@@ -1,5 +1,13 @@
---- CM UI LIBRARY v1.3
-
+--==================================================
+-- CM UI LIBRARY
+--==================================================
+-- Premium single file Roblox UI library.
+-- Monochrome Studio Architecture | PC + Mobile.
+-- Author: Captain Manjiro
+--
+-- Legacy API : Library.CreateLib("CM Hub", "DarkTheme")
+-- Modern API : Library:CreateWindow({ Title = "CM Hub" })
+--==================================================
 
 --==================================================
 -- SERVICES
@@ -43,14 +51,14 @@ end)
 --==================================================
 
 local LIB_NAME       = "CM UI Library"
-local LIB_VERSION    = "1.3.0"
+local LIB_VERSION    = "1.9.0"
 local GUI_NAME       = "CM_UI_LIBRARY"
 local ROOT_FOLDER    = "CM_UI"
 local CONFIG_FOLDER  = "CM_UI/configs"
 local THEME_FOLDER   = "CM_UI/themes"
 local INTERFACE_FILE = "CM_UI/interface.json"
 
-local YOUTUBE_URL = "https://www.youtube.com/@CaptainManjirooo"
+local YOUTUBE_URL = "https://www.youtube.com/@CaptainManjiroo"
 local DISCORD_URL = "https://discord.com/invite/WS9vzUWM4R"
 local WEBSITE_URL = "https://www.youtube.com/@CaptainManjiroo"
 
@@ -1803,16 +1811,20 @@ end
 
 local ScreenGui = nil
 local NotificationHolder = nil
-local TooltipFrame = nil
-local TooltipLabel = nil
-local GhostDragPanel = nil
-local GhostTrailPool = {}
+local TooltipState = {}
+TooltipState.Frame = nil
+TooltipState.Label = nil
+TooltipState.Token = 0
+TooltipState.Target = nil
+local GhostDrag = {}
+GhostDrag.Panel = nil
+GhostDrag.TrailPool = {}
 local GetViewport
 local GetRootOffset
 
 local function EnsureGhostDragPanel()
-	if GhostDragPanel and GhostDragPanel.Frame and GhostDragPanel.Frame.Parent then
-		return GhostDragPanel
+	if GhostDrag.Panel and GhostDrag.Panel.Frame and GhostDrag.Panel.Frame.Parent then
+		return GhostDrag.Panel
 	end
 	if not ScreenGui then
 		return nil
@@ -1912,7 +1924,7 @@ local function EnsureGhostDragPanel()
 	RegisterTheme(coordLabel, { TextColor3 = "Text" })
 
 	-- Strictly capped pool of 4 lightweight afterimage trail frames
-	table.clear(GhostTrailPool)
+	table.clear(GhostDrag.TrailPool)
 	for i = 1, 4 do
 		local trail = New("Frame", {
 			Name = "CMGhostTrail_" .. i,
@@ -1932,10 +1944,10 @@ local function EnsureGhostDragPanel()
 		})
 		RegisterTheme(trail, { BackgroundColor3 = "Background" })
 		RegisterTheme(ts, { Color = "Accent" })
-		table.insert(GhostTrailPool, { Frame = trail, Corner = tc, Stroke = ts })
+		table.insert(GhostDrag.TrailPool, { Frame = trail, Corner = tc, Stroke = ts })
 	end
 
-	GhostDragPanel = {
+	GhostDrag.Panel = {
 		Frame = panel,
 		Corner = ghostCorner,
 		Stroke = ghostStroke,
@@ -1943,14 +1955,14 @@ local function EnsureGhostDragPanel()
 		TrailIndex = 0,
 		LastTrailClock = 0,
 	}
-	return GhostDragPanel
+	return GhostDrag.Panel
 end
 
 local function HideGhostDragImmediate()
-	if GhostDragPanel and GhostDragPanel.Frame then
-		GhostDragPanel.Frame.Visible = false
+	if GhostDrag.Panel and GhostDrag.Panel.Frame then
+		GhostDrag.Panel.Frame.Visible = false
 	end
-	for _, entry in ipairs(GhostTrailPool) do
+	for _, entry in ipairs(GhostDrag.TrailPool) do
 		if entry.Frame then
 			entry.Frame.Visible = false
 		end
@@ -1958,16 +1970,16 @@ local function HideGhostDragImmediate()
 end
 
 local function SpawnTrailStep(pos, size, radius)
-	if not Settings.AfterimageTrail or Settings.VFXLevel == "Off" or not GhostDragPanel then
+	if not Settings.AfterimageTrail or Settings.VFXLevel == "Off" or not GhostDrag.Panel then
 		return
 	end
 	local now = os.clock()
-	if now - GhostDragPanel.LastTrailClock < 0.045 then
+	if now - GhostDrag.Panel.LastTrailClock < 0.045 then
 		return
 	end
-	GhostDragPanel.LastTrailClock = now
-	GhostDragPanel.TrailIndex = (GhostDragPanel.TrailIndex % #GhostTrailPool) + 1
-	local item = GhostTrailPool[GhostDragPanel.TrailIndex]
+	GhostDrag.Panel.LastTrailClock = now
+	GhostDrag.Panel.TrailIndex = (GhostDrag.Panel.TrailIndex % #GhostDrag.TrailPool) + 1
+	local item = GhostDrag.TrailPool[GhostDrag.Panel.TrailIndex]
 	if not item or not item.Frame or not item.Frame.Parent then
 		return
 	end
@@ -2134,12 +2146,12 @@ local function MakeDraggable(frame, handle, maid, options)
 
 			local mode = options.AllowGhost and (Settings.DragStyle or "Ghost Outline") or "Direct"
 			if (mode == "Ghost Outline" or mode == "Ghost") and moved then
-				if GhostDragPanel and GhostDragPanel.Frame and GhostDragPanel.Frame.Visible then
-					Tween(GhostDragPanel.Frame, { BackgroundTransparency = 1 }, SPEED.Fast)
-					Tween(GhostDragPanel.Stroke, { Transparency = 1 }, SPEED.Fast)
+				if GhostDrag.Panel and GhostDrag.Panel.Frame and GhostDrag.Panel.Frame.Visible then
+					Tween(GhostDrag.Panel.Frame, { BackgroundTransparency = 1 }, SPEED.Fast)
+					Tween(GhostDrag.Panel.Stroke, { Transparency = 1 }, SPEED.Fast)
 					task.delay(SPEED.Fast + 0.02, function()
-						if not dragging and GhostDragPanel and GhostDragPanel.Frame then
-							GhostDragPanel.Frame.Visible = false
+						if not dragging and GhostDrag.Panel and GhostDrag.Panel.Frame then
+							GhostDrag.Panel.Frame.Visible = false
 						end
 					end)
 				end
@@ -2260,14 +2272,15 @@ local FloatingMoved = false
 local FloatingPillCard = nil
 local BackgroundDimFrame = nil
 
-local shimmerPools = {}
-local shimmerClock = 0
-local PillPingBars = {}
-local PillStrokeGrad = nil
-local ThemeShimmerSequences = nil
-local GenerateShimmerFromAccent = nil
-local GetCurrentShimmerSequence = nil
-local UpdateAllShimmerColors = nil
+local Shimmer = {}
+Shimmer.Pools = {}
+Shimmer.Clock = 0
+Shimmer.PillPingBars = {}
+Shimmer.PillStrokeGrad = nil
+Shimmer.ThemeSequences = nil
+Shimmer.GenerateFromAccent = nil
+Shimmer.GetCurrentSequence = nil
+Shimmer.UpdateAllColors = nil
 
 -- One shared player for brand marks and optional ambient VFX particles.
 do
@@ -2445,7 +2458,7 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 		return layer
 	end
 
-	ThemeShimmerSequences = {
+	Shimmer.ThemeSequences = {
 		Aurora = ColorSequence.new({
 			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(56, 189, 248)),
 			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(99, 102, 241)),
@@ -2539,7 +2552,7 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 		}),
 	}
 
-	GenerateShimmerFromAccent = function(accent)
+	Shimmer.GenerateFromAccent = function(accent)
 		local h, s, v = Color3.toHSV(accent)
 		local c0 = Color3.fromHSV(h, s, v)
 		local c1 = Color3.fromHSV((h + 0.07) % 1, math.clamp(s * 0.95, 0.4, 1), math.clamp(v * 1.15, 0.6, 1))
@@ -2554,24 +2567,24 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 		})
 	end
 
-	GetCurrentShimmerSequence = function()
+	Shimmer.GetCurrentSequence = function()
 		if Settings.CustomAccent and typeof(Settings.CustomAccent) == "Color3" then
-			return GenerateShimmerFromAccent(Settings.CustomAccent)
+			return Shimmer.GenerateFromAccent(Settings.CustomAccent)
 		end
 		local themeKey = CurrentThemeName or "DarkTheme"
-		if ThemeShimmerSequences[themeKey] then
-			return ThemeShimmerSequences[themeKey]
+		if Shimmer.ThemeSequences[themeKey] then
+			return Shimmer.ThemeSequences[themeKey]
 		end
 		local base = Theme and Theme.Accent
 		if base then
-			return GenerateShimmerFromAccent(base)
+			return Shimmer.GenerateFromAccent(base)
 		end
-		return ThemeShimmerSequences.Aurora
+		return Shimmer.ThemeSequences.Aurora
 	end
 
-	UpdateAllShimmerColors = function()
-		local seq = GetCurrentShimmerSequence()
-		for _, s in ipairs(shimmerPools) do
+	Shimmer.UpdateAllColors = function()
+		local seq = Shimmer.GetCurrentSequence()
+		for _, s in ipairs(Shimmer.Pools) do
 			if s.Grad and s.Grad.Parent then
 				s.Grad.Color = seq
 			end
@@ -2579,19 +2592,19 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 				s.GlowGrad.Color = seq
 			end
 		end
-		if PillStrokeGrad and PillStrokeGrad.Parent then
-			PillStrokeGrad.Color = seq
+		if Shimmer.PillStrokeGrad and Shimmer.PillStrokeGrad.Parent then
+			Shimmer.PillStrokeGrad.Color = seq
 		end
 	end
-	OnThemeChanged(UpdateAllShimmerColors)
+	OnThemeChanged(Shimmer.UpdateAllColors)
 
 	function Library:_AttachAuroraShimmer(parentFrame, mode, zIndex, phaseOffset, activeFn)
 		if not parentFrame then return nil end
 		local isCrown = (mode == "crown")
 		local z = tonumber(zIndex) or (parentFrame.ZIndex + 2)
-		local phase = tonumber(phaseOffset) or (#shimmerPools * 0.65)
+		local phase = tonumber(phaseOffset) or (#Shimmer.Pools * 0.65)
 
-		local auroraColors = GetCurrentShimmerSequence()
+		local auroraColors = Shimmer.GetCurrentSequence()
 
 		local pad = parentFrame:FindFirstChildOfClass("UIPadding")
 		local topOff = pad and -pad.PaddingTop.Offset or 0
@@ -2681,7 +2694,7 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 			})
 		end
 
-		table.insert(shimmerPools, {
+		table.insert(Shimmer.Pools, {
 			Parent = parentFrame,
 			Bar = bar,
 			Grad = grad,
@@ -2756,12 +2769,12 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 				local allowShimmer = not Settings.ReducedMotion
 					and Settings.VFXLevel ~= "Off"
 				if allowShimmer then
-					shimmerClock = shimmerClock + dt
+					Shimmer.Clock = Shimmer.Clock + dt
 				end
-				for i = #shimmerPools, 1, -1 do
-					local s = shimmerPools[i]
+				for i = #Shimmer.Pools, 1, -1 do
+					local s = Shimmer.Pools[i]
 					if not s.Bar or not s.Bar.Parent or not s.Parent or not s.Parent.Parent then
-						table.remove(shimmerPools, i)
+						table.remove(Shimmer.Pools, i)
 					else
 						local isActive = (s.ActiveFn == nil) or (s.ActiveFn() == true)
 						local shouldShow = isActive and (Settings.VFXLevel ~= "Off")
@@ -2772,7 +2785,7 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 						if shouldShow and allowShimmer and Visible(s.Parent) then
 							local speed = s.IsCrown and 1.55 or 1.25
 							local amp = s.IsCrown and 0.44 or 0.56
-							local wave = math.sin(shimmerClock * speed + s.Phase) * amp
+							local wave = math.sin(Shimmer.Clock * speed + s.Phase) * amp
 							s.Grad.Offset = Vector2.new(wave, 0)
 							if s.GlowGrad then
 								s.GlowGrad.Offset = Vector2.new(wave * 0.85, 0)
@@ -2782,16 +2795,16 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 				end
 				-- Update mini live ping sparkline & rotating border rim on the floating capsule ("gilid")
 				if allowShimmer and FloatingButton and FloatingButton.Parent and FloatingButton.Visible then
-					if PillStrokeGrad and PillStrokeGrad.Parent then
-						PillStrokeGrad.Rotation = (shimmerClock * 75) % 360
+					if Shimmer.PillStrokeGrad and Shimmer.PillStrokeGrad.Parent then
+						Shimmer.PillStrokeGrad.Rotation = (Shimmer.Clock * 75) % 360
 					end
-					if #PillPingBars > 0 then
+					if #Shimmer.PillPingBars > 0 then
 						local curP = (Telemetry and Telemetry.Ping) or 35
 						local pRatio = math.clamp(curP / 120, 0.25, 1.0)
-						for idx = 1, #PillPingBars do
-							local pBar = PillPingBars[idx]
+						for idx = 1, #Shimmer.PillPingBars do
+							local pBar = Shimmer.PillPingBars[idx]
 							if pBar and pBar.Parent then
-								local wave = math.sin(shimmerClock * 4.2 + idx * 1.15) * 2.8
+								local wave = math.sin(Shimmer.Clock * 4.2 + idx * 1.15) * 2.8
 								local baseH = 3 + math.floor(idx * 2.4 * pRatio)
 								local targetH = math.clamp(math.floor(baseH + wave + 0.5), 3, 14)
 								pBar.Size = UDim2.fromOffset(3, targetH)
@@ -3068,11 +3081,9 @@ end
 -- TOOLTIP SYSTEM (Delayed Appearance & Fast Dismiss)
 --==================================================
 
-local TooltipToken = 0
-local TooltipTarget = nil
 
 local function BuildTooltipSystem()
-	TooltipFrame = New("Frame", {
+	TooltipState.Frame = New("Frame", {
 		Name = "CMTooltip",
 		Parent = ScreenGui,
 		BackgroundColor3 = T("Header"),
@@ -3083,14 +3094,14 @@ local function BuildTooltipSystem()
 		Visible = false,
 		ZIndex = 950,
 	})
-	Corner(TooltipFrame, 6, false)
-	Stroke(TooltipFrame, "Border", 1, 0.15)
-	Padding(TooltipFrame, 4, 4, 9, 9)
-	RegisterTheme(TooltipFrame, { BackgroundColor3 = "Header" })
+	Corner(TooltipState.Frame, 6, false)
+	Stroke(TooltipState.Frame, "Border", 1, 0.15)
+	Padding(TooltipState.Frame, 4, 4, 9, 9)
+	RegisterTheme(TooltipState.Frame, { BackgroundColor3 = "Header" })
 
-	TooltipLabel = New("TextLabel", {
+	TooltipState.Label = New("TextLabel", {
 		Name = "Text",
-		Parent = TooltipFrame,
+		Parent = TooltipState.Frame,
 		BackgroundTransparency = 1,
 		Size = UDim2.fromOffset(0, 18),
 		AutomaticSize = Enum.AutomaticSize.X,
@@ -3100,52 +3111,52 @@ local function BuildTooltipSystem()
 		TextSize = 12,
 		ZIndex = 951,
 	})
-	RegisterTheme(TooltipLabel, { TextColor3 = "Text" })
+	RegisterTheme(TooltipState.Label, { TextColor3 = "Text" })
 end
 
 local function ShowTooltip(guiObject, text, delaySec)
-	if not TooltipFrame or not TooltipFrame.Parent or IsTouchDevice() then
+	if not TooltipState.Frame or not TooltipState.Frame.Parent or IsTouchDevice() then
 		return
 	end
 	text = tostring(text or "")
 	if text == "" then
 		return
 	end
-	TooltipToken += 1
-	local myToken = TooltipToken
-	TooltipTarget = guiObject
+	TooltipState.Token += 1
+	local myToken = TooltipState.Token
+	TooltipState.Target = guiObject
 
 	task.delay(delaySec or 0.32, function()
-		if myToken ~= TooltipToken or TooltipTarget ~= guiObject or not guiObject.Parent then
+		if myToken ~= TooltipState.Token or TooltipState.Target ~= guiObject or not guiObject.Parent then
 			return
 		end
-		TooltipLabel.Text = text
+		TooltipState.Label.Text = text
 		local absPos = guiObject.AbsolutePosition
 		local absSize = guiObject.AbsoluteSize
 		local viewport = GetViewport()
-		local tipW = math.max(60, TooltipLabel.TextBounds.X + 20)
+		local tipW = math.max(60, TooltipState.Label.TextBounds.X + 20)
 		local x = Clamp(absPos.X + (absSize.X - tipW) / 2, 8, math.max(8, viewport.X - tipW - 8))
 		local y = absPos.Y - 32
 		if y < 8 then
 			y = absPos.Y + absSize.Y + 6
 		end
-		TooltipFrame.Position = UDim2.fromOffset(math.floor(x), math.floor(y))
-		TooltipFrame.BackgroundTransparency = 0.35
-		TooltipLabel.TextTransparency = 0.35
-		TooltipFrame.Visible = true
-		Tween(TooltipFrame, { BackgroundTransparency = 0.06 }, SPEED.Fast)
-		Tween(TooltipLabel, { TextTransparency = 0 }, SPEED.Fast)
+		TooltipState.Frame.Position = UDim2.fromOffset(math.floor(x), math.floor(y))
+		TooltipState.Frame.BackgroundTransparency = 0.35
+		TooltipState.Label.TextTransparency = 0.35
+		TooltipState.Frame.Visible = true
+		Tween(TooltipState.Frame, { BackgroundTransparency = 0.06 }, SPEED.Fast)
+		Tween(TooltipState.Label, { TextTransparency = 0 }, SPEED.Fast)
 	end)
 end
 
 local function HideTooltip(guiObject)
-	if guiObject and TooltipTarget ~= guiObject then
+	if guiObject and TooltipState.Target ~= guiObject then
 		return
 	end
-	TooltipToken += 1
-	TooltipTarget = nil
-	if TooltipFrame and TooltipFrame.Parent and TooltipFrame.Visible then
-		TooltipFrame.Visible = false
+	TooltipState.Token += 1
+	TooltipState.Target = nil
+	if TooltipState.Frame and TooltipState.Frame.Parent and TooltipState.Frame.Visible then
+		TooltipState.Frame.Visible = false
 	end
 end
 
@@ -8374,13 +8385,15 @@ end
 -- FLOATING CAPSULE PILL & TELEMETRY PREVIEW CARD
 --==================================================
 
-local PillPreviewExpanded = false
-local PillPreviewPinned = false
-local PillHoverToken = 0
-local PillLeaveToken = 0
-local LastPillTransitionClock = 0
-local SetPillPreviewExpanded
-local FloatingPillCardStroke = nil
+local PillState = {}
+PillState.Expanded = false
+PillState.Pinned = false
+PillState.HoverToken = 0
+PillState.LeaveToken = 0
+PillState.LastClock = 0
+PillState.SetExpanded = nil
+PillState.CardStroke = nil
+PillState.LeavePending = false
 
 local function GetPillCardTargets()
 	local viewport = GetViewport()
@@ -8402,22 +8415,21 @@ local function GetPillCardTargets()
 	return centerX, targetY
 end
 
-local PillLeavePending = false
 
 local function RenderFloatingButton(isOpen)
 	if not FloatingButton or not FloatingButton.Parent then
 		return
 	end
 
-	LastPillTransitionClock = os.clock()
+	PillState.LastClock = os.clock()
 	FloatingButton:SetAttribute("CMOpen", isOpen)
 	local showCapsule = (not isOpen) or (Settings.AlwaysShowPill == true)
 
-	PillPreviewPinned = false
-	PillPreviewExpanded = false
-	PillLeavePending = false
-	PillHoverToken += 1
-	PillLeaveToken += 1
+	PillState.Pinned = false
+	PillState.Expanded = false
+	PillState.LeavePending = false
+	PillState.HoverToken += 1
+	PillState.LeaveToken += 1
 	if FloatingPillCard and FloatingPillCard.Parent then
 		FloatingPillCard.Visible = false
 		pcall(function()
@@ -8478,7 +8490,7 @@ local function RenderFloatingButton(isOpen)
 	end
 end
 
-SetPillPreviewExpanded = function(state, fromPin, instant)
+PillState.SetExpanded = function(state, fromPin, instant)
 	if not FloatingPillCard or not FloatingPillCard.Parent or not FloatingButton or not FloatingButton.Parent then
 		return
 	end
@@ -8490,18 +8502,18 @@ SetPillPreviewExpanded = function(state, fromPin, instant)
 	end
 
 	local targetState = (state == true)
-	PillLeavePending = false
-	PillLeaveToken += 1
-	if PillPreviewExpanded == targetState and FloatingPillCard.Visible == targetState then
+	PillState.LeavePending = false
+	PillState.LeaveToken += 1
+	if PillState.Expanded == targetState and FloatingPillCard.Visible == targetState then
 		return
 	end
 
-	PillPreviewExpanded = targetState
+	PillState.Expanded = targetState
 	if not targetState then
-		PillPreviewPinned = false
+		PillState.Pinned = false
 	end
-	PillHoverToken += 1
-	local myToken = PillHoverToken
+	PillState.HoverToken += 1
+	local myToken = PillState.HoverToken
 
 	local cardScale = FloatingPillCard:FindFirstChildOfClass("UIScale")
 	if cardScale then
@@ -8509,11 +8521,11 @@ SetPillPreviewExpanded = function(state, fromPin, instant)
 	end
 	local centerX, targetY = GetPillCardTargets()
 
-	if PillPreviewExpanded then
+	if PillState.Expanded then
 		local wasVisible = FloatingPillCard.Visible
 		FloatingPillCard.Visible = true
-		if FloatingPillCardStroke then
-			FloatingPillCardStroke.Enabled = true
+		if PillState.CardStroke then
+			PillState.CardStroke.Enabled = true
 		end
 		if UpdatePillMetrics then
 			pcall(UpdatePillMetrics)
@@ -8526,12 +8538,12 @@ SetPillPreviewExpanded = function(state, fromPin, instant)
 				pcall(function()
 					FloatingPillCard.GroupTransparency = 1
 				end)
-				if FloatingPillCardStroke then
-					FloatingPillCardStroke.Transparency = 1
+				if PillState.CardStroke then
+					PillState.CardStroke.Transparency = 1
 				end
 			end
-			if FloatingPillCardStroke then
-				Tween(FloatingPillCardStroke, { Transparency = 0 }, 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			if PillState.CardStroke then
+				Tween(PillState.CardStroke, { Transparency = 0 }, 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
 			end
 			Tween(FloatingPillCard, {
 				Position = UDim2.fromOffset(centerX, targetY),
@@ -8541,8 +8553,8 @@ SetPillPreviewExpanded = function(state, fromPin, instant)
 		else
 			FloatingPillCard.Position = UDim2.fromOffset(centerX, targetY)
 			FloatingPillCard.BackgroundTransparency = 0.02
-			if FloatingPillCardStroke then
-				FloatingPillCardStroke.Transparency = 0
+			if PillState.CardStroke then
+				PillState.CardStroke.Transparency = 0
 			end
 			pcall(function()
 				FloatingPillCard.GroupTransparency = 0
@@ -8552,28 +8564,28 @@ SetPillPreviewExpanded = function(state, fromPin, instant)
 		if instant or not Settings.Animations or Settings.ReducedMotion then
 			FloatingPillCard.Visible = false
 			FloatingPillCard.BackgroundTransparency = 1
-			if FloatingPillCardStroke then
-				FloatingPillCardStroke.Enabled = false
-				FloatingPillCardStroke.Transparency = 1
+			if PillState.CardStroke then
+				PillState.CardStroke.Enabled = false
+				PillState.CardStroke.Transparency = 1
 			end
 			pcall(function()
 				FloatingPillCard.GroupTransparency = 1
 			end)
 		else
-			if FloatingPillCardStroke then
-				Tween(FloatingPillCardStroke, { Transparency = 1 }, 0.14, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			if PillState.CardStroke then
+				Tween(PillState.CardStroke, { Transparency = 1 }, 0.14, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
 			end
 			Tween(FloatingPillCard, {
 				Position = UDim2.fromOffset(centerX, targetY - 8),
 				GroupTransparency = 1,
 			}, 0.14, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
 			task.delay(0.14, function()
-				if not PillPreviewExpanded and FloatingPillCard and FloatingPillCard.Parent then
+				if not PillState.Expanded and FloatingPillCard and FloatingPillCard.Parent then
 					FloatingPillCard.Visible = false
 					FloatingPillCard.BackgroundTransparency = 1
-					if FloatingPillCardStroke then
-						FloatingPillCardStroke.Enabled = false
-						FloatingPillCardStroke.Transparency = 1
+					if PillState.CardStroke then
+						PillState.CardStroke.Enabled = false
+						PillState.CardStroke.Transparency = 1
 					end
 				end
 			end)
@@ -8613,9 +8625,9 @@ local function EnsureFloatingButton()
 
 	Corner(FloatingButton, 10)
 	local pillStroke = Stroke(FloatingButton, "Border", 1.2, 0, "pill")
-	PillStrokeGrad = pillStroke:FindFirstChildOfClass("UIGradient")
-	if PillStrokeGrad then
-		PillStrokeGrad.Color = GetCurrentShimmerSequence()
+	Shimmer.PillStrokeGrad = pillStroke:FindFirstChildOfClass("UIGradient")
+	if Shimmer.PillStrokeGrad then
+		Shimmer.PillStrokeGrad.Color = Shimmer.GetCurrentSequence()
 	end
 	RegisterTheme(FloatingButton, { BackgroundColor3 = "Background" })
 	New("UIScale", { Parent = FloatingButton, Scale = 1 })
@@ -8681,7 +8693,7 @@ local function EnsureFloatingButton()
 	RegisterTheme(FloatingLabel, { TextColor3 = "Text" })
 
 	-- Live Network Ping Telemetry Sparkline on the capsule side ("gilid")
-	table.clear(PillPingBars)
+	table.clear(Shimmer.PillPingBars)
 	local pillPingHolder = New("Frame", {
 		Name = "PillPingIndicator",
 		Parent = FloatingButton,
@@ -8719,7 +8731,7 @@ local function EnsureFloatingButton()
 		})
 		Corner(pBar, 1, false)
 		RegisterTheme(pBar, { BackgroundColor3 = "Accent" })
-		table.insert(PillPingBars, pBar)
+		table.insert(Shimmer.PillPingBars, pBar)
 	end
 
 	BindTooltip(pillPingHolder, LibraryMaid, function()
@@ -8790,9 +8802,9 @@ local function EnsureFloatingButton()
 	RegisterGlyphTheme(infoGlyphParts, "SubText")
 
 	LibraryMaid:Give(infoBtn.MouseButton1Click:Connect(function()
-		local nextState = not PillPreviewExpanded
-		PillPreviewPinned = nextState
-		SetPillPreviewExpanded(nextState, true, false)
+		local nextState = not PillState.Expanded
+		PillState.Pinned = nextState
+		PillState.SetExpanded(nextState, true, false)
 	end))
 
 	-- Build the Telemetry HUD Drop-Card (CanvasGroup + Top-Center Anchored for Symmetric Smooth Swipe!)
@@ -8810,9 +8822,9 @@ local function EnsureFloatingButton()
 		ZIndex = 810,
 	})
 	Corner(FloatingPillCard, 11)
-	FloatingPillCardStroke = Stroke(FloatingPillCard, "Border", 1.2, 0, "window")
-	FloatingPillCardStroke.Enabled = false
-	FloatingPillCardStroke.Transparency = 1
+	PillState.CardStroke = Stroke(FloatingPillCard, "Border", 1.2, 0, "window")
+	PillState.CardStroke.Enabled = false
+	PillState.CardStroke.Transparency = 1
 	RegisterTheme(FloatingPillCard, { BackgroundColor3 = "Background" })
 	New("UIScale", { Parent = FloatingPillCard, Scale = 1 })
 	Padding(FloatingPillCard, 12, 12, 14, 14)
@@ -9024,8 +9036,8 @@ local function EnsureFloatingButton()
 	RegisterTheme(restoreBtn, { BackgroundColor3 = "Element", TextColor3 = "Text" })
 
 	LibraryMaid:Give(restoreBtn.MouseButton1Click:Connect(function()
-		SetPillPreviewExpanded(false, false, true)
-		LastPillTransitionClock = os.clock()
+		PillState.SetExpanded(false, false, true)
+		PillState.LastClock = os.clock()
 		Library:Show()
 	end))
 
@@ -9076,17 +9088,17 @@ local function EnsureFloatingButton()
 
 	-- Deterministic, Non-Resetting Pointer Bounds Hover Tracker
 	local function StartHoverCollapseOnce()
-		if IsTouchDevice() or PillPreviewPinned or PillLeavePending then
+		if IsTouchDevice() or PillState.Pinned or PillState.LeavePending then
 			return
 		end
-		PillLeavePending = true
-		PillLeaveToken += 1
-		local leaveTok = PillLeaveToken
+		PillState.LeavePending = true
+		PillState.LeaveToken += 1
+		local leaveTok = PillState.LeaveToken
 		task.delay(0.11, function()
-			if leaveTok == PillLeaveToken then
-				PillLeavePending = false
-				if PillPreviewExpanded and not PillPreviewPinned then
-					SetPillPreviewExpanded(false, false, false)
+			if leaveTok == PillState.LeaveToken then
+				PillState.LeavePending = false
+				if PillState.Expanded and not PillState.Pinned then
+					PillState.SetExpanded(false, false, false)
 				end
 			end
 		end)
@@ -9108,10 +9120,10 @@ local function EnsureFloatingButton()
 		if FloatingButton:GetAttribute("CMDragging") == true then
 			return
 		end
-		if (os.clock() - LastPillTransitionClock) < 0.28 then
+		if (os.clock() - PillState.LastClock) < 0.28 then
 			return
 		end
-		if PillPreviewPinned then
+		if PillState.Pinned then
 			return
 		end
 
@@ -9121,15 +9133,15 @@ local function EnsureFloatingButton()
 
 		local inPill = (mx >= pPos.X - 6 and mx <= pPos.X + pSize.X + 6 and my >= pPos.Y - 6 and my <= pPos.Y + pSize.Y + 12)
 		if inPill then
-			PillLeavePending = false
-			PillLeaveToken += 1
-			if not PillPreviewExpanded then
-				SetPillPreviewExpanded(true, false, false)
+			PillState.LeavePending = false
+			PillState.LeaveToken += 1
+			if not PillState.Expanded then
+				PillState.SetExpanded(true, false, false)
 			end
 			return
 		end
 
-		if PillPreviewExpanded and FloatingPillCard and FloatingPillCard.Visible then
+		if PillState.Expanded and FloatingPillCard and FloatingPillCard.Visible then
 			local cPos = FloatingPillCard.AbsolutePosition
 			local cSize = FloatingPillCard.AbsoluteSize
 			local minX = math.min(pPos.X, cPos.X) - 14
@@ -9138,8 +9150,8 @@ local function EnsureFloatingButton()
 			local maxY = math.max(pPos.Y + pSize.Y, cPos.Y + cSize.Y) + 14
 			local inCombined = (mx >= minX and mx <= maxX and my >= minY and my <= maxY)
 			if inCombined then
-				PillLeavePending = false
-				PillLeaveToken += 1
+				PillState.LeavePending = false
+				PillState.LeaveToken += 1
 			else
 				StartHoverCollapseOnce()
 			end
@@ -9154,18 +9166,18 @@ local function EnsureFloatingButton()
 		Inset = 8,
 		OnStart = function()
 			FloatingButton:SetAttribute("CMDragging", true)
-			PillPreviewPinned = false
-			if PillPreviewExpanded or (FloatingPillCard and FloatingPillCard.Visible) then
-				SetPillPreviewExpanded(false, false, true)
+			PillState.Pinned = false
+			if PillState.Expanded or (FloatingPillCard and FloatingPillCard.Visible) then
+				PillState.SetExpanded(false, false, true)
 			end
 		end,
 		OnEnd = function(moved)
 			FloatingButton:SetAttribute("CMDragging", false)
-			LastPillTransitionClock = os.clock()
+			PillState.LastClock = os.clock()
 			if moved then
 				FloatingMoved = true
 			else
-				SetPillPreviewExpanded(false, false, true)
+				PillState.SetExpanded(false, false, true)
 				Library:ToggleUI()
 			end
 		end,
@@ -9234,7 +9246,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Position = UDim2.fromOffset(14, 0),
 		Size = UDim2.new(1, -110, 1, 0),
 		Font = FONT_BOLD,
-		Text = "TELEMETRY & INSTANCE OVERVIEW",
+		Text = "COMMAND DECK  •  TELEMETRY & INSTANCE OVERVIEW",
 		TextColor3 = T("SubText"),
 		TextSize = 11,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -9467,7 +9479,7 @@ local function BuildHomeDashboard(window, tab, config)
 	end
 
 	CreateOpPill(1, "v" .. tostring(config.Version or LIB_VERSION), 36)
-	local maskNamePill = CreateOpPill(2, "Blurd Name", 56, function() return Settings.MaskIdentity == true end, function(btn)
+	local maskNamePill = CreateOpPill(2, "Mask Name", 56, function() return Settings.MaskIdentity == true end, function(btn)
 		Settings.MaskIdentity = not Settings.MaskIdentity
 		btn.BackgroundColor3 = Settings.MaskIdentity and T("Accent") or T("Element")
 		btn.TextColor3 = Settings.MaskIdentity and T("OnAccent") or T("Text")
@@ -9478,7 +9490,7 @@ local function BuildHomeDashboard(window, tab, config)
 		if UpdatePillMetrics then UpdatePillMetrics() end
 		SaveInterface()
 	end)
-	local maskArtPill = CreateOpPill(3, "Blurd Profile", 50, function() return Settings.MaskAvatar == true end, function(btn)
+	local maskArtPill = CreateOpPill(3, "Mask Art", 50, function() return Settings.MaskAvatar == true end, function(btn)
 		Settings.MaskAvatar = not Settings.MaskAvatar
 		btn.BackgroundColor3 = Settings.MaskAvatar and T("Accent") or T("Element")
 		btn.TextColor3 = Settings.MaskAvatar and T("OnAccent") or T("Text")
@@ -11583,10 +11595,10 @@ local function CreateWindowInternal(config)
 	function window:Show()
 		self._TransitionToken = (self._TransitionToken or 0) + 1
 		local token = self._TransitionToken
-		LastPillTransitionClock = os.clock()
+		PillState.LastClock = os.clock()
 
-		if SetPillPreviewExpanded then
-			SetPillPreviewExpanded(false, false, true)
+		if PillState.SetExpanded then
+			PillState.SetExpanded(false, false, true)
 		end
 
 		self.Visible = true
@@ -11638,7 +11650,7 @@ local function CreateWindowInternal(config)
 					pcall(function()
 						main.GroupTransparency = 0
 					end)
-					LastPillTransitionClock = os.clock()
+					PillState.LastClock = os.clock()
 				end
 			end)
 		else
@@ -11661,11 +11673,11 @@ local function CreateWindowInternal(config)
 	function window:Hide()
 		self._TransitionToken = (self._TransitionToken or 0) + 1
 		local token = self._TransitionToken
-		LastPillTransitionClock = os.clock()
+		PillState.LastClock = os.clock()
 
 		HideTooltip()
-		if SetPillPreviewExpanded then
-			SetPillPreviewExpanded(false, false, true)
+		if PillState.SetExpanded then
+			PillState.SetExpanded(false, false, true)
 		end
 
 		if self._DragController and self._DragController.IsDragging() then
@@ -11715,7 +11727,7 @@ local function CreateWindowInternal(config)
 					pcall(function()
 						main.GroupTransparency = 0
 					end)
-					LastPillTransitionClock = os.clock()
+					PillState.LastClock = os.clock()
 				end
 			end)
 		else
@@ -11729,7 +11741,7 @@ local function CreateWindowInternal(config)
 				main.GroupTransparency = 0
 			end)
 			RenderFloatingButton(false)
-			LastPillTransitionClock = os.clock()
+			PillState.LastClock = os.clock()
 		end
 
 		return self
@@ -11990,7 +12002,8 @@ end
 -- SETTINGS TAB (2-Column Architectural Folders)
 --==================================================
 
-local THEME_DISPLAY = {
+local SettingsUI = {}
+SettingsUI.THEME_DISPLAY = {
 	DarkTheme  = "Dark",
 	Obsidian   = "Obsidian",
 	Graphite   = "Graphite",
@@ -12005,7 +12018,7 @@ local THEME_DISPLAY = {
 	Rose       = "Rose",
 }
 
-local DISPLAY_THEME = {
+SettingsUI.DISPLAY_THEME = {
 	Dark     = "DarkTheme",
 	Obsidian = "Obsidian",
 	Graphite = "Graphite",
@@ -12020,13 +12033,13 @@ local DISPLAY_THEME = {
 	Rose     = "Rose",
 }
 
-local SCALE_VALUES = { "75%", "85%", "90%", "100%", "110%", "120%", "130%" }
+SettingsUI.SCALE_VALUES = { "75%", "85%", "90%", "100%", "110%", "120%", "130%" }
 
-local function ScaleToDisplay(scale)
+SettingsUI.ScaleToDisplay = function(scale)
 	return tostring(math.floor((tonumber(scale) or 1) * 100 + 0.5)) .. "%"
 end
 
-local function DisplayToScale(display)
+SettingsUI.DisplayToScale = function(display)
 	local stripped = string.gsub(tostring(display), "%%", "")
 	local number = tonumber(stripped)
 	return (number or 100) / 100
@@ -12040,8 +12053,8 @@ SyncSettingsUI = function()
 		end
 	end
 
-	SafeSet("__CMTheme", THEME_DISPLAY[CurrentThemeName] or CurrentThemeName or "Dark", true)
-	SafeSet("__CMScale", ScaleToDisplay(Settings.Scale), true)
+	SafeSet("__CMTheme", SettingsUI.THEME_DISPLAY[CurrentThemeName] or CurrentThemeName or "Dark", true)
+	SafeSet("__CMScale", SettingsUI.ScaleToDisplay(Settings.Scale), true)
 	SafeSet("__CMScaleSlider", math.floor((Settings.Scale or 1) * 100 + 0.5), true)
 	SafeSet("__CMTransparency", math.floor((Settings.Transparency or 0) * 100 + 0.5), true)
 	SafeSet("__CMBackgroundDim", Settings.BackgroundDim == true, true)
@@ -12147,11 +12160,11 @@ local function BuildSettingsTab(window)
 
 	interface:AddDropdown("__CMScale", {
 		Title = "UI Scale Preset",
-		Values = SCALE_VALUES,
-		Default = ScaleToDisplay(Settings.Scale),
+		Values = SettingsUI.SCALE_VALUES,
+		Default = SettingsUI.ScaleToDisplay(Settings.Scale),
 		Save = false,
 		Callback = function(value)
-			Library:SetScale(DisplayToScale(value))
+			Library:SetScale(SettingsUI.DisplayToScale(value))
 		end,
 	})
 
@@ -12324,8 +12337,8 @@ local function BuildSettingsTab(window)
 		Save = false,
 		Callback = function(value)
 			Settings.PillPreview = tostring(value)
-			if Settings.PillPreview == "Off" and SetPillPreviewExpanded then
-				SetPillPreviewExpanded(false)
+			if Settings.PillPreview == "Off" and PillState.SetExpanded then
+				PillState.SetExpanded(false)
 			end
 			SaveInterface()
 		end,
@@ -12378,10 +12391,10 @@ local function BuildSettingsTab(window)
 	themeFolder:AddDropdown("__CMTheme", {
 		Title = "Theme Preset",
 		Values = { "Dark", "Obsidian", "Graphite", "Light", "Serpent", "Midnight", "Crimson", "Emerald", "Amethyst", "Sunset", "Aqua", "Rose" },
-		Default = THEME_DISPLAY[CurrentThemeName] or CurrentThemeName or "Dark",
+		Default = SettingsUI.THEME_DISPLAY[CurrentThemeName] or CurrentThemeName or "Dark",
 		Save = false,
 		Callback = function(value)
-			local themeName = DISPLAY_THEME[tostring(value)] or ResolveThemeName(tostring(value))
+			local themeName = SettingsUI.DISPLAY_THEME[tostring(value)] or ResolveThemeName(tostring(value))
 			SetThemeInternal(themeName)
 			SaveInterface()
 		end,
@@ -13138,9 +13151,9 @@ function Library:Destroy(reason)
 	FloatingLabel = nil
 	FloatingPillCard = nil
 	BackgroundDimFrame = nil
-	GhostDragPanel = nil
+	GhostDrag.Panel = nil
 	NotificationHolder = nil
-	TooltipFrame = nil
+	TooltipState.Frame = nil
 	ScreenGui = nil
 
 	for _, env in ipairs(GetSharedEnvironments()) do
