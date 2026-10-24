@@ -1,13 +1,4 @@
---==================================================
--- CM UI LIBRARY
---==================================================
--- Premium single file Roblox UI library.
--- Monochrome Studio Architecture | PC + Mobile.
--- Author: Captain Manjiro
---
--- Legacy API : Library.CreateLib("CM Hub", "DarkTheme")
--- Modern API : Library:CreateWindow({ Title = "CM Hub" })
---==================================================
+--- CM UI LIBRARY 
 
 --==================================================
 -- SERVICES
@@ -51,7 +42,7 @@ end)
 --==================================================
 
 local LIB_NAME       = "CM UI Library"
-local LIB_VERSION    = "1.9.0"
+local LIB_VERSION    = "1.0"
 local GUI_NAME       = "CM_UI_LIBRARY"
 local ROOT_FOLDER    = "CM_UI"
 local CONFIG_FOLDER  = "CM_UI/configs"
@@ -4506,15 +4497,28 @@ function Config:Export(name)
 	return raw
 end
 
+function Config:ExportCode(name)
+	local raw = self:Export(name)
+	if typeof(raw) == "string" and raw ~= "" then
+		return "CMCFG:" .. raw
+	end
+	return ""
+end
+
 function Config:Import(rawJson, saveAsName, options)
 	if typeof(rawJson) ~= "string" or rawJson == "" then
 		return false, "empty input"
 	end
+	local clean = rawJson:match("^%s*(.-)%s*$")
+	if clean:sub(1, 6):upper() == "CMCFG:" then
+		clean = clean:sub(7)
+	end
+	rawJson = clean
 	local ok, data = pcall(function()
 		return HttpService:JSONDecode(rawJson)
 	end)
 	if not ok or typeof(data) ~= "table" then
-		return false, "invalid json"
+		return false, "invalid config code"
 	end
 	local targetName = saveAsName and NormalizeConfigName(saveAsName) or nil
 	if targetName then
@@ -4953,6 +4957,7 @@ local function AttachBaseMethods(object, base, owner)
 	object.Maid = base.Maid
 	object.Element = base.Element
 	object.Row = base.Row
+	object.TitleLabel = base.TitleLabel
 	object.Owner = owner
 
 	local function RefreshSearchMeta()
@@ -4973,9 +4978,112 @@ local function AttachBaseMethods(object, base, owner)
 		return self
 	end
 
+	local function SyncElementVisibility()
+		local uHidden = base.Element:GetAttribute("UserHidden") == true
+		local dHidden = base.Element:GetAttribute("DependencyHidden") == true
+		local sHidden = base.Element:GetAttribute("SearchHidden") == true
+		base.Element.Visible = not (uHidden or dHidden or sHidden)
+	end
+
 	function object:SetVisible(state)
-		base.Element.Visible = state and true or false
 		base.Element:SetAttribute("UserHidden", not (state and true or false))
+		SyncElementVisibility()
+		return self
+	end
+
+	function object:DependsOn(parentOptionOrId, predicateOrMode, modeOverride)
+		local parentOpt = nil
+		if typeof(parentOptionOrId) == "table" then
+			parentOpt = parentOptionOrId
+		elseif typeof(parentOptionOrId) == "string" then
+			parentOpt = Library.Options[parentOptionOrId]
+		end
+		if not parentOpt then
+			return self
+		end
+
+		local mode = "Hide"
+		if predicateOrMode == "Hide" or predicateOrMode == "Lock" then
+			mode = predicateOrMode
+		elseif modeOverride == "Hide" or modeOverride == "Lock" then
+			mode = modeOverride
+		end
+
+		local checkFn
+		if typeof(predicateOrMode) == "function" then
+			checkFn = predicateOrMode
+		elseif predicateOrMode ~= nil and predicateOrMode ~= "Hide" and predicateOrMode ~= "Lock" then
+			checkFn = function(val)
+				return val == predicateOrMode
+			end
+		else
+			checkFn = function(val)
+				return val == true or (typeof(val) ~= "boolean" and val ~= nil and val ~= "")
+			end
+		end
+
+		local lockOverlay = nil
+		local parentTitle = tostring(parentOpt._IdleTitle or (parentOpt.TitleLabel and parentOpt.TitleLabel.Text) or "Parent Setting")
+
+		local function EvaluateDependency(val)
+			local ok, satisfied = pcall(checkFn, val)
+			satisfied = (ok and satisfied == true)
+
+			if mode == "Lock" then
+				base.Element:SetAttribute("DependencyHidden", false)
+				SyncElementVisibility()
+				local barArea = base.Element:FindFirstChild("BarArea")
+				if not satisfied then
+					if not lockOverlay then
+						lockOverlay = New("Frame", {
+							Name = "CMLockOverlay",
+							Parent = base.Element,
+							BackgroundColor3 = T("Header"),
+							BackgroundTransparency = 0.15,
+							BorderSizePixel = 0,
+							Size = UDim2.new(1, 0, 0, 22),
+							LayoutOrder = 95,
+						})
+						Corner(lockOverlay, 5)
+						Stroke(lockOverlay, "Border", 1, 0.3)
+						Padding(lockOverlay, 2, 2, 8, 8)
+						RegisterTheme(lockOverlay, { BackgroundColor3 = "Header" })
+						local lockText = New("TextLabel", {
+							Parent = lockOverlay,
+							BackgroundTransparency = 1,
+							Size = UDim2.fromScale(1, 1),
+							Font = FONT_BOLD,
+							Text = "LOCKED • Requires '" .. parentTitle .. "'",
+							TextColor3 = T("SubText"),
+							TextSize = 10,
+							TextXAlignment = Enum.TextXAlignment.Left,
+						})
+						RegisterTheme(lockText, { TextColor3 = "SubText" })
+					end
+					lockOverlay.Visible = true
+					base.TitleLabel.TextTransparency = 0.45
+					base.Accessory.Visible = false
+					if barArea then barArea.Visible = false end
+					base:SetInteractiveEnabled(false)
+				else
+					if lockOverlay then
+						lockOverlay.Visible = false
+					end
+					base.TitleLabel.TextTransparency = 0
+					base.Accessory.Visible = true
+					if barArea then barArea.Visible = true end
+					base:SetInteractiveEnabled(true)
+				end
+			else
+				base.Element:SetAttribute("DependencyHidden", not satisfied)
+				SyncElementVisibility()
+			end
+		end
+
+		if typeof(parentOpt.OnChanged) == "function" then
+			parentOpt:OnChanged(EvaluateDependency)
+		end
+		EvaluateDependency(parentOpt.Value)
 		return self
 	end
 
@@ -5319,6 +5427,286 @@ function Elements.Changelog(parent, config, owner)
 end
 
 --==================================================
+-- TERMINAL / ACTIVITY LOG BOX (Real-Time Console Component)
+--==================================================
+
+function Elements.Terminal(parent, config, owner)
+	config = config or {}
+	local maid = Maid.new()
+	local titleStr = tostring(config.Title or "Live Activity Terminal")
+	local maxLines = Clamp(tonumber(config.MaxLines) or 80, 10, 300)
+	local boxHeight = Clamp(tonumber(config.Height) or 140, 80, 360)
+	local autoScroll = config.AutoScroll ~= false
+
+	local card = New("Frame", {
+		Name = "CMTerminalCard",
+		Parent = parent,
+		BackgroundColor3 = T("Element"),
+		BorderSizePixel = 0,
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		LayoutOrder = config.LayoutOrder or 1,
+	})
+	Corner(card, 8)
+	Stroke(card, "Border", 1, 0.2, "card")
+	RegisterTheme(card, { BackgroundColor3 = "Element" })
+	Padding(card, 10, 10, 10, 10)
+	ListLayout(card, 8)
+
+	-- Terminal Header Bar
+	local headerRow = New("Frame", {
+		Name = "HeaderRow",
+		Parent = card,
+		BackgroundTransparency = 1,
+		Size = UDim2.new(1, 0, 0, 22),
+		LayoutOrder = 1,
+	})
+
+	local termIcon, termIconParts = CreateLineGlyph(headerRow, "terminal", 14, headerRow.ZIndex + 1)
+	termIcon.AnchorPoint = Vector2.new(0, 0.5)
+	termIcon.Position = UDim2.new(0, 0, 0.5, 0)
+	RegisterGlyphTheme(termIconParts, "Accent")
+
+	local titleLbl = New("TextLabel", {
+		Name = "Title",
+		Parent = headerRow,
+		BackgroundTransparency = 1,
+		Position = UDim2.fromOffset(20, 0),
+		Size = UDim2.new(1, -155, 1, 0),
+		Font = FONT_BOLD,
+		Text = titleStr,
+		TextColor3 = T("Text"),
+		TextSize = 12,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		TextTruncate = Enum.TextTruncate.AtEnd,
+	})
+	RegisterTheme(titleLbl, { TextColor3 = "Text" })
+
+	local controlsRight = New("Frame", {
+		Name = "Controls",
+		Parent = headerRow,
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, 0, 0.5, 0),
+		Size = UDim2.fromOffset(132, 20),
+		BackgroundTransparency = 1,
+	})
+	local ctrlLayout = ListLayout(controlsRight, 4, Enum.FillDirection.Horizontal, Enum.VerticalAlignment.Center)
+	ctrlLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+
+	local function MakeTermPill(label, width, isActiveFn, onClick)
+		local btn = New("TextButton", {
+			Name = label .. "Btn",
+			Parent = controlsRight,
+			Size = UDim2.fromOffset(width, 19),
+			BackgroundColor3 = (isActiveFn and isActiveFn()) and T("Accent") or T("Header"),
+			BackgroundTransparency = (isActiveFn and isActiveFn()) and 0.80 or 0,
+			BorderSizePixel = 0,
+			AutoButtonColor = false,
+			Font = FONT_BOLD,
+			Text = label,
+			TextColor3 = (isActiveFn and isActiveFn()) and T("Accent") or T("SubText"),
+			TextSize = 9,
+		})
+		Corner(btn, 4)
+		local st = Stroke(btn, (isActiveFn and isActiveFn()) and "Accent" or "Border", 1, 0.35)
+		RegisterTheme(btn, {
+			BackgroundColor3 = function(theme)
+				return (isActiveFn and isActiveFn()) and theme.Accent or theme.Header
+			end,
+			TextColor3 = function(theme)
+				return (isActiveFn and isActiveFn()) and theme.Accent or theme.SubText
+			end,
+		})
+		maid:Give(btn.MouseButton1Click:Connect(function()
+			onClick(btn, st)
+		end))
+		return btn, st
+	end
+
+	-- Recessed Console Viewport
+	local viewport = New("ScrollingFrame", {
+		Name = "LogViewport",
+		Parent = card,
+		BackgroundColor3 = T("Background"),
+		BorderSizePixel = 0,
+		Size = UDim2.new(1, 0, 0, boxHeight),
+		CanvasSize = UDim2.new(0, 0, 0, 0),
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		ScrollBarThickness = 3,
+		ScrollBarImageColor3 = T("Accent"),
+		ScrollingDirection = Enum.ScrollingDirection.Y,
+		LayoutOrder = 2,
+	})
+	Corner(viewport, 6)
+	Stroke(viewport, "Border", 1, 0.3)
+	RegisterTheme(viewport, { BackgroundColor3 = "Background", ScrollBarImageColor3 = "Accent" })
+	Padding(viewport, 6, 6, 8, 8)
+	local logListLayout = ListLayout(viewport, 4)
+
+	local logEntries = {}
+	local logSerial = 0
+
+	MakeTermPill("AUTO", 38, function() return autoScroll end, function(btn, st)
+		autoScroll = not autoScroll
+		btn.BackgroundColor3 = autoScroll and T("Accent") or T("Header")
+		btn.BackgroundTransparency = autoScroll and 0.80 or 0
+		btn.TextColor3 = autoScroll and T("Accent") or T("SubText")
+		st.Color = autoScroll and T("Accent") or T("Border")
+	end)
+
+	MakeTermPill("COPY", 38, nil, function(btn)
+		local lines = {}
+		for _, item in ipairs(logEntries) do
+			table.insert(lines, item.Plain)
+		end
+		CopyToClipboard(table.concat(lines, "\n"))
+		btn.Text = "OK!"
+		task.delay(1, function()
+			if btn.Parent then btn.Text = "COPY" end
+		end)
+	end)
+
+	local object = {
+		Type = "Terminal",
+		Element = card,
+		Maid = maid,
+		Owner = owner,
+	}
+
+	MakeTermPill("CLEAR", 42, nil, function()
+		object:Clear()
+	end)
+
+	local LEVEL_COLORS = {
+		info    = Color3.fromRGB(56, 189, 248),
+		success = Color3.fromRGB(16, 185, 129),
+		ok      = Color3.fromRGB(16, 185, 129),
+		warn    = Color3.fromRGB(245, 158, 11),
+		warning = Color3.fromRGB(245, 158, 11),
+		error   = Color3.fromRGB(239, 68, 68),
+		fail    = Color3.fromRGB(239, 68, 68),
+	}
+
+	function object:Log(levelOrMsg, optionalMsg)
+		local level = "INFO"
+		local msg = ""
+		if optionalMsg == nil then
+			msg = tostring(levelOrMsg or "")
+		else
+			level = tostring(levelOrMsg or "INFO"):upper()
+			msg = tostring(optionalMsg or "")
+		end
+
+		logSerial = logSerial + 1
+		local timeStr = os.date("%H:%M:%S")
+		local plainLine = string.format("[%s] [%s] %s", timeStr, level, msg)
+
+		local row = New("Frame", {
+			Name = "Log_" .. logSerial,
+			Parent = viewport,
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			LayoutOrder = logSerial,
+		})
+
+		local tagColor = LEVEL_COLORS[level:lower()] or T("Accent")
+		local hexColor = string.format("#%02X%02X%02X", math.floor(tagColor.R * 255), math.floor(tagColor.G * 255), math.floor(tagColor.B * 255))
+
+		local lineLabel = New("TextLabel", {
+			Name = "Line",
+			Parent = row,
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			Font = FONT_MONO,
+			RichText = true,
+			Text = string.format('<font color="#888894">[%s]</font> <font color="%s"><b>[%s]</b></font> %s', timeStr, hexColor, level, msg),
+			TextColor3 = T("Text"),
+			TextSize = 11,
+			TextWrapped = true,
+			TextXAlignment = Enum.TextXAlignment.Left,
+		})
+		RegisterTheme(lineLabel, { TextColor3 = "Text" })
+
+		table.insert(logEntries, {
+			Instance = row,
+			Plain = plainLine,
+		})
+
+		while #logEntries > maxLines do
+			local oldest = table.remove(logEntries, 1)
+			if oldest and oldest.Instance then
+				pcall(function() oldest.Instance:Destroy() end)
+			end
+		end
+
+		if autoScroll then
+			task.defer(function()
+				if viewport.Parent then
+					viewport.CanvasPosition = Vector2.new(0, math.max(0, logListLayout.AbsoluteContentSize.Y))
+				end
+			end)
+		end
+
+		return self
+	end
+
+	function object:Info(msg) return self:Log("INFO", msg) end
+	function object:Success(msg) return self:Log("SUCCESS", msg) end
+	function object:Warn(msg) return self:Log("WARN", msg) end
+	function object:Error(msg) return self:Log("ERROR", msg) end
+
+	function object:Clear()
+		for _, item in ipairs(logEntries) do
+			if item.Instance then
+				pcall(function() item.Instance:Destroy() end)
+			end
+		end
+		table.clear(logEntries)
+		return self
+	end
+
+	function object:GetText()
+		local lines = {}
+		for _, item in ipairs(logEntries) do
+			table.insert(lines, item.Plain)
+		end
+		return table.concat(lines, "\n")
+	end
+
+	function object:SetVisible(state)
+		card:SetAttribute("UserHidden", not (state and true or false))
+		card.Visible = state and true or false
+		return self
+	end
+
+	function object:Destroy()
+		maid:DoCleaning()
+		card:Destroy()
+	end
+
+	card:SetAttribute("SearchText", (titleStr .. " terminal console log activity"):lower())
+	maid:Give(card)
+
+	if typeof(config.DefaultLogs) == "table" then
+		for _, entry in ipairs(config.DefaultLogs) do
+			if typeof(entry) == "table" then
+				object:Log(entry.Level or entry.Type or entry[1] or "INFO", entry.Text or entry.Message or entry[2] or "")
+			else
+				object:Log("INFO", tostring(entry))
+			end
+		end
+	end
+
+	if owner and typeof(owner._Elements) == "table" then
+		table.insert(owner._Elements, object)
+	end
+
+	return object
+end
+
+--==================================================
 -- BUTTON (Hover Highlight, Press Compression & Loading State)
 --==================================================
 
@@ -5556,6 +5944,8 @@ end
 
 function Elements.Toggle(parent, id, config, owner)
 	config = config or {}
+	local isInternalToggle = typeof(id) == "string" and id:sub(1, 4) == "__CM"
+	local allowQuickPin = config.PinButton ~= false and not isInternalToggle
 
 	local base = CreateBase(parent, {
 		Name = "CMToggle",
@@ -5563,7 +5953,7 @@ function Elements.Toggle(parent, id, config, owner)
 		Description = config.Description,
 		Tooltip = config.Tooltip,
 		Interactive = true,
-		RightWidth = 44,
+		RightWidth = allowQuickPin and 70 or 44,
 	})
 
 	local value = config.Default == true
@@ -5614,6 +6004,228 @@ function Elements.Toggle(parent, id, config, owner)
 		end,
 	})
 
+	local quickChip = nil
+	local quickChipStroke = nil
+	local quickDot = nil
+	local quickStateText = nil
+	local quickTitleText = nil
+	local pinBtn = nil
+	local pinBtnStroke = nil
+	local pinGlyphParts = nil
+
+	local function SyncQuickPinVisual()
+		if pinBtn and pinBtn.Parent then
+			pinBtn.BackgroundColor3 = object.Pinned and T("Accent") or T("Background")
+			pinBtn.BackgroundTransparency = object.Pinned and 0.80 or 0.20
+			if pinBtnStroke then
+				pinBtnStroke.Color = object.Pinned and T("Accent") or T("Border")
+				pinBtnStroke.Transparency = object.Pinned and 0.25 or 0.35
+			end
+			if pinGlyphParts then
+				SetGlyphColor(pinGlyphParts, object.Pinned and T("Accent") or T("SubText"))
+			end
+		end
+		if quickChip and quickChip.Parent then
+			if quickChipStroke then
+				quickChipStroke.Color = object.Value and T("Accent") or T("Border")
+				quickChipStroke.Transparency = object.Value and 0.08 or 0.35
+			end
+			if quickDot then
+				quickDot.BackgroundColor3 = object.Value and T("Accent") or T("SubText")
+			end
+			if quickStateText then
+				quickStateText.Text = object.Value and "ON" or "OFF"
+				quickStateText.TextColor3 = object.Value and T("Accent") or T("SubText")
+			end
+			if quickTitleText then
+				quickTitleText.TextColor3 = object.Value and T("Text") or T("SubText")
+			end
+		end
+	end
+
+	if allowQuickPin then
+		pinBtn = New("TextButton", {
+			Name = "QuickPinButton",
+			Parent = base.Accessory,
+			BackgroundColor3 = T("Background"),
+			BackgroundTransparency = 0.20,
+			BorderSizePixel = 0,
+			Size = UDim2.fromOffset(20, 20),
+			AutoButtonColor = false,
+			Text = "",
+			LayoutOrder = 1,
+			ZIndex = base.Accessory.ZIndex + 2,
+		})
+		Corner(pinBtn, 5)
+		pinBtnStroke = Stroke(pinBtn, "Border", 1, 0.35)
+		local pinGlyph
+		pinGlyph, pinGlyphParts = CreateLineGlyph(pinBtn, "target", 11, pinBtn.ZIndex + 1)
+		pinGlyph.AnchorPoint = Vector2.new(0.5, 0.5)
+		pinGlyph.Position = UDim2.fromScale(0.5, 0.5)
+		BindTooltip(pinBtn, base.Maid, "Pin Quick-Bind Button to Screen (Mobile & PC HUD)")
+		RegisterTheme(pinBtn, {
+			BackgroundColor3 = function(theme)
+				return object.Pinned and theme.Accent or theme.Background
+			end,
+		})
+		RegisterGlyphTheme(pinGlyphParts, function(theme)
+			return object.Pinned and theme.Accent or theme.SubText
+		end)
+
+		base.Maid:Give(pinBtn.MouseButton1Click:Connect(function()
+			object:SetPinned(not object.Pinned)
+		end))
+	end
+
+	function object:SetPinned(state)
+		state = state == true
+		if self.Pinned == state then
+			return self
+		end
+		self.Pinned = state
+		Library.QuickBinds = Library.QuickBinds or {}
+
+		if state then
+			EnsureRoot()
+			local slotIndex = #Library.QuickBinds
+			local chipW = IsTouchDevice() and 152 or 142
+			local chipH = IsTouchDevice() and 36 or 32
+			local vp = GetViewport()
+			local defaultX = math.max(14, vp.X - chipW - 18)
+			local defaultY = Clamp(76 + slotIndex * (chipH + 8), 50, math.max(60, vp.Y - chipH - 20))
+
+			quickChip = New("TextButton", {
+				Name = "CMQuickBind_" .. tostring(id or config.Title or "Toggle"),
+				Parent = ScreenGui,
+				Position = UDim2.fromOffset(defaultX, defaultY),
+				Size = UDim2.fromOffset(chipW, chipH),
+				BackgroundColor3 = T("Header"),
+				BackgroundTransparency = 0.06,
+				BorderSizePixel = 0,
+				AutoButtonColor = false,
+				Text = "",
+				ZIndex = 92,
+			})
+			Corner(quickChip, 8)
+			quickChipStroke = Stroke(quickChip, self.Value and "Accent" or "Border", 1.2, self.Value and 0.08 or 0.35)
+			RegisterTheme(quickChip, { BackgroundColor3 = "Header" })
+
+			quickDot = New("Frame", {
+				Name = "StatusDot",
+				Parent = quickChip,
+				AnchorPoint = Vector2.new(0, 0.5),
+				Position = UDim2.new(0, 9, 0.5, 0),
+				Size = UDim2.fromOffset(7, 7),
+				BackgroundColor3 = self.Value and T("Accent") or T("SubText"),
+				BorderSizePixel = 0,
+				ZIndex = 93,
+			})
+			Corner(quickDot, 4, false)
+
+			quickTitleText = New("TextLabel", {
+				Name = "Title",
+				Parent = quickChip,
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(22, 0),
+				Size = UDim2.new(1, -68, 1, 0),
+				Font = FONT_BOLD,
+				Text = tostring(config.Title or "Toggle"),
+				TextColor3 = self.Value and T("Text") or T("SubText"),
+				TextSize = 11,
+				TextXAlignment = Enum.TextXAlignment.Left,
+				TextTruncate = Enum.TextTruncate.AtEnd,
+				ZIndex = 93,
+			})
+
+			quickStateText = New("TextLabel", {
+				Name = "State",
+				Parent = quickChip,
+				AnchorPoint = Vector2.new(1, 0.5),
+				Position = UDim2.new(1, -24, 0.5, 0),
+				Size = UDim2.fromOffset(24, 16),
+				BackgroundTransparency = 1,
+				Font = FONT_MONO,
+				Text = self.Value and "ON" or "OFF",
+				TextColor3 = self.Value and T("Accent") or T("SubText"),
+				TextSize = 10,
+				TextXAlignment = Enum.TextXAlignment.Right,
+				ZIndex = 93,
+			})
+
+			local unpinX = New("TextButton", {
+				Name = "Unpin",
+				Parent = quickChip,
+				AnchorPoint = Vector2.new(1, 0.5),
+				Position = UDim2.new(1, -4, 0.5, 0),
+				Size = UDim2.fromOffset(18, 18),
+				BackgroundTransparency = 1,
+				Font = FONT_BOLD,
+				Text = GLYPH.Close,
+				TextColor3 = T("SubText"),
+				TextSize = 9,
+				ZIndex = 94,
+			})
+			RegisterTheme(unpinX, { TextColor3 = "SubText" })
+
+			local pressStart = nil
+			local dragged = false
+			MakeDraggable(quickChip, quickChip, base.Maid, function()
+				dragged = true
+			end, { Direct = true })
+
+			quickChip.InputBegan:Connect(function(inp)
+				if inp.UserInputType == Enum.UserInputType.MouseButton1 or inp.UserInputType == Enum.UserInputType.Touch then
+					pressStart = Vector2.new(inp.Position.X, inp.Position.Y)
+					dragged = false
+				end
+			end)
+
+			quickChip.MouseButton1Click:Connect(function()
+				if not dragged then
+					object:Toggle()
+				end
+			end)
+
+			unpinX.MouseButton1Click:Connect(function()
+				object:SetPinned(false)
+			end)
+
+			table.insert(Library.QuickBinds, quickChip)
+			base.Maid:Give(function()
+				if quickChip then
+					pcall(function() quickChip:Destroy() end)
+					quickChip = nil
+				end
+			end)
+		else
+			if quickChip then
+				for idx, c in ipairs(Library.QuickBinds) do
+					if c == quickChip then
+						table.remove(Library.QuickBinds, idx)
+						break
+					end
+				end
+				pcall(function() quickChip:Destroy() end)
+				quickChip = nil
+				quickChipStroke = nil
+				quickDot = nil
+				quickStateText = nil
+				quickTitleText = nil
+			end
+		end
+
+		SyncQuickPinVisual()
+		return self
+	end
+
+	function object:Pin() return self:SetPinned(true) end
+	function object:Unpin() return self:SetPinned(false) end
+	function object:IsPinned() return self.Pinned == true end
+
+	OnThemeChanged(function()
+		SyncQuickPinVisual()
+	end)
+
 	local function Render()
 		local targetPos = object.Value and 23 or 3
 		Tween(track, { BackgroundColor3 = object.Value and T("Accent") or T("Background") }, SPEED.Fast)
@@ -5623,6 +6235,7 @@ function Elements.Toggle(parent, id, config, owner)
 			BackgroundColor3 = object.Value and T("OnAccent") or T("SubText"),
 			Position = UDim2.new(0, targetPos, 0.5, 0),
 		}, SPEED.Fast, Enum.EasingStyle.Quart)
+		SyncQuickPinVisual()
 		if UpdatePillMetrics then
 			pcall(UpdatePillMetrics)
 		end
@@ -5657,6 +6270,10 @@ function Elements.Toggle(parent, id, config, owner)
 
 	if id then
 		RegisterOption(id, object)
+	end
+
+	if config.Pinned == true or config.Pin == true then
+		object:SetPinned(true)
 	end
 
 	if value and config.FireOnInit ~= false then
@@ -7148,6 +7765,12 @@ function ComponentAPI:AddChangelog(config)
 	return Elements.Changelog(self:_GetContainer(), config, self)
 end
 
+function ComponentAPI:AddTerminal(config)
+	return Elements.Terminal(self:_GetContainer(), config, self)
+end
+
+ComponentAPI.AddLogBox = ComponentAPI.AddTerminal
+
 function ComponentAPI:AddButton(a, b, c)
 	local config
 	if typeof(a) == "table" then
@@ -7839,7 +8462,7 @@ function Elements.Folder(parent, config, owner)
 
 	local wrappedAdders = {
 		"AddButton", "AddToggle", "AddSlider", "AddDropdown",
-		"AddInput", "AddKeybind", "AddColorpicker", "AddLabel", "AddParagraph", "AddChangelog"
+		"AddInput", "AddKeybind", "AddColorpicker", "AddLabel", "AddParagraph", "AddChangelog", "AddTerminal", "AddLogBox"
 	}
 	for _, methodName in ipairs(wrappedAdders) do
 		local orig = folder[methodName]
@@ -9246,7 +9869,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Position = UDim2.fromOffset(14, 0),
 		Size = UDim2.new(1, -110, 1, 0),
 		Font = FONT_BOLD,
-		Text = "COMMAND DECK  •  TELEMETRY & INSTANCE OVERVIEW",
+		Text = "TELEMETRY & INSTANCE OVERVIEW",
 		TextColor3 = T("SubText"),
 		TextSize = 11,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -9479,7 +10102,7 @@ local function BuildHomeDashboard(window, tab, config)
 	end
 
 	CreateOpPill(1, "v" .. tostring(config.Version or LIB_VERSION), 36)
-	local maskNamePill = CreateOpPill(2, "Mask Name", 56, function() return Settings.MaskIdentity == true end, function(btn)
+	local maskNamePill = CreateOpPill(2, "Hide Name", 56, function() return Settings.MaskIdentity == true end, function(btn)
 		Settings.MaskIdentity = not Settings.MaskIdentity
 		btn.BackgroundColor3 = Settings.MaskIdentity and T("Accent") or T("Element")
 		btn.TextColor3 = Settings.MaskIdentity and T("OnAccent") or T("Text")
@@ -9490,7 +10113,7 @@ local function BuildHomeDashboard(window, tab, config)
 		if UpdatePillMetrics then UpdatePillMetrics() end
 		SaveInterface()
 	end)
-	local maskArtPill = CreateOpPill(3, "Mask Art", 50, function() return Settings.MaskAvatar == true end, function(btn)
+	local maskArtPill = CreateOpPill(3, "Hide Profile", 50, function() return Settings.MaskAvatar == true end, function(btn)
 		Settings.MaskAvatar = not Settings.MaskAvatar
 		btn.BackgroundColor3 = Settings.MaskAvatar and T("Accent") or T("Element")
 		btn.TextColor3 = Settings.MaskAvatar and T("OnAccent") or T("Text")
@@ -10026,6 +10649,34 @@ local function CreateTab(window, config)
 		RichText = true,
 	})
 
+	local searchMatchBadge = New("Frame", {
+		Name = "SearchMatchBadge",
+		Parent = button,
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -6, 0.5, 0),
+		Size = UDim2.fromOffset(20, 16),
+		BackgroundColor3 = T("Accent"),
+		BackgroundTransparency = 0.15,
+		BorderSizePixel = 0,
+		Visible = false,
+		ZIndex = button.ZIndex + 3,
+	})
+	Corner(searchMatchBadge, 4)
+	RegisterTheme(searchMatchBadge, { BackgroundColor3 = "Accent" })
+
+	local searchMatchLabel = New("TextLabel", {
+		Name = "Count",
+		Parent = searchMatchBadge,
+		BackgroundTransparency = 1,
+		Size = UDim2.fromScale(1, 1),
+		Font = FONT_BOLD,
+		Text = "0",
+		TextColor3 = T("OnAccent"),
+		TextSize = 9,
+		ZIndex = button.ZIndex + 4,
+	})
+	RegisterTheme(searchMatchLabel, { TextColor3 = "OnAccent" })
+
 	RegisterTheme(button, {
 		BackgroundColor3 = function(theme)
 			return IsSelected() and theme.ElementHover or theme.Element
@@ -10160,10 +10811,12 @@ local function CreateTab(window, config)
 			availW = (window.Instance and window.Instance.Size.X.Offset or 720) - (window.Sidebar and window.Sidebar.Size.X.Offset or 158) - 24
 		end
 
+		local isSingleHomeBanner = (self.HomeDashboard ~= nil and #visibleBlocks == 1)
 		local useTwo = Settings.AdaptiveLayout ~= false
 			and window.TwoColumnMode ~= false
 			and availW >= 400
-			and #visibleBlocks >= 2
+			and #visibleBlocks >= 1
+			and not isSingleHomeBanner
 
 		if useTwo then
 			leftCol.Size = UDim2.new(0.5, -5, 0, 0)
@@ -10195,6 +10848,7 @@ local function CreateTab(window, config)
 
 	function tab:_ApplySearch(query)
 		query = tostring(query or ""):lower():match("^%s*(.-)%s*$")
+		local matchCount = 0
 		for _, block in ipairs(self._ColumnBlocks) do
 			local blockFrame = block.Frame or block.Instance
 			if blockFrame then
@@ -10202,11 +10856,25 @@ local function CreateTab(window, config)
 					blockFrame:SetAttribute("SearchHidden", false)
 					blockFrame.Visible = true
 					for _, elem in ipairs(block._Elements or {}) do
-						if elem.Element and elem.Element:GetAttribute("UserHidden") ~= true then
-							elem.Element.Visible = true
+						if elem.Element then
+							elem.Element:SetAttribute("SearchHidden", false)
+							local uHidden = elem.Element:GetAttribute("UserHidden") == true
+							local dHidden = elem.Element:GetAttribute("DependencyHidden") == true
+							elem.Element.Visible = not (uHidden or dHidden)
 						end
 					end
+					if block.Type == "Folder" and block._PreSearchOpen ~= nil then
+						if block._PreSearchOpen then
+							block:Open(true)
+						else
+							block:Close(true)
+						end
+						block._PreSearchOpen = nil
+					end
 				else
+					if block.Type == "Folder" and block._PreSearchOpen == nil then
+						block._PreSearchOpen = block.IsOpen
+					end
 					local blockTitle = ""
 					if block.TitleLabel then blockTitle = tostring(block.TitleLabel.Text or "")
 					elseif block.HeaderLabel then blockTitle = tostring(block.HeaderLabel.Text or "") end
@@ -10214,24 +10882,39 @@ local function CreateTab(window, config)
 					local anyChildMatch = false
 
 					for _, elem in ipairs(block._Elements or {}) do
-						if elem.Element and elem.Element:GetAttribute("UserHidden") ~= true then
+						if elem.Element then
+							local uHidden = elem.Element:GetAttribute("UserHidden") == true
+							local dHidden = elem.Element:GetAttribute("DependencyHidden") == true
 							local sText = tostring(elem.Element:GetAttribute("SearchText") or ""):lower()
-							local m = blockMatch or (string.find(sText, query, 1, true) ~= nil)
+							local m = (not uHidden and not dHidden) and (blockMatch or (string.find(sText, query, 1, true) ~= nil))
+							elem.Element:SetAttribute("SearchHidden", not m)
 							elem.Element.Visible = m
-							if m then anyChildMatch = true end
+							if m then
+								anyChildMatch = true
+								matchCount = matchCount + 1
+							end
 						end
 					end
 
 					local showBlock = blockMatch or anyChildMatch
 					blockFrame:SetAttribute("SearchHidden", not showBlock)
 					blockFrame.Visible = showBlock
-					if showBlock and block.Type == "Folder" and not block.IsOpen then
-						block:Open(true)
+					if block.Type == "Folder" then
+						if showBlock and not block.IsOpen then
+							block:Open(true)
+						elseif not showBlock and block.IsOpen then
+							block:Close(true)
+						end
 					end
 				end
 			end
 		end
+		if searchMatchBadge and searchMatchBadge.Parent then
+			searchMatchBadge.Visible = (query ~= "" and matchCount > 0)
+			searchMatchLabel.Text = tostring(matchCount)
+		end
 		self:_ReflowColumns()
+		return matchCount
 	end
 
 	function tab:_GetContainer()
@@ -10805,12 +11488,29 @@ local function CreateWindowInternal(config)
 	})
 	RegisterTheme(clearSearchBtn, { TextColor3 = "SubText" })
 
-	window.Maid:Give(headerSearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-		local q = headerSearchBox.Text
+	function window:_ApplyGlobalSearch(q)
+		q = tostring(q or "")
 		clearSearchBtn.Visible = q ~= ""
-		if window.CurrentTab and typeof(window.CurrentTab._ApplySearch) == "function" then
-			window.CurrentTab:_ApplySearch(q)
+		local currentMatches = 0
+		local firstMatchingTab = nil
+		for _, t in ipairs(window.Tabs) do
+			if typeof(t._ApplySearch) == "function" then
+				local m = t:_ApplySearch(q) or 0
+				if t == window.CurrentTab then
+					currentMatches = m
+				end
+				if m > 0 and not firstMatchingTab then
+					firstMatchingTab = t
+				end
+			end
 		end
+		if q ~= "" and currentMatches == 0 and firstMatchingTab and firstMatchingTab ~= window.CurrentTab then
+			window:SelectTab(firstMatchingTab)
+		end
+	end
+
+	window.Maid:Give(headerSearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+		window:_ApplyGlobalSearch(headerSearchBox.Text)
 	end))
 	window.Maid:Give(clearSearchBtn.MouseButton1Click:Connect(function()
 		headerSearchBox.Text = ""
@@ -12654,6 +13354,71 @@ local function BuildSettingsTab(window)
 				})
 			else
 				Library.Config:SetAutoLoad(nil)
+			end
+		end,
+	})
+
+	local shareCodeInput = configuration:AddInput("__CMConfigShareCode", {
+		Title = "Shareable Config Code",
+		Description = "Paste a CMCFG string from Discord or export yours",
+		Placeholder = "CMCFG:{...}",
+		Default = "",
+		Finished = false,
+		Save = false,
+	})
+
+	configuration:AddButton({
+		Title = "Export Config to Clipboard",
+		Description = "Generates shareable CMCFG string & copies to clipboard",
+		Icon = "copy",
+		Callback = function()
+			local code = Library.Config:ExportCode()
+			if code ~= "" then
+				if shareCodeInput then
+					shareCodeInput:SetValue(code, true)
+				end
+				CopyToClipboard(code)
+				Library:Notify({
+					Type = "Success",
+					Title = "Config Exported",
+					Content = "Shareable CMCFG code copied to clipboard!",
+					Duration = 3,
+				})
+			end
+		end,
+	})
+
+	configuration:AddButton({
+		Title = "Import Config from Code",
+		Description = "Applies settings from the Shareable Config Code box",
+		Icon = "upload",
+		Callback = function()
+			local code = shareCodeInput and tostring(shareCodeInput.Value or "") or ""
+			if code == "" then
+				Library:Notify({
+					Type = "Warning",
+					Title = "Config Import",
+					Content = "Paste a CMCFG code into Shareable Config Code first.",
+					Duration = 3,
+				})
+				return
+			end
+			local ok, report = Library.Config:Import(code)
+			if ok then
+				SyncSettingsUI()
+				Library:Notify({
+					Type = "Success",
+					Title = "Config Imported",
+					Content = string.format("Applied shared config (%d options restored).", report and report.Restored or 0),
+					Duration = 3,
+				})
+			else
+				Library:Notify({
+					Type = "Error",
+					Title = "Config Import Failed",
+					Content = "Invalid config code: " .. tostring(report),
+					Duration = 4,
+				})
 			end
 		end,
 	})
