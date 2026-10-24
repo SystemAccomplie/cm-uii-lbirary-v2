@@ -1,13 +1,5 @@
---==================================================
--- CM UI LIBRARY
---==================================================
--- Premium single file Roblox UI library.
--- Monochrome Studio Architecture | PC + Mobile.
--- Author: Captain Manjiro
---
--- Legacy API : Library.CreateLib("CM Hub", "DarkTheme")
--- Modern API : Library:CreateWindow({ Title = "CM Hub" })
---==================================================
+--- CM UI LIBRARY v1.3
+
 
 --==================================================
 -- SERVICES
@@ -51,14 +43,14 @@ end)
 --==================================================
 
 local LIB_NAME       = "CM UI Library"
-local LIB_VERSION    = "1.9.0"
+local LIB_VERSION    = "1.3.0"
 local GUI_NAME       = "CM_UI_LIBRARY"
 local ROOT_FOLDER    = "CM_UI"
 local CONFIG_FOLDER  = "CM_UI/configs"
 local THEME_FOLDER   = "CM_UI/themes"
 local INTERFACE_FILE = "CM_UI/interface.json"
 
-local YOUTUBE_URL = "https://www.youtube.com/@CaptainManjiroo"
+local YOUTUBE_URL = "https://www.youtube.com/@CaptainManjirooo"
 local DISCORD_URL = "https://discord.com/invite/WS9vzUWM4R"
 local WEBSITE_URL = "https://www.youtube.com/@CaptainManjiroo"
 
@@ -77,7 +69,7 @@ end
 local FONT        = SafeFont("Gotham", Enum.Font.SourceSans)
 local FONT_MEDIUM = SafeFont("GothamMedium", FONT)
 local FONT_BOLD   = SafeFont("GothamBold", Enum.Font.SourceSansBold)
-local FONT_MONO   = SafeFont("RobotoMono", FONT_MEDIUM)
+local FONT_MONO   = SafeFont("GothamMedium", FONT)
 
 local GLYPH = {
 	Arrow    = utf8.char(0x2192),
@@ -602,44 +594,56 @@ end
 Maid.Destroy = Maid.DoCleaning
 
 --==================================================
--- THEME SYSTEM (Monochrome Studio + Full Palettes)
+-- THEME SYSTEM (Aurora Cyber-Glass + Full Palettes)
 --==================================================
 
 local Themes = {
 	DarkTheme = {
-		Background   = Color3.fromRGB(9, 9, 11),
-		Header       = Color3.fromRGB(14, 14, 18),
-		Surface      = Color3.fromRGB(17, 17, 22),
-		Element      = Color3.fromRGB(22, 22, 28),
-		ElementHover = Color3.fromRGB(32, 32, 40),
-		Text         = Color3.fromRGB(250, 250, 252),
-		SubText      = Color3.fromRGB(150, 150, 162),
-		Accent       = Color3.fromRGB(255, 255, 255),
-		Border       = Color3.fromRGB(44, 44, 54),
+		Background   = Color3.fromRGB(10, 13, 22),
+		Header       = Color3.fromRGB(14, 19, 32),
+		Surface      = Color3.fromRGB(18, 24, 40),
+		Element      = Color3.fromRGB(22, 30, 48),
+		ElementHover = Color3.fromRGB(32, 43, 68),
+		Text         = Color3.fromRGB(244, 247, 255),
+		SubText      = Color3.fromRGB(148, 165, 200),
+		Accent       = Color3.fromRGB(99, 102, 241),
+		Border       = Color3.fromRGB(48, 65, 104),
+	},
+
+	Aurora = {
+		Background   = Color3.fromRGB(10, 13, 22),
+		Header       = Color3.fromRGB(14, 19, 32),
+		Surface      = Color3.fromRGB(18, 24, 40),
+		Element      = Color3.fromRGB(22, 30, 48),
+		ElementHover = Color3.fromRGB(32, 43, 68),
+		Text         = Color3.fromRGB(244, 247, 255),
+		SubText      = Color3.fromRGB(148, 165, 200),
+		Accent       = Color3.fromRGB(99, 102, 241),
+		Border       = Color3.fromRGB(48, 65, 104),
 	},
 
 	Obsidian = {
-		Background   = Color3.fromRGB(4, 4, 6),
-		Header       = Color3.fromRGB(9, 9, 12),
-		Surface      = Color3.fromRGB(12, 12, 16),
-		Element      = Color3.fromRGB(16, 16, 21),
-		ElementHover = Color3.fromRGB(25, 25, 33),
-		Text         = Color3.fromRGB(255, 255, 255),
-		SubText      = Color3.fromRGB(140, 140, 152),
-		Accent       = Color3.fromRGB(245, 245, 248),
-		Border       = Color3.fromRGB(38, 38, 48),
+		Background   = Color3.fromRGB(8, 10, 16),
+		Header       = Color3.fromRGB(12, 15, 24),
+		Surface      = Color3.fromRGB(16, 20, 32),
+		Element      = Color3.fromRGB(21, 26, 40),
+		ElementHover = Color3.fromRGB(30, 38, 58),
+		Text         = Color3.fromRGB(246, 248, 255),
+		SubText      = Color3.fromRGB(152, 164, 190),
+		Accent       = Color3.fromRGB(56, 189, 248),
+		Border       = Color3.fromRGB(44, 58, 88),
 	},
 
 	Graphite = {
-		Background   = Color3.fromRGB(15, 16, 19),
-		Header       = Color3.fromRGB(21, 22, 26),
-		Surface      = Color3.fromRGB(25, 26, 31),
-		Element      = Color3.fromRGB(30, 32, 38),
-		ElementHover = Color3.fromRGB(40, 43, 50),
-		Text         = Color3.fromRGB(244, 244, 246),
-		SubText      = Color3.fromRGB(160, 164, 174),
-		Accent       = Color3.fromRGB(228, 228, 234),
-		Border       = Color3.fromRGB(54, 57, 66),
+		Background   = Color3.fromRGB(14, 16, 24),
+		Header       = Color3.fromRGB(20, 23, 34),
+		Surface      = Color3.fromRGB(25, 29, 42),
+		Element      = Color3.fromRGB(31, 36, 52),
+		ElementHover = Color3.fromRGB(42, 49, 70),
+		Text         = Color3.fromRGB(248, 249, 255),
+		SubText      = Color3.fromRGB(168, 178, 204),
+		Accent       = Color3.fromRGB(129, 140, 248),
+		Border       = Color3.fromRGB(58, 68, 96),
 	},
 
 	LightTheme = {
@@ -752,6 +756,10 @@ local Themes = {
 }
 
 local ThemeAliases = {
+	Aurora     = "Aurora",
+	aurora     = "Aurora",
+	Cyber      = "Aurora",
+	cyber      = "Aurora",
 	Dark       = "DarkTheme",
 	Nocturne   = "DarkTheme",
 	Monochrome = "DarkTheme",
@@ -852,7 +860,20 @@ end
 local Tween
 local Library
 
+local function GetOnAccentColor(theme)
+	theme = theme or Theme
+	local a = (theme and theme.Accent) or Color3.fromRGB(99, 102, 241)
+	local lum = 0.299 * a.R + 0.587 * a.G + 0.114 * a.B
+	if lum > 0.72 then
+		return Color3.fromRGB(10, 13, 22)
+	end
+	return Color3.fromRGB(255, 255, 255)
+end
+
 local function T(key)
+	if key == "OnAccent" then
+		return GetOnAccentColor(Theme)
+	end
 	if key == "Surface" and Theme.Surface == nil then
 		return Theme.Header or Color3.fromRGB(16, 16, 20)
 	end
@@ -2233,6 +2254,21 @@ end
 
 local LibraryMaid = Maid.new()
 
+local FloatingButton = nil
+local FloatingLabel = nil
+local FloatingMoved = false
+local FloatingPillCard = nil
+local BackgroundDimFrame = nil
+
+local shimmerPools = {}
+local shimmerClock = 0
+local PillPingBars = {}
+local PillStrokeGrad = nil
+local ThemeShimmerSequences = nil
+local GenerateShimmerFromAccent = nil
+local GetCurrentShimmerSequence = nil
+local UpdateAllShimmerColors = nil
+
 -- One shared player for brand marks and optional ambient VFX particles.
 do
 -- BEGIN GENERATED CM LOGO
@@ -2409,6 +2445,255 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 		return layer
 	end
 
+	ThemeShimmerSequences = {
+		Aurora = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(56, 189, 248)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(99, 102, 241)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(168, 85, 247)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(236, 72, 153)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(56, 189, 248)),
+		}),
+		DarkTheme = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(56, 189, 248)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(99, 102, 241)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(168, 85, 247)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(236, 72, 153)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(56, 189, 248)),
+		}),
+		Obsidian = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(56, 189, 248)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(14, 165, 233)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(59, 130, 246)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(125, 211, 252)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(56, 189, 248)),
+		}),
+		Graphite = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(129, 140, 248)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(99, 102, 241)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(79, 70, 229)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(165, 180, 252)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(129, 140, 248)),
+		}),
+		Serpent = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 255, 140)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(16, 185, 129)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(5, 150, 105)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(74, 222, 128)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 140)),
+		}),
+		Midnight = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(59, 130, 246)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(37, 99, 235)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(6, 182, 212)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(96, 165, 250)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(59, 130, 246)),
+		}),
+		Crimson = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(239, 68, 68)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(220, 38, 38)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(249, 115, 22)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(244, 63, 94)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(239, 68, 68)),
+		}),
+		Emerald = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(16, 185, 129)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(5, 150, 105)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(20, 184, 166)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(52, 211, 153)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(16, 185, 129)),
+		}),
+		Amethyst = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(168, 85, 247)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(147, 51, 234)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(192, 38, 211)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(216, 180, 254)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(168, 85, 247)),
+		}),
+		Sunset = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(245, 158, 11)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(249, 115, 22)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(239, 68, 68)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(234, 179, 8)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(245, 158, 11)),
+		}),
+		Aqua = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(6, 182, 212)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(20, 184, 166)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(56, 189, 248)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(45, 212, 191)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(6, 182, 212)),
+		}),
+		Rose = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(244, 63, 94)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(236, 72, 153)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(217, 70, 239)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(251, 113, 133)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(244, 63, 94)),
+		}),
+		LightTheme = ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, Color3.fromRGB(99, 102, 241)),
+			ColorSequenceKeypoint.new(0.25, Color3.fromRGB(56, 189, 248)),
+			ColorSequenceKeypoint.new(0.50, Color3.fromRGB(168, 85, 247)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(71, 85, 105)),
+			ColorSequenceKeypoint.new(1.00, Color3.fromRGB(99, 102, 241)),
+		}),
+	}
+
+	GenerateShimmerFromAccent = function(accent)
+		local h, s, v = Color3.toHSV(accent)
+		local c0 = Color3.fromHSV(h, s, v)
+		local c1 = Color3.fromHSV((h + 0.07) % 1, math.clamp(s * 0.95, 0.4, 1), math.clamp(v * 1.15, 0.6, 1))
+		local c2 = Color3.fromHSV((h + 0.14) % 1, math.clamp(s * 0.90, 0.4, 1), math.clamp(v * 1.25, 0.7, 1))
+		local c3 = Color3.fromHSV((h - 0.07 + 1) % 1, math.clamp(s * 0.95, 0.4, 1), math.clamp(v * 1.10, 0.6, 1))
+		return ColorSequence.new({
+			ColorSequenceKeypoint.new(0.00, c0),
+			ColorSequenceKeypoint.new(0.25, c1),
+			ColorSequenceKeypoint.new(0.50, c2),
+			ColorSequenceKeypoint.new(0.75, c3),
+			ColorSequenceKeypoint.new(1.00, c0),
+		})
+	end
+
+	GetCurrentShimmerSequence = function()
+		if Settings.CustomAccent and typeof(Settings.CustomAccent) == "Color3" then
+			return GenerateShimmerFromAccent(Settings.CustomAccent)
+		end
+		local themeKey = CurrentThemeName or "DarkTheme"
+		if ThemeShimmerSequences[themeKey] then
+			return ThemeShimmerSequences[themeKey]
+		end
+		local base = Theme and Theme.Accent
+		if base then
+			return GenerateShimmerFromAccent(base)
+		end
+		return ThemeShimmerSequences.Aurora
+	end
+
+	UpdateAllShimmerColors = function()
+		local seq = GetCurrentShimmerSequence()
+		for _, s in ipairs(shimmerPools) do
+			if s.Grad and s.Grad.Parent then
+				s.Grad.Color = seq
+			end
+			if s.GlowGrad and s.GlowGrad.Parent then
+				s.GlowGrad.Color = seq
+			end
+		end
+		if PillStrokeGrad and PillStrokeGrad.Parent then
+			PillStrokeGrad.Color = seq
+		end
+	end
+	OnThemeChanged(UpdateAllShimmerColors)
+
+	function Library:_AttachAuroraShimmer(parentFrame, mode, zIndex, phaseOffset, activeFn)
+		if not parentFrame then return nil end
+		local isCrown = (mode == "crown")
+		local z = tonumber(zIndex) or (parentFrame.ZIndex + 2)
+		local phase = tonumber(phaseOffset) or (#shimmerPools * 0.65)
+
+		local auroraColors = GetCurrentShimmerSequence()
+
+		local pad = parentFrame:FindFirstChildOfClass("UIPadding")
+		local topOff = pad and -pad.PaddingTop.Offset or 0
+		local leftOff = pad and -pad.PaddingLeft.Offset or 0
+		local widthAdd = pad and (pad.PaddingLeft.Offset + pad.PaddingRight.Offset) or 0
+		local heightAdd = pad and (pad.PaddingTop.Offset + pad.PaddingBottom.Offset) or 0
+
+		local bar = New("Frame", {
+			Name = isCrown and "AuroraCrown" or "CardShimmerLine",
+			Parent = parentFrame,
+			Position = isCrown and UDim2.new(0, leftOff + 10, 0, topOff) or UDim2.new(0, leftOff + 8, 0, topOff),
+			Size = isCrown and UDim2.new(1, widthAdd - 20, 0, 2) or UDim2.new(1, widthAdd - 16, 0, 2),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BorderSizePixel = 0,
+			Active = false,
+			ZIndex = z,
+		})
+		Corner(bar, 2, false)
+
+		local grad = New("UIGradient", {
+			Parent = bar,
+			Color = auroraColors,
+			Transparency = isCrown and NumberSequence.new({
+				NumberSequenceKeypoint.new(0.00, 0.72),
+				NumberSequenceKeypoint.new(0.15, 0.04),
+				NumberSequenceKeypoint.new(0.50, 0.00),
+				NumberSequenceKeypoint.new(0.85, 0.04),
+				NumberSequenceKeypoint.new(1.00, 0.72),
+			}) or NumberSequence.new({
+				NumberSequenceKeypoint.new(0.00, 0.96),
+				NumberSequenceKeypoint.new(0.25, 0.65),
+				NumberSequenceKeypoint.new(0.50, 0.08),
+				NumberSequenceKeypoint.new(0.75, 0.65),
+				NumberSequenceKeypoint.new(1.00, 0.96),
+			}),
+		})
+
+		local glow, glowGrad = nil, nil
+		if isCrown then
+			glow = New("Frame", {
+				Name = "AuroraCrownGlow",
+				Parent = parentFrame,
+				Position = UDim2.new(0, leftOff + 14, 0, topOff),
+				Size = UDim2.new(1, widthAdd - 28, 0, 12),
+				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = 0.89,
+				BorderSizePixel = 0,
+				Active = false,
+				ZIndex = math.max(1, z - 1),
+			})
+			Corner(glow, 4, false)
+			glowGrad = New("UIGradient", {
+				Parent = glow,
+				Color = auroraColors,
+				Transparency = NumberSequence.new({
+					NumberSequenceKeypoint.new(0.00, 0.92),
+					NumberSequenceKeypoint.new(0.20, 0.25),
+					NumberSequenceKeypoint.new(0.50, 0.05),
+					NumberSequenceKeypoint.new(0.80, 0.25),
+					NumberSequenceKeypoint.new(1.00, 0.92),
+				}),
+			})
+		else
+			glow = New("Frame", {
+				Name = "CardShimmerSheen",
+				Parent = parentFrame,
+				Position = UDim2.fromOffset(leftOff, topOff),
+				Size = UDim2.new(1, widthAdd, 1, heightAdd),
+				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = 0.95,
+				BorderSizePixel = 0,
+				Active = false,
+				ZIndex = math.max(1, z - 1),
+			})
+			Corner(glow, 8, false)
+			glowGrad = New("UIGradient", {
+				Parent = glow,
+				Rotation = 22,
+				Color = auroraColors,
+				Transparency = NumberSequence.new({
+					NumberSequenceKeypoint.new(0.00, 0.98),
+					NumberSequenceKeypoint.new(0.35, 0.72),
+					NumberSequenceKeypoint.new(0.50, 0.18),
+					NumberSequenceKeypoint.new(0.65, 0.72),
+					NumberSequenceKeypoint.new(1.00, 0.98),
+				}),
+			})
+		end
+
+		table.insert(shimmerPools, {
+			Parent = parentFrame,
+			Bar = bar,
+			Grad = grad,
+			Glow = glow,
+			GlowGrad = glowGrad,
+			IsCrown = isCrown,
+			Phase = phase,
+			ActiveFn = activeFn,
+		})
+		return bar
+	end
+
 	function Library:_AttachAnimatedLogo(parent, fallback, zIndex)
 		local image = New("ImageLabel", {
 			Name = "CMAnimatedLogo", Parent = parent,
@@ -2467,6 +2752,53 @@ local CM_LOGO_DURATIONS = {0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.06,0.07,0.07,0.0
 						end
 					end
 				end
+				-- Update Flowing Aurora Top-Crown & Active Card Shimmers (GPU UIGradient offset, zero-lag on Mobile & PC)
+				local allowShimmer = not Settings.ReducedMotion
+					and Settings.VFXLevel ~= "Off"
+				if allowShimmer then
+					shimmerClock = shimmerClock + dt
+				end
+				for i = #shimmerPools, 1, -1 do
+					local s = shimmerPools[i]
+					if not s.Bar or not s.Bar.Parent or not s.Parent or not s.Parent.Parent then
+						table.remove(shimmerPools, i)
+					else
+						local isActive = (s.ActiveFn == nil) or (s.ActiveFn() == true)
+						local shouldShow = isActive and (Settings.VFXLevel ~= "Off")
+						if s.Bar.Visible ~= shouldShow then
+							s.Bar.Visible = shouldShow
+							if s.Glow then s.Glow.Visible = shouldShow end
+						end
+						if shouldShow and allowShimmer and Visible(s.Parent) then
+							local speed = s.IsCrown and 1.55 or 1.25
+							local amp = s.IsCrown and 0.44 or 0.56
+							local wave = math.sin(shimmerClock * speed + s.Phase) * amp
+							s.Grad.Offset = Vector2.new(wave, 0)
+							if s.GlowGrad then
+								s.GlowGrad.Offset = Vector2.new(wave * 0.85, 0)
+							end
+						end
+					end
+				end
+				-- Update mini live ping sparkline & rotating border rim on the floating capsule ("gilid")
+				if allowShimmer and FloatingButton and FloatingButton.Parent and FloatingButton.Visible then
+					if PillStrokeGrad and PillStrokeGrad.Parent then
+						PillStrokeGrad.Rotation = (shimmerClock * 75) % 360
+					end
+					if #PillPingBars > 0 then
+						local curP = (Telemetry and Telemetry.Ping) or 35
+						local pRatio = math.clamp(curP / 120, 0.25, 1.0)
+						for idx = 1, #PillPingBars do
+							local pBar = PillPingBars[idx]
+							if pBar and pBar.Parent then
+								local wave = math.sin(shimmerClock * 4.2 + idx * 1.15) * 2.8
+								local baseH = 3 + math.floor(idx * 2.4 * pRatio)
+								local targetH = math.clamp(math.floor(baseH + wave + 0.5), 3, 14)
+								pBar.Size = UDim2.fromOffset(3, targetH)
+							end
+						end
+					end
+				end
 				-- Update ambient particles only when enabled and visible
 				for i = #particlePools, 1, -1 do
 					local pool = particlePools[i]
@@ -2509,12 +2841,6 @@ end
 --==================================================
 -- DUPLICATE INSTANCE PROTECTION & ROOT GUI
 --==================================================
-
-local FloatingButton = nil
-local FloatingLabel = nil
-local FloatingMoved = false
-local FloatingPillCard = nil
-local BackgroundDimFrame = nil
 
 local function DestroyStrayGuis(container)
 	if not container then
@@ -4725,6 +5051,263 @@ function Elements.Paragraph(parent, config, owner)
 end
 
 --==================================================
+-- CHANGELOG (Architectural Update & Version Release Card)
+--==================================================
+
+function Elements.Changelog(parent, config, owner)
+	config = config or {}
+	local maid = Maid.new()
+
+	local versionStr = tostring(config.Version or config.Title or "v1.0.0")
+	local dateStr = tostring(config.Date or config.ReleaseDate or "Recent")
+	local tagStr = tostring(config.Tag or config.Badge or (config.IsLatest and "LATEST" or ""))
+	local descStr = tostring(config.Description or config.Summary or config.Content or "")
+	local changes = config.Changes or config.Items or config.List or {}
+
+	local card = New("Frame", {
+		Name = "CMChangelogCard",
+		Parent = parent,
+		BackgroundColor3 = T("Element"),
+		BackgroundTransparency = 0.25,
+		BorderSizePixel = 0,
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		LayoutOrder = config.LayoutOrder or 1,
+	})
+	Corner(card, 8)
+	Stroke(card, "Border", 1, 0.3, "card")
+	RegisterTheme(card, { BackgroundColor3 = "Element" })
+	Padding(card, 10, 10, 12, 12)
+	ListLayout(card, 8)
+
+	-- Top Header Row: [Version Badge] [Tag Badge] ---- [Date with Icon]
+	local headerRow = New("Frame", {
+		Name = "HeaderRow",
+		Parent = card,
+		BackgroundTransparency = 1,
+		Size = UDim2.new(1, 0, 0, 22),
+		LayoutOrder = 1,
+	})
+
+	local leftBadges = New("Frame", {
+		Name = "Badges",
+		Parent = headerRow,
+		BackgroundTransparency = 1,
+		Size = UDim2.new(1, -120, 1, 0),
+	})
+	local badgeList = New("UIListLayout", {
+		Parent = leftBadges,
+		FillDirection = Enum.FillDirection.Horizontal,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		VerticalAlignment = Enum.VerticalAlignment.Center,
+		Padding = UDim.new(0, 6),
+	})
+
+	-- Version Pill (Accent-colored badge)
+	local vPill = New("Frame", {
+		Name = "VersionPill",
+		Parent = leftBadges,
+		BackgroundColor3 = T("Accent"),
+		BorderSizePixel = 0,
+		Size = UDim2.new(0, 0, 0, 20),
+		AutomaticSize = Enum.AutomaticSize.X,
+		LayoutOrder = 1,
+	})
+	Corner(vPill, 4)
+	Padding(vPill, 2, 2, 7, 7)
+	RegisterTheme(vPill, { BackgroundColor3 = "Accent" })
+
+	local vLabel = New("TextLabel", {
+		Name = "Text",
+		Parent = vPill,
+		BackgroundTransparency = 1,
+		Size = UDim2.fromScale(0, 1),
+		AutomaticSize = Enum.AutomaticSize.X,
+		Font = FONT_BOLD,
+		Text = versionStr,
+		TextColor3 = T("OnAccent"),
+		TextSize = 11,
+	})
+	RegisterTheme(vLabel, { TextColor3 = "OnAccent" })
+
+	-- Status Tag (e.g. LATEST or UPDATE)
+	if tagStr ~= "" then
+		local isLatest = tagStr:upper() == "LATEST"
+		local tagPill = New("Frame", {
+			Name = "TagPill",
+			Parent = leftBadges,
+			BackgroundColor3 = isLatest and Color3.fromRGB(16, 185, 129) or T("Header"),
+			BackgroundTransparency = isLatest and 0.15 or 0,
+			BorderSizePixel = 0,
+			Size = UDim2.new(0, 0, 0, 20),
+			AutomaticSize = Enum.AutomaticSize.X,
+			LayoutOrder = 2,
+		})
+		Corner(tagPill, 4)
+		Padding(tagPill, 2, 2, 6, 6)
+		if not isLatest then
+			RegisterTheme(tagPill, { BackgroundColor3 = "Header" })
+		end
+		local tagLabel = New("TextLabel", {
+			Name = "Text",
+			Parent = tagPill,
+			BackgroundTransparency = 1,
+			Size = UDim2.fromScale(0, 1),
+			AutomaticSize = Enum.AutomaticSize.X,
+			Font = FONT_BOLD,
+			Text = tagStr:upper(),
+			TextColor3 = isLatest and Color3.fromRGB(255, 255, 255) or T("SubText"),
+			TextSize = 10,
+		})
+		if not isLatest then
+			RegisterTheme(tagLabel, { TextColor3 = "SubText" })
+		end
+	end
+
+	-- Right Date Display
+	local dateLabel = New("TextLabel", {
+		Name = "Date",
+		Parent = headerRow,
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, 0, 0.5, 0),
+		Size = UDim2.new(0, 115, 1, 0),
+		BackgroundTransparency = 1,
+		Font = FONT_MEDIUM,
+		Text = dateStr,
+		TextColor3 = T("SubText"),
+		TextSize = 11,
+		TextXAlignment = Enum.TextXAlignment.Right,
+	})
+	RegisterTheme(dateLabel, { TextColor3 = "SubText" })
+
+	-- Optional Description / Summary
+	if descStr ~= "" then
+		local descLabel = New("TextLabel", {
+			Name = "Description",
+			Parent = card,
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			Font = FONT_REGULAR,
+			Text = descStr,
+			TextColor3 = T("Text"),
+			TextSize = 11,
+			TextWrapped = true,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			LayoutOrder = 2,
+		})
+		RegisterTheme(descLabel, { TextColor3 = "Text" })
+	end
+
+	-- Bulleted List of Changes
+	local searchConcat = { versionStr, dateStr, tagStr, descStr }
+	if typeof(changes) == "table" and #changes > 0 then
+		local listHolder = New("Frame", {
+			Name = "ChangesList",
+			Parent = card,
+			BackgroundTransparency = 1,
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			LayoutOrder = 3,
+		})
+		ListLayout(listHolder, 5)
+
+		for idx, item in ipairs(changes) do
+			local itemType = "bullet"
+			local itemText = ""
+			if typeof(item) == "table" then
+				itemType = tostring(item.Type or item[1] or "bullet"):lower()
+				itemText = tostring(item.Text or item[2] or "")
+			else
+				itemText = tostring(item)
+			end
+			table.insert(searchConcat, itemText)
+
+			local itemRow = New("Frame", {
+				Name = "Item" .. idx,
+				Parent = listHolder,
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, 0, 0, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
+				LayoutOrder = idx,
+			})
+
+			local badgeText = "•"
+			local badgeColor = T("SubText")
+			if itemType == "add" or itemType == "new" or itemType == "+" then
+				badgeText = "[+]"
+				badgeColor = Color3.fromRGB(16, 185, 129)
+			elseif itemType == "fix" or itemType == "bug" or itemType == "!" then
+				badgeText = "[FIX]"
+				badgeColor = Color3.fromRGB(245, 158, 11)
+			elseif itemType == "improve" or itemType == "change" or itemType == "*" then
+				badgeText = "[*]"
+				badgeColor = Color3.fromRGB(56, 189, 248)
+			elseif itemType == "remove" or itemType == "delete" or itemType == "-" then
+				badgeText = "[-]"
+				badgeColor = Color3.fromRGB(239, 68, 68)
+			end
+
+			local prefixLbl = New("TextLabel", {
+				Name = "Prefix",
+				Parent = itemRow,
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(0, 1),
+				Size = UDim2.fromOffset(28, 16),
+				Font = FONT_BOLD,
+				Text = badgeText,
+				TextColor3 = badgeColor,
+				TextSize = 10,
+				TextXAlignment = Enum.TextXAlignment.Left,
+			})
+
+			local textLbl = New("TextLabel", {
+				Name = "Text",
+				Parent = itemRow,
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(28, 0),
+				Size = UDim2.new(1, -28, 0, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Font = FONT_REGULAR,
+				Text = itemText,
+				TextColor3 = T("Text"),
+				TextSize = 11,
+				TextWrapped = true,
+				TextXAlignment = Enum.TextXAlignment.Left,
+			})
+			RegisterTheme(textLbl, { TextColor3 = "Text" })
+		end
+	end
+
+	card:SetAttribute("SearchText", table.concat(searchConcat, " "):lower())
+	maid:Give(card)
+
+	local object = {
+		Type = "Changelog",
+		Element = card,
+		Maid = maid,
+		Owner = owner,
+	}
+
+	function object:SetVisible(state)
+		card.Visible = state and true or false
+		card:SetAttribute("UserHidden", not (state and true or false))
+		return self
+	end
+
+	function object:Destroy()
+		maid:DoCleaning()
+		card:Destroy()
+	end
+
+	if owner and typeof(owner._Elements) == "table" then
+		table.insert(owner._Elements, object)
+	end
+
+	return object
+end
+
+--==================================================
 -- BUTTON (Hover Highlight, Press Compression & Loading State)
 --==================================================
 
@@ -4992,7 +5575,7 @@ function Elements.Toggle(parent, id, config, owner)
 		AnchorPoint = Vector2.new(0, 0.5),
 		Position = UDim2.new(0, value and 23 or 3, 0.5, 0),
 		Size = UDim2.fromOffset(16, 16),
-		BackgroundColor3 = value and T("Background") or T("SubText"),
+		BackgroundColor3 = value and T("OnAccent") or T("SubText"),
 		BorderSizePixel = 0,
 	})
 
@@ -5016,7 +5599,7 @@ function Elements.Toggle(parent, id, config, owner)
 
 	RegisterTheme(knob, {
 		BackgroundColor3 = function(theme)
-			return object.Value and theme.Background or theme.SubText
+			return object.Value and GetOnAccentColor(theme) or theme.SubText
 		end,
 	})
 
@@ -5026,7 +5609,7 @@ function Elements.Toggle(parent, id, config, owner)
 		Tween(trackStroke, { Transparency = object.Value and 0.8 or 0.1 }, SPEED.Fast)
 		Tween(knob, {
 			Size = UDim2.fromOffset(16, 16),
-			BackgroundColor3 = object.Value and T("Background") or T("SubText"),
+			BackgroundColor3 = object.Value and T("OnAccent") or T("SubText"),
 			Position = UDim2.new(0, targetPos, 0.5, 0),
 		}, SPEED.Fast, Enum.EasingStyle.Quart)
 		if UpdatePillMetrics then
@@ -6550,6 +7133,10 @@ function ComponentAPI:AddParagraph(config)
 	return Elements.Paragraph(self:_GetContainer(), config, self)
 end
 
+function ComponentAPI:AddChangelog(config)
+	return Elements.Changelog(self:_GetContainer(), config, self)
+end
+
 function ComponentAPI:AddButton(a, b, c)
 	local config
 	if typeof(a) == "table" then
@@ -6903,20 +7490,31 @@ function Elements.Folder(parent, config, owner)
 	})
 	RegisterTheme(folderDivider, { BackgroundColor3 = "Border" })
 
-	-- Left: Architectural Monochrome Icon Box with Active Pip
+	local folder
+	Library:_AttachAuroraShimmer(header, "card", header.ZIndex + 1, nil, function()
+		return (folder and folder.IsOpen == true) or (folder == nil and isOpen == true)
+	end)
+
+	-- Left: Architectural Aurora Icon Box with Active Pip
 	local iconBox = New("Frame", {
 		Name = "IconBox",
 		Parent = header,
 		AnchorPoint = Vector2.new(0, 0.5),
 		Position = UDim2.new(0, 10, 0.5, 0),
 		Size = UDim2.fromOffset(28, 28),
-		BackgroundColor3 = T("Element"),
+		BackgroundColor3 = isOpen and T("Accent") or T("Element"),
+		BackgroundTransparency = isOpen and 0.82 or 0,
 		BorderSizePixel = 0,
 		ZIndex = header.ZIndex + 2,
 	})
 	Corner(iconBox, 7)
-	local iconBoxStroke = Stroke(iconBox, "Border", 1, 0.25)
-	RegisterTheme(iconBox, { BackgroundColor3 = "Element" })
+	local iconBoxStroke = Stroke(iconBox, isOpen and "Accent" or "Border", 1, isOpen and 0.45 or 0.25)
+	RegisterTheme(iconBox, {
+		BackgroundColor3 = function(theme)
+			local openState = (folder and folder.IsOpen) or (folder == nil and isOpen)
+			return openState and theme.Accent or theme.Element
+		end,
+	})
 
 	local spine = New("Frame", {
 		Name = "FolderSpine",
@@ -6945,8 +7543,8 @@ function Elements.Folder(parent, config, owner)
 		Name = "TextHolder",
 		Parent = header,
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(46, 7),
-		Size = UDim2.new(1, -134, 1, -14),
+		Position = UDim2.fromOffset(42, 7),
+		Size = UDim2.new(1, -100, 1, -14),
 		ZIndex = header.ZIndex + 2,
 	})
 	ListLayout(textHolder, 2)
@@ -6974,23 +7572,24 @@ function Elements.Folder(parent, config, owner)
 		Parent = textHolder,
 		BackgroundTransparency = 1,
 		Size = UDim2.new(1, 0, 0, 14),
-		Font = FONT,
+		Font = FONT_MEDIUM,
 		Text = descText,
 		TextColor3 = T("SubText"),
-		TextSize = 11,
+		TextSize = 10,
+		TextScaled = true,
 		TextXAlignment = Enum.TextXAlignment.Left,
-		TextTruncate = Enum.TextTruncate.AtEnd,
 		RichText = true,
 		LayoutOrder = 2,
 		Visible = descText ~= "",
 		ZIndex = header.ZIndex + 2,
 	})
+	New("UITextSizeConstraint", { Parent = descLabel, MinTextSize = 8, MaxTextSize = 10 })
 	RegisterTheme(descLabel, { TextColor3 = "SubText" })
 
 	if descText == "" then
 		titleLabel.Size = UDim2.fromScale(1, 1)
-		textHolder.Position = UDim2.fromOffset(46, 0)
-		textHolder.Size = UDim2.new(1, -134, 1, 0)
+		textHolder.Position = UDim2.fromOffset(42, 0)
+		textHolder.Size = UDim2.new(1, -100, 1, 0)
 	end
 
 	-- Right: Technical Counter Tag + Rotating Chevron Capsule
@@ -6998,47 +7597,57 @@ function Elements.Folder(parent, config, owner)
 		Name = "RightControls",
 		Parent = header,
 		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -10, 0.5, 0),
-		Size = UDim2.fromOffset(80, 26),
+		Position = UDim2.new(1, -8, 0.5, 0),
+		Size = UDim2.fromOffset(56, 22),
 		BackgroundTransparency = 1,
 		ZIndex = header.ZIndex + 2,
 	})
-	local rightLayout = ListLayout(rightHolder, 6, Enum.FillDirection.Horizontal, Enum.VerticalAlignment.Center)
+	local rightLayout = ListLayout(rightHolder, 5, Enum.FillDirection.Horizontal, Enum.VerticalAlignment.Center)
 	rightLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
 
 	local badge = New("Frame", {
 		Name = "ItemBadge",
 		Parent = rightHolder,
-		BackgroundColor3 = T("Background"),
-		BackgroundTransparency = 0.15,
+		BackgroundColor3 = isOpen and T("Accent") or T("Background"),
+		BackgroundTransparency = isOpen and 0.82 or 0.15,
 		BorderSizePixel = 0,
-		Size = UDim2.fromOffset(42, 20),
+		Size = UDim2.fromOffset(28, 20),
 		LayoutOrder = 1,
 		ZIndex = header.ZIndex + 2,
 	})
 	Corner(badge, 5)
-	Stroke(badge, "Border", 1, 0.35)
-	RegisterTheme(badge, { BackgroundColor3 = "Background" })
+	local badgeStroke = Stroke(badge, isOpen and "Accent" or "Border", 1, isOpen and 0.50 or 0.35)
+	RegisterTheme(badge, {
+		BackgroundColor3 = function(theme)
+			local openState = (folder and folder.IsOpen) or (folder == nil and isOpen)
+			return openState and theme.Accent or theme.Background
+		end,
+	})
 
 	local badgeLabel = New("TextLabel", {
 		Name = "Count",
 		Parent = badge,
 		BackgroundTransparency = 1,
 		Size = UDim2.fromScale(1, 1),
-		Font = FONT_MONO,
+		Font = FONT_BOLD,
 		Text = "00",
-		TextColor3 = T("SubText"),
-		TextSize = 11,
+		TextColor3 = isOpen and T("Accent") or T("SubText"),
+		TextSize = 10,
 		ZIndex = header.ZIndex + 3,
 	})
-	RegisterTheme(badgeLabel, { TextColor3 = "SubText" })
+	RegisterTheme(badgeLabel, {
+		TextColor3 = function(theme)
+			local openState = (folder and folder.IsOpen) or (folder == nil and isOpen)
+			return openState and theme.Accent or theme.SubText
+		end,
+	})
 
 	local chevronBox = New("Frame", {
 		Name = "ChevronBox",
 		Parent = rightHolder,
 		BackgroundColor3 = T("Element"),
 		BorderSizePixel = 0,
-		Size = UDim2.fromOffset(22, 20),
+		Size = UDim2.fromOffset(20, 20),
 		LayoutOrder = 2,
 		ZIndex = header.ZIndex + 2,
 	})
@@ -7065,7 +7674,7 @@ function Elements.Folder(parent, config, owner)
 	local containerPadding = Padding(container, 10, 12, 10, 10)
 	local containerLayout = ListLayout(container, 8)
 
-	local folder = {
+	folder = {
 		Type = "Folder",
 		IsOpen = isOpen,
 		Container = container,
@@ -7107,6 +7716,13 @@ function Elements.Folder(parent, config, owner)
 			spine.BackgroundTransparency = targetSpineAlpha
 			spine.Size = UDim2.fromOffset(3, targetSpineH)
 			header.BackgroundColor3 = targetBg
+			iconBox.BackgroundColor3 = folder.IsOpen and T("Accent") or T("Element")
+			iconBox.BackgroundTransparency = folder.IsOpen and 0.82 or 0
+			iconBoxStroke.Color = folder.IsOpen and T("Accent") or T("Border")
+			badge.BackgroundColor3 = folder.IsOpen and T("Accent") or T("Background")
+			badge.BackgroundTransparency = folder.IsOpen and 0.82 or 0.15
+			badgeStroke.Color = folder.IsOpen and T("Accent") or T("Border")
+			badgeLabel.TextColor3 = folder.IsOpen and T("Accent") or T("SubText")
 			folderDivider.Visible = folder.IsOpen
 			folderDivider.BackgroundTransparency = folder.IsOpen and 0.45 or 1
 			container.Visible = folder.IsOpen
@@ -7118,6 +7734,11 @@ function Elements.Folder(parent, config, owner)
 			Tween(chevronHolder.Canvas, { Rotation = targetRot }, 0.22, Enum.EasingStyle.Quart)
 			Tween(spine, { BackgroundTransparency = targetSpineAlpha, Size = UDim2.fromOffset(3, targetSpineH) }, SPEED.Fast)
 			Tween(header, { BackgroundColor3 = targetBg }, SPEED.Fast)
+			Tween(iconBox, { BackgroundColor3 = folder.IsOpen and T("Accent") or T("Element"), BackgroundTransparency = folder.IsOpen and 0.82 or 0 }, SPEED.Fast)
+			Tween(iconBoxStroke, { Color = folder.IsOpen and T("Accent") or T("Border") }, SPEED.Fast)
+			Tween(badge, { BackgroundColor3 = folder.IsOpen and T("Accent") or T("Background"), BackgroundTransparency = folder.IsOpen and 0.82 or 0.15 }, SPEED.Fast)
+			Tween(badgeStroke, { Color = folder.IsOpen and T("Accent") or T("Border") }, SPEED.Fast)
+			Tween(badgeLabel, { TextColor3 = folder.IsOpen and T("Accent") or T("SubText") }, SPEED.Fast)
 			TweenGlyphColor(iconParts, folder.IsOpen and T("Accent") or T("SubText"))
 
 			if folder.IsOpen then
@@ -7207,7 +7828,7 @@ function Elements.Folder(parent, config, owner)
 
 	local wrappedAdders = {
 		"AddButton", "AddToggle", "AddSlider", "AddDropdown",
-		"AddInput", "AddKeybind", "AddColorpicker", "AddLabel", "AddParagraph"
+		"AddInput", "AddKeybind", "AddColorpicker", "AddLabel", "AddParagraph", "AddChangelog"
 	}
 	for _, methodName in ipairs(wrappedAdders) do
 		local orig = folder[methodName]
@@ -7258,23 +7879,34 @@ end
 -- CENTRALIZED TELEMETRY ENGINE (Throttled & Pooled)
 --==================================================
 
+local function GetInitialGameName()
+	local raw = tostring(game.Name or "")
+	if raw == "" or raw == "Ugc" or raw == "Game" or raw == "Place1" then
+		if game.PlaceId and game.PlaceId > 0 then
+			return "Place " .. tostring(game.PlaceId)
+		end
+		return "Roblox Experience"
+	end
+	return raw
+end
+
 local Telemetry = {
 	FPS = 60,
 	FPSMin = 60,
 	FPSMax = 60,
 	FPSAvg = 60,
 	FPSHistory = {},
-	Ping = nil,
-	PingMin = nil,
-	PingMax = nil,
-	PingAvg = nil,
+	Ping = 42,
+	PingMin = 42,
+	PingMax = 42,
+	PingAvg = 42,
 	PingHistory = {},
 	PlayersCount = 1,
 	MaxPlayers = 1,
 	SessionText = "0m 00s",
 	ActiveToggles = 0,
 	ActiveToggleNames = {},
-	GameName = tostring(game.Name or "Roblox Experience"),
+	GameName = GetInitialGameName(),
 	CreatorName = "Roblox Creator",
 	ProductFetched = false,
 	Listeners = {},
@@ -7282,7 +7914,7 @@ local Telemetry = {
 
 for i = 1, 16 do
 	Telemetry.FPSHistory[i] = 60
-	Telemetry.PingHistory[i] = 0
+	Telemetry.PingHistory[i] = 42
 end
 
 local function FetchGameMetadataOnce()
@@ -7317,18 +7949,21 @@ local function ReadCurrentPingMs()
 	local pingMs = nil
 	if StatsService then
 		pcall(function()
-			local net = StatsService:FindFirstChild("Network")
-			local serverItems = net and net:FindFirstChild("ServerStatsItem")
-			local dataPing = serverItems and serverItems:FindFirstChild("Data Ping")
-			if dataPing and typeof(dataPing.GetValue) == "function" then
-				local v = tonumber(dataPing:GetValue())
+			local v = tonumber(StatsService.Network.ServerStatsItem["Data Ping"]:GetValue())
+			if v and v > 0 then
+				pingMs = math.floor(v + 0.5)
+			end
+		end)
+		if not pingMs then
+			pcall(function()
+				local v = tonumber(StatsService.PerformanceStats.Ping:GetValue())
 				if v and v > 0 then
 					pingMs = math.floor(v + 0.5)
 				end
-			end
-		end)
+			end)
+		end
 	end
-	if pingMs == nil and LocalPlayer and typeof(LocalPlayer.GetNetworkPing) == "function" then
+	if not pingMs and LocalPlayer then
 		pcall(function()
 			local v = tonumber(LocalPlayer:GetNetworkPing())
 			if v and v > 0 then
@@ -7336,7 +7971,7 @@ local function ReadCurrentPingMs()
 			end
 		end)
 	end
-	return pingMs
+	return pingMs or Telemetry.Ping or 35
 end
 
 local function CountActiveUserToggles()
@@ -7347,7 +7982,7 @@ local function CountActiveUserToggles()
 			if opt.Type == "Toggle" and opt.Value == true then
 				count += 1
 				if #names < 5 then
-					local title = opt._IdleTitle or (opt.Element and opt.Element:FindFirstChild("Row") and opt.Element.Row:FindFirstChild("Text") and opt.Element.Row.Text:FindFirstChild("Title") and opt.Element.Row.Text.Title.Text) or id
+					local title = opt._IdleTitle or opt.Title or id
 					table.insert(names, tostring(title))
 				end
 			end
@@ -7356,22 +7991,8 @@ local function CountActiveUserToggles()
 	return count, names
 end
 
-do
-	local frameCounter = 0
-	local lastSampleClock = os.clock()
-
-	LibraryMaid:Give(RunService.RenderStepped:Connect(function()
-		frameCounter += 1
-		local now = os.clock()
-		local elapsedSample = now - lastSampleClock
-		if elapsedSample < 0.50 then
-			return
-		end
-
-		local rawFps = Clamp(math.floor(frameCounter / elapsedSample + 0.5), 1, 999)
-		frameCounter = 0
-		lastSampleClock = now
-
+local function SampleTelemetryNow(rawFps)
+	if rawFps then
 		Telemetry.FPS = rawFps
 		table.remove(Telemetry.FPSHistory, 1)
 		table.insert(Telemetry.FPSHistory, rawFps)
@@ -7385,40 +8006,60 @@ do
 		Telemetry.FPSMin = fMin
 		Telemetry.FPSMax = fMax
 		Telemetry.FPSAvg = math.floor(fSum / #Telemetry.FPSHistory + 0.5)
+	end
 
-		local ping = ReadCurrentPingMs()
-		Telemetry.Ping = ping
-		table.remove(Telemetry.PingHistory, 1)
-		table.insert(Telemetry.PingHistory, ping or 0)
+	local ping = ReadCurrentPingMs()
+	Telemetry.Ping = ping
+	table.remove(Telemetry.PingHistory, 1)
+	table.insert(Telemetry.PingHistory, ping)
 
-		if ping ~= nil then
-			local pMin, pMax, pSum, pCount = 99999, 0, 0, 0
-			for _, v in ipairs(Telemetry.PingHistory) do
-				if v > 0 then
-					if v < pMin then pMin = v end
-					if v > pMax then pMax = v end
-					pSum += v
-					pCount += 1
-				end
-			end
-			if pCount > 0 then
-				Telemetry.PingMin = pMin
-				Telemetry.PingMax = pMax
-				Telemetry.PingAvg = math.floor(pSum / pCount + 0.5)
-			end
+	local pMin, pMax, pSum, pCount = 99999, 0, 0, 0
+	for _, v in ipairs(Telemetry.PingHistory) do
+		if v > 0 then
+			if v < pMin then pMin = v end
+			if v > pMax then pMax = v end
+			pSum += v
+			pCount += 1
+		end
+	end
+	if pCount > 0 then
+		Telemetry.PingMin = pMin
+		Telemetry.PingMax = pMax
+		Telemetry.PingAvg = math.floor(pSum / pCount + 0.5)
+	end
+
+	pcall(function()
+		local pList = Players:GetPlayers()
+		Telemetry.PlayersCount = math.max(#pList, 1)
+		Telemetry.MaxPlayers = math.max(tonumber(Players.MaxPlayers) or 1, Telemetry.PlayersCount)
+	end)
+
+	Telemetry.SessionText = FormatDuration(os.clock() - SessionStartClock)
+	Telemetry.ActiveToggles, Telemetry.ActiveToggleNames = CountActiveUserToggles()
+
+	for _, listener in ipairs(Telemetry.Listeners) do
+		SafeCallback(listener, Telemetry)
+	end
+end
+
+do
+	local frameCounter = 0
+	local lastSampleClock = os.clock()
+	FetchGameMetadataOnce()
+	SampleTelemetryNow(60)
+
+	LibraryMaid:Give(RunService.RenderStepped:Connect(function()
+		frameCounter += 1
+		local now = os.clock()
+		local elapsedSample = now - lastSampleClock
+		if elapsedSample < 0.50 then
+			return
 		end
 
-		pcall(function()
-			Telemetry.PlayersCount = #Players:GetPlayers()
-			Telemetry.MaxPlayers = Players.MaxPlayers or math.max(Telemetry.PlayersCount, 1)
-		end)
-
-		Telemetry.SessionText = FormatDuration(now - SessionStartClock)
-		Telemetry.ActiveToggles, Telemetry.ActiveToggleNames = CountActiveUserToggles()
-
-		for _, listener in ipairs(Telemetry.Listeners) do
-			SafeCallback(listener, Telemetry)
-		end
+		local rawFps = Clamp(math.floor(frameCounter / elapsedSample + 0.5), 1, 999)
+		frameCounter = 0
+		lastSampleClock = now
+		SampleTelemetryNow(rawFps)
 	end))
 end
 
@@ -7427,38 +8068,406 @@ local function OnTelemetryUpdated(listener)
 end
 
 --==================================================
--- FLOATING CAPSULE PILL & TELEMETRY PREVIEW CARD
+-- OPTICAL GAUSSIAN BLUR / FROSTED SPOILER HELPERS
+-- (For Mask Name & Mask Art — real blur effect!)
 --==================================================
-
-local PillPreviewExpanded = false
-local PillHoverCount = 0
-local PillHoverToken = 0
-local SetPillPreviewExpanded
 
 local function GetOperatorNames()
 	local dName = (LocalPlayer and LocalPlayer.DisplayName) or "Operator"
 	local uName = (LocalPlayer and LocalPlayer.Name) or "Player"
-	if Settings.MaskIdentity then
-		return "CM Operator", "@hidden_user"
-	end
 	return dName, "@" .. uName
 end
+
+local function ObfuscateWordShape(str, variant, isSubtle)
+	local s = tostring(str or "Operator")
+	local v = (tonumber(variant) or 1)
+	-- Deliberately vary advance widths across 4 variants (wide 'm/w' vs medium 'o/e' vs narrow 'r/c')
+	-- so character columns phase-shift across the 16 Gaussian passes and melt into a creamy cloud!
+	local pools = {
+		{ "o", "m", "e", "u", "n", "a", "w", "o", "e", "c" },
+		{ "r", "e", "o", "w", "c", "u", "n", "a", "m", "e" },
+		{ "u", "c", "w", "a", "e", "m", "o", "n", "u", "r" },
+		{ "a", "n", "u", "e", "m", "o", "c", "w", "a", "s" },
+	}
+	local pool = pools[((v - 1) % 4) + 1]
+	local maxChars = isSubtle and 13 or 10
+	local scaledLen = math.floor(#s * (isSubtle and 0.68 or 0.56))
+	local n = math.clamp(scaledLen - (v % 2), 5, maxChars)
+	local out = table.create(n)
+	for i = 1, n do
+		local ch = string.sub(s, i, i)
+		if ch == " " then
+			out[i] = " "
+		else
+			out[i] = pool[((i * 3 + v) % #pool) + 1]
+		end
+	end
+	return table.concat(out)
+end
+
+local function AttachTextBlur(textLabel, isSubtle)
+	local barH = isSubtle and 16 or 20
+	local blurHolder = New("CanvasGroup", {
+		Name = "TextBlurCluster",
+		Parent = textLabel,
+		AnchorPoint = Vector2.new(0, 0.5),
+		Position = UDim2.new(0, 0, 0.5, 0),
+		Size = UDim2.new(1, 0, 0, barH),
+		BackgroundTransparency = 1,
+		GroupTransparency = 0,
+		BorderSizePixel = 0,
+		ClipsDescendants = true,
+		Visible = false,
+		ZIndex = textLabel.ZIndex + 1,
+	})
+
+	-- Smooth horizontal fade at the right boundary so clipped text never forms a hard cut or "..."
+	New("UIGradient", {
+		Parent = blurHolder,
+		Rotation = 0,
+		Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0.00, 0.12),
+			NumberSequenceKeypoint.new(0.03, 0.00),
+			NumberSequenceKeypoint.new(0.84, 0.00),
+			NumberSequenceKeypoint.new(0.96, 0.65),
+			NumberSequenceKeypoint.new(1.00, 1.00),
+		}),
+	})
+
+	local colorKey = isSubtle and "SubText" or "Text"
+	local baseT = isSubtle and 0.86 or 0.83
+
+	-- 16-pass wide-radius 2D integer-lattice Gaussian Text Convolution Kernel (dx in [-5,+5], dy in [-2,+2])
+	-- Low per-pass opacity (0.83..0.92 transparency) ensures no single pass shows a sharp glyph edge!
+	local kernel = {
+		-- Inner Gaussian disk (r ~ 1.5..2px)
+		{ -1, -1, baseT,        1,  0 },
+		{  1,  1, baseT,        2,  0 },
+		{ -2,  1, baseT + 0.01, 3,  1 },
+		{  2, -1, baseT + 0.01, 4,  1 },
+		-- Mid Gaussian ring (r ~ 2.5..3.5px)
+		{ -3,  0, baseT + 0.02, 2, -1 },
+		{  3,  0, baseT + 0.02, 1, -1 },
+		{  0, -2, baseT + 0.02, 4,  0 },
+		{  0,  2, baseT + 0.02, 3,  0 },
+		{ -3, -2, baseT + 0.03, 3,  1 },
+		{  3,  2, baseT + 0.03, 4,  1 },
+		{ -3,  2, baseT + 0.03, 1, -1 },
+		{  3, -2, baseT + 0.03, 2, -1 },
+		-- Outer Gaussian feather (r ~ 4.5..5.5px)
+		{ -5, -1, baseT + 0.05, 4,  0 },
+		{  5,  1, baseT + 0.05, 3,  0 },
+		{ -5,  1, baseT + 0.06, 2,  1 },
+		{  5, -1, baseT + 0.06, 1,  1 },
+	}
+	local passLabels = {}
+	local bSize = textLabel.TextSize or (isSubtle and 11 or 14)
+	for idx, k in ipairs(kernel) do
+		local passT = math.clamp(k[3], 0, 0.96)
+		local pass = New("TextLabel", {
+			Name = "FrostVeil_" .. idx,
+			Parent = blurHolder,
+			BackgroundTransparency = 1,
+			Position = UDim2.fromOffset(k[1], k[2]),
+			Size = UDim2.fromScale(1, 1),
+			Font = Enum.Font.GothamMedium,
+			Text = "",
+			TextColor3 = T(colorKey),
+			TextTransparency = passT,
+			TextStrokeColor3 = T(colorKey),
+			TextStrokeTransparency = math.clamp(passT + 0.03, 0.86, 0.94),
+			TextSize = math.max(8, bSize + k[5]),
+			TextXAlignment = textLabel.TextXAlignment,
+			TextYAlignment = Enum.TextYAlignment.Center,
+			TextTruncate = Enum.TextTruncate.None,
+			ZIndex = textLabel.ZIndex + 2,
+		})
+		RegisterTheme(pass, { TextColor3 = colorKey, TextStrokeColor3 = colorKey })
+		table.insert(passLabels, { label = pass, variant = k[4] })
+	end
+
+	local function UpdateWidth(str)
+		local variants = {
+			ObfuscateWordShape(str, 1, isSubtle),
+			ObfuscateWordShape(str, 2, isSubtle),
+			ObfuscateWordShape(str, 3, isSubtle),
+			ObfuscateWordShape(str, 4, isSubtle),
+		}
+		for _, item in ipairs(passLabels) do
+			item.label.Text = variants[item.variant]
+		end
+	end
+
+	local lastActive = nil
+	local animToken = 0
+
+	local function Sync(masked, newText)
+		if newText ~= nil then
+			textLabel.Text = newText
+		end
+		UpdateWidth(textLabel.Text)
+		local active = (masked == true)
+
+		if lastActive == nil or not Settings.Animations or Settings.ReducedMotion then
+			lastActive = active
+			animToken += 1
+			blurHolder.Visible = active
+			pcall(function()
+				blurHolder.GroupTransparency = active and 0 or 1
+			end)
+			textLabel.TextTransparency = active and 1 or 0
+			return
+		end
+
+		if lastActive == active then
+			return
+		end
+		lastActive = active
+		animToken += 1
+		local myToken = animToken
+
+		if active then
+			blurHolder.Visible = true
+			pcall(function()
+				blurHolder.GroupTransparency = 1
+			end)
+			Tween(blurHolder, { GroupTransparency = 0 }, 0.22, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			Tween(textLabel, { TextTransparency = 1 }, 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+		else
+			Tween(blurHolder, { GroupTransparency = 1 }, 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			Tween(textLabel, { TextTransparency = 0 }, 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			task.delay(0.21, function()
+				if myToken == animToken and not lastActive and blurHolder and blurHolder.Parent then
+					blurHolder.Visible = false
+				end
+			end)
+		end
+	end
+
+	Sync(Settings.MaskIdentity == true, textLabel.Text)
+	return Sync
+end
+
+local function AttachImageBlur(parentBox, mainImage, cornerRad, uri)
+	pcall(function()
+		parentBox.ClipsDescendants = true
+	end)
+	local blurContainer = New("CanvasGroup", {
+		Name = "ArtBlurCluster",
+		Parent = parentBox,
+		BackgroundTransparency = 1,
+		GroupTransparency = 0,
+		Size = UDim2.fromScale(1, 1),
+		ClipsDescendants = true,
+		Visible = false,
+		ZIndex = mainImage.ZIndex + 1,
+	})
+	Corner(blurContainer, cornerRad or 8, false)
+
+	-- 16 continuous Vogel-spiral Gaussian passes (no inner Corner outlines -> creamy edge-free portrait blur!)
+	local imgOffsets = {
+		{ -2, -1, 1.14, 0.46 },
+		{  2,  1, 1.14, 0.46 },
+		{ -1,  2, 1.14, 0.46 },
+		{  1, -2, 1.14, 0.46 },
+		{ -4,  0, 1.20, 0.52 },
+		{  4,  0, 1.20, 0.52 },
+		{  0, -4, 1.20, 0.52 },
+		{  0,  4, 1.20, 0.52 },
+		{ -3, -3, 1.24, 0.56 },
+		{  3,  3, 1.24, 0.56 },
+		{ -3,  3, 1.24, 0.56 },
+		{  3, -3, 1.24, 0.56 },
+		{ -6, -5, 1.30, 0.62 },
+		{  6,  5, 1.30, 0.62 },
+		{ -6,  5, 1.30, 0.62 },
+		{  6, -5, 1.30, 0.62 },
+	}
+	for idx, off in ipairs(imgOffsets) do
+		local gImg = New("ImageLabel", {
+			Name = "BlurPass_" .. idx,
+			Parent = blurContainer,
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.new(0.5, off[1], 0.5, off[2]),
+			Size = UDim2.new(off[3], 0, off[3], 0),
+			BackgroundTransparency = 1,
+			Image = "",
+			ImageTransparency = off[4],
+			ScaleType = Enum.ScaleType.Crop,
+			ZIndex = mainImage.ZIndex + 1,
+		})
+		LoadImageAsync(gImg, uri)
+	end
+
+	-- Subtle optical frost diffuser (preserves bright avatar colors instead of darkening)
+	local frostGlass = New("Frame", {
+		Name = "FrostDiffuser",
+		Parent = blurContainer,
+		Size = UDim2.fromScale(1, 1),
+		BackgroundColor3 = T("Element"),
+		BackgroundTransparency = 0.78,
+		BorderSizePixel = 0,
+		ZIndex = mainImage.ZIndex + 2,
+	})
+	RegisterTheme(frostGlass, { BackgroundColor3 = "Element" })
+
+	local frostSheen = New("Frame", {
+		Name = "FrostSheen",
+		Parent = blurContainer,
+		Size = UDim2.fromScale(1, 1),
+		BackgroundColor3 = T("Text"),
+		BackgroundTransparency = 0.90,
+		BorderSizePixel = 0,
+		ZIndex = mainImage.ZIndex + 3,
+	})
+	Corner(frostSheen, cornerRad or 8, false)
+	RegisterTheme(frostSheen, { BackgroundColor3 = "Text" })
+
+	local lastActive = nil
+	local animToken = 0
+
+	local function Sync(masked)
+		local active = (masked == true)
+		mainImage.Visible = true
+
+		if lastActive == nil or not Settings.Animations or Settings.ReducedMotion then
+			lastActive = active
+			animToken += 1
+			blurContainer.Visible = active
+			pcall(function()
+				blurContainer.GroupTransparency = active and 0 or 1
+			end)
+			mainImage.ImageTransparency = active and 0.68 or 0
+			return
+		end
+
+		if lastActive == active then
+			return
+		end
+		lastActive = active
+		animToken += 1
+		local myToken = animToken
+
+		if active then
+			blurContainer.Visible = true
+			pcall(function()
+				blurContainer.GroupTransparency = 1
+			end)
+			Tween(blurContainer, { GroupTransparency = 0 }, 0.22, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			Tween(mainImage, { ImageTransparency = 0.68 }, 0.22, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+		else
+			Tween(blurContainer, { GroupTransparency = 1 }, 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			Tween(mainImage, { ImageTransparency = 0 }, 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			task.delay(0.21, function()
+				if myToken == animToken and not lastActive and blurContainer and blurContainer.Parent then
+					blurContainer.Visible = false
+				end
+			end)
+		end
+	end
+
+	Sync(Settings.MaskAvatar == true)
+	return Sync
+end
+
+--==================================================
+-- FLOATING CAPSULE PILL & TELEMETRY PREVIEW CARD
+--==================================================
+
+local PillPreviewExpanded = false
+local PillPreviewPinned = false
+local PillHoverToken = 0
+local PillLeaveToken = 0
+local LastPillTransitionClock = 0
+local SetPillPreviewExpanded
+local FloatingPillCardStroke = nil
+
+local function GetPillCardTargets()
+	local viewport = GetViewport()
+	local pillPos = FloatingButton.Position
+	local pillSize = FloatingButton.Size
+	local cardW = FloatingPillCard.Size.X.Offset
+	local cardH = FloatingPillCard.Size.Y.Offset
+	local halfW = math.floor(cardW * 0.5)
+
+	local centerX = Clamp(
+		pillPos.X.Offset + math.floor(pillSize.X.Offset * 0.5),
+		halfW + 10,
+		math.max(halfW + 10, viewport.X - halfW - 10)
+	)
+	local targetY = pillPos.Y.Offset + pillSize.Y.Offset + 7
+	if targetY + cardH > viewport.Y - 10 then
+		targetY = math.max(10, pillPos.Y.Offset - cardH - 7)
+	end
+	return centerX, targetY
+end
+
+local PillLeavePending = false
 
 local function RenderFloatingButton(isOpen)
 	if not FloatingButton or not FloatingButton.Parent then
 		return
 	end
 
+	LastPillTransitionClock = os.clock()
 	FloatingButton:SetAttribute("CMOpen", isOpen)
 	local showCapsule = (not isOpen) or (Settings.AlwaysShowPill == true)
-	FloatingButton.Visible = showCapsule
-	if isOpen and PillPreviewExpanded and SetPillPreviewExpanded then
-		SetPillPreviewExpanded(false)
+
+	PillPreviewPinned = false
+	PillPreviewExpanded = false
+	PillLeavePending = false
+	PillHoverToken += 1
+	PillLeaveToken += 1
+	if FloatingPillCard and FloatingPillCard.Parent then
+		FloatingPillCard.Visible = false
+		pcall(function()
+			FloatingPillCard.GroupTransparency = 1
+		end)
 	end
 
-	Tween(FloatingButton, {
-		BackgroundColor3 = isOpen and T("Header") or T("Background"),
-	}, SPEED.Fast)
+	if UpdatePillMetrics then
+		pcall(UpdatePillMetrics)
+	end
+
+	local pillScale = FloatingButton:FindFirstChildOfClass("UIScale")
+	if pillScale then
+		pillScale.Scale = 1
+	end
+	local viewport = GetViewport()
+	local offset = GetRootOffset()
+	local pillW = FloatingButton.Size.X.Offset
+	local defaultX = Clamp(math.floor((viewport.X - pillW) / 2 - offset.X), 12, math.max(12, viewport.X - pillW - 12))
+	local restX = FloatingMoved and FloatingButton.Position.X.Offset or defaultX
+	local restY = FloatingMoved and FloatingButton.Position.Y.Offset or math.max(10, 12 - offset.Y)
+
+	if showCapsule then
+		local wasHidden = not FloatingButton.Visible
+		FloatingButton.Visible = true
+		if wasHidden and Settings.Animations and not Settings.ReducedMotion then
+			local startY = FloatingMoved and restY or (restY - 10)
+			FloatingButton.Position = UDim2.fromOffset(restX, startY)
+			pcall(function()
+				FloatingButton.GroupTransparency = 1
+			end)
+			Tween(FloatingButton, {
+				Position = UDim2.fromOffset(restX, restY),
+				BackgroundColor3 = isOpen and T("Header") or T("Background"),
+				BackgroundTransparency = 0.03,
+				GroupTransparency = 0,
+			}, 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+		else
+			FloatingButton.Position = UDim2.fromOffset(restX, restY)
+			FloatingButton.BackgroundTransparency = 0.03
+			pcall(function()
+				FloatingButton.GroupTransparency = 0
+			end)
+			Tween(FloatingButton, {
+				BackgroundColor3 = isOpen and T("Header") or T("Background"),
+			}, SPEED.Fast)
+		end
+	else
+		FloatingButton.Visible = false
+	end
 
 	if FloatingLabel then
 		local windowTitle = (Library.Window and Library.Window.Title) or "CM HUB"
@@ -7469,48 +8478,106 @@ local function RenderFloatingButton(isOpen)
 	end
 end
 
-SetPillPreviewExpanded = function(state)
-	if not FloatingPillCard or not FloatingPillCard.Parent then
+SetPillPreviewExpanded = function(state, fromPin, instant)
+	if not FloatingPillCard or not FloatingPillCard.Parent or not FloatingButton or not FloatingButton.Parent then
 		return
 	end
-	if state and Settings.PillPreview == "Off" then
+	if state and Settings.PillPreview == "Off" and not fromPin then
 		state = false
 	end
-	PillPreviewExpanded = state == true
+	if state and (not FloatingButton.Visible or (Library.Window and Library.Window.Visible)) then
+		state = false
+	end
+
+	local targetState = (state == true)
+	PillLeavePending = false
+	PillLeaveToken += 1
+	if PillPreviewExpanded == targetState and FloatingPillCard.Visible == targetState then
+		return
+	end
+
+	PillPreviewExpanded = targetState
+	if not targetState then
+		PillPreviewPinned = false
+	end
 	PillHoverToken += 1
 	local myToken = PillHoverToken
 
 	local cardScale = FloatingPillCard:FindFirstChildOfClass("UIScale")
+	if cardScale then
+		cardScale.Scale = 1
+	end
+	local centerX, targetY = GetPillCardTargets()
+
 	if PillPreviewExpanded then
-		local viewport = GetViewport()
-		local pillPos = FloatingButton.Position
-		local pillSize = FloatingButton.Size
-		local cardW = FloatingPillCard.Size.X.Offset
-		local cardH = 178
-
-		local targetX = Clamp(pillPos.X.Offset + math.floor((pillSize.X.Offset - cardW) / 2), 10, math.max(10, viewport.X - cardW - 10))
-		local targetY = pillPos.Y.Offset + pillSize.Y.Offset + 6
-		if targetY + cardH > viewport.Y - 10 then
-			targetY = math.max(10, pillPos.Y.Offset - cardH - 6)
-		end
-
-		FloatingPillCard.Position = UDim2.fromOffset(targetX, targetY)
+		local wasVisible = FloatingPillCard.Visible
 		FloatingPillCard.Visible = true
-		if cardScale then
-			cardScale.Scale = Settings.Animations and 0.94 or 1
-			Tween(cardScale, { Scale = 1 }, SPEED.Fast, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+		if FloatingPillCardStroke then
+			FloatingPillCardStroke.Enabled = true
 		end
-		Tween(FloatingPillCard, { BackgroundTransparency = 0.03 }, SPEED.Fast)
-	else
-		if cardScale then
-			Tween(cardScale, { Scale = 0.94 }, SPEED.Fast, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
+		if UpdatePillMetrics then
+			pcall(UpdatePillMetrics)
 		end
-		Tween(FloatingPillCard, { BackgroundTransparency = 0.35 }, SPEED.Fast)
-		task.delay(Settings.Animations and (SPEED.Fast + 0.02) or 0, function()
-			if myToken == PillHoverToken and not PillPreviewExpanded and FloatingPillCard and FloatingPillCard.Parent then
-				FloatingPillCard.Visible = false
+
+		if not instant and Settings.Animations and not Settings.ReducedMotion then
+			if not wasVisible then
+				FloatingPillCard.Position = UDim2.fromOffset(centerX, targetY - 10)
+				FloatingPillCard.BackgroundTransparency = 0.02
+				pcall(function()
+					FloatingPillCard.GroupTransparency = 1
+				end)
+				if FloatingPillCardStroke then
+					FloatingPillCardStroke.Transparency = 1
+				end
 			end
-		end)
+			if FloatingPillCardStroke then
+				Tween(FloatingPillCardStroke, { Transparency = 0 }, 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			end
+			Tween(FloatingPillCard, {
+				Position = UDim2.fromOffset(centerX, targetY),
+				BackgroundTransparency = 0.02,
+				GroupTransparency = 0,
+			}, 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+		else
+			FloatingPillCard.Position = UDim2.fromOffset(centerX, targetY)
+			FloatingPillCard.BackgroundTransparency = 0.02
+			if FloatingPillCardStroke then
+				FloatingPillCardStroke.Transparency = 0
+			end
+			pcall(function()
+				FloatingPillCard.GroupTransparency = 0
+			end)
+		end
+	else
+		if instant or not Settings.Animations or Settings.ReducedMotion then
+			FloatingPillCard.Visible = false
+			FloatingPillCard.BackgroundTransparency = 1
+			if FloatingPillCardStroke then
+				FloatingPillCardStroke.Enabled = false
+				FloatingPillCardStroke.Transparency = 1
+			end
+			pcall(function()
+				FloatingPillCard.GroupTransparency = 1
+			end)
+		else
+			if FloatingPillCardStroke then
+				Tween(FloatingPillCardStroke, { Transparency = 1 }, 0.14, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			end
+			Tween(FloatingPillCard, {
+				Position = UDim2.fromOffset(centerX, targetY - 8),
+				GroupTransparency = 1,
+			}, 0.14, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			task.delay(0.14, function()
+				if not PillPreviewExpanded and FloatingPillCard and FloatingPillCard.Parent then
+					FloatingPillCard.Visible = false
+					FloatingPillCard.BackgroundTransparency = 1
+					if FloatingPillCardStroke then
+						FloatingPillCardStroke.Enabled = false
+						FloatingPillCardStroke.Transparency = 1
+					end
+				end
+			end)
+		end
 	end
 end
 
@@ -7521,29 +8588,38 @@ local function EnsureFloatingButton()
 
 	EnsureRoot()
 	FetchGameMetadataOnce()
+	SampleTelemetryNow()
 
-	local pillW = IsTouchDevice() and 256 or 244
+	local pillW = IsTouchDevice() and 290 or 278
 	local pillH = IsTouchDevice() and 40 or 36
 	local viewport = GetViewport()
 	local offset = GetRootOffset()
 
-	FloatingButton = New("Frame", {
+	FloatingButton = New("CanvasGroup", {
 		Name = "CMFloatingButton",
 		Parent = ScreenGui,
 		BackgroundColor3 = T("Background"),
-		BackgroundTransparency = 0.04,
+		BackgroundTransparency = 0.03,
+		GroupTransparency = 0,
 		BorderSizePixel = 0,
 		Size = UDim2.fromOffset(pillW, pillH),
 		Position = UDim2.fromOffset(
 			Clamp(math.floor((viewport.X - pillW) / 2 - offset.X), 12, math.max(12, viewport.X - pillW - 12)),
 			math.max(10, 12 - offset.Y)
 		),
+		Visible = false,
 		ZIndex = 800,
 	})
 
 	Corner(FloatingButton, 10)
-	Stroke(FloatingButton, "Border", 1.2, 0, "pill")
+	local pillStroke = Stroke(FloatingButton, "Border", 1.2, 0, "pill")
+	PillStrokeGrad = pillStroke:FindFirstChildOfClass("UIGradient")
+	if PillStrokeGrad then
+		PillStrokeGrad.Color = GetCurrentShimmerSequence()
+	end
 	RegisterTheme(FloatingButton, { BackgroundColor3 = "Background" })
+	New("UIScale", { Parent = FloatingButton, Scale = 1 })
+	Library:_AttachAuroraShimmer(FloatingButton, "crown", 804, 0.3)
 
 	-- Left: Animated CM Emblem Badge
 	local badgeSize = pillH - 10
@@ -7567,11 +8643,11 @@ local function EnsureFloatingButton()
 		Size = UDim2.fromScale(1, 1),
 		Font = FONT_BOLD,
 		Text = "CM",
-		TextColor3 = T("Background"),
+		TextColor3 = T("OnAccent"),
 		TextSize = 11,
 		ZIndex = 802,
 	})
-	RegisterTheme(logoFallback, { TextColor3 = "Background" })
+	RegisterTheme(logoFallback, { TextColor3 = "OnAccent" })
 	Library:_AttachAnimatedLogo(logoBox, logoFallback, 803)
 
 	-- Status Dot + Title
@@ -7593,7 +8669,7 @@ local function EnsureFloatingButton()
 		Parent = FloatingButton,
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(badgeSize + 24, 0),
-		Size = UDim2.new(1, -(badgeSize + 92), 1, 0),
+		Size = UDim2.new(1, -(badgeSize + 124), 1, 0),
 		Font = FONT_BOLD,
 		Text = "CM HUB",
 		TextColor3 = T("Text"),
@@ -7604,13 +8680,60 @@ local function EnsureFloatingButton()
 	})
 	RegisterTheme(FloatingLabel, { TextColor3 = "Text" })
 
+	-- Live Network Ping Telemetry Sparkline on the capsule side ("gilid")
+	table.clear(PillPingBars)
+	local pillPingHolder = New("Frame", {
+		Name = "PillPingIndicator",
+		Parent = FloatingButton,
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -74, 0.5, 0),
+		Size = UDim2.fromOffset(28, 18),
+		BackgroundColor3 = T("Element"),
+		BackgroundTransparency = 0.5,
+		BorderSizePixel = 0,
+		ZIndex = 802,
+	})
+	Corner(pillPingHolder, 5)
+	Stroke(pillPingHolder, "Border", 1, 0.35)
+	RegisterTheme(pillPingHolder, { BackgroundColor3 = "Element" })
+
+	local pingList = New("UIListLayout", {
+		Parent = pillPingHolder,
+		FillDirection = Enum.FillDirection.Horizontal,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		VerticalAlignment = Enum.VerticalAlignment.Bottom,
+		HorizontalAlignment = Enum.HorizontalAlignment.Center,
+		Padding = UDim.new(0, 2),
+	})
+	Padding(pillPingHolder, 2, 2, 3, 3)
+
+	for i = 1, 4 do
+		local pBar = New("Frame", {
+			Name = "Bar" .. i,
+			Parent = pillPingHolder,
+			Size = UDim2.fromOffset(3, 4 + i * 2),
+			BackgroundColor3 = T("Accent"),
+			BorderSizePixel = 0,
+			LayoutOrder = i,
+			ZIndex = 803,
+		})
+		Corner(pBar, 1, false)
+		RegisterTheme(pBar, { BackgroundColor3 = "Accent" })
+		table.insert(PillPingBars, pBar)
+	end
+
+	BindTooltip(pillPingHolder, LibraryMaid, function()
+		local p = (Telemetry and Telemetry.Ping) or 35
+		return string.format("Network Ping: %d ms", p)
+	end)
+
 	-- Right: Active Count Pill + Mobile/PC Info Toggle Button
 	local countTag = New("Frame", {
 		Name = "ActiveTag",
 		Parent = FloatingButton,
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, -34, 0.5, 0),
-		Size = UDim2.fromOffset(32, 20),
+		Size = UDim2.fromOffset(34, 20),
 		BackgroundColor3 = T("Element"),
 		BorderSizePixel = 0,
 		ZIndex = 802,
@@ -7624,7 +8747,7 @@ local function EnsureFloatingButton()
 		Parent = countTag,
 		BackgroundTransparency = 1,
 		Size = UDim2.fromScale(1, 1),
-		Font = FONT_MONO,
+		Font = FONT_BOLD,
 		Text = "0 ON",
 		TextColor3 = T("SubText"),
 		TextSize = 10,
@@ -7641,7 +8764,7 @@ local function EnsureFloatingButton()
 		Text = "",
 		AutoButtonColor = false,
 		Active = true,
-		Size = UDim2.new(1, -30, 1, 0),
+		Size = UDim2.new(1, -108, 1, 0),
 		ZIndex = 805,
 	})
 
@@ -7667,37 +8790,32 @@ local function EnsureFloatingButton()
 	RegisterGlyphTheme(infoGlyphParts, "SubText")
 
 	LibraryMaid:Give(infoBtn.MouseButton1Click:Connect(function()
-		SetPillPreviewExpanded(not PillPreviewExpanded)
+		local nextState = not PillPreviewExpanded
+		PillPreviewPinned = nextState
+		SetPillPreviewExpanded(nextState, true, false)
 	end))
 
-	-- Build the Telemetry HUD Drop-Card (distinct Monochrome Studio HUD)
-	FloatingPillCard = New("Frame", {
+	-- Build the Telemetry HUD Drop-Card (CanvasGroup + Top-Center Anchored for Symmetric Smooth Swipe!)
+	FloatingPillCard = New("CanvasGroup", {
 		Name = "CMPillPreviewCard",
 		Parent = ScreenGui,
+		AnchorPoint = Vector2.new(0.5, 0),
 		BackgroundColor3 = T("Background"),
-		BackgroundTransparency = 0.03,
+		BackgroundTransparency = 1,
+		GroupTransparency = 1,
 		BorderSizePixel = 0,
-		Size = UDim2.fromOffset(316, 178),
+		Size = UDim2.fromOffset(336, 178),
 		Visible = false,
 		Active = true,
 		ZIndex = 810,
 	})
 	Corner(FloatingPillCard, 11)
-	Stroke(FloatingPillCard, "Border", 1.2, 0, "window")
+	FloatingPillCardStroke = Stroke(FloatingPillCard, "Border", 1.2, 0, "window")
+	FloatingPillCardStroke.Enabled = false
+	FloatingPillCardStroke.Transparency = 1
 	RegisterTheme(FloatingPillCard, { BackgroundColor3 = "Background" })
 	New("UIScale", { Parent = FloatingPillCard, Scale = 1 })
 	Padding(FloatingPillCard, 12, 12, 14, 14)
-
-	-- Invisible hover bridge at top of preview card so pointer moving between pill & card stays in hover region
-	local hoverBridge = New("Frame", {
-		Name = "HoverBridge",
-		Parent = FloatingPillCard,
-		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(-14, -22),
-		Size = UDim2.new(1, 28, 0, 24),
-		Active = true,
-		ZIndex = 809,
-	})
 
 	-- Preview Card Top Header: Avatar + Operator + Session Timer
 	local cardHeader = New("Frame", {
@@ -7707,6 +8825,7 @@ local function EnsureFloatingButton()
 		Size = UDim2.new(1, 0, 0, 38),
 		ZIndex = 811,
 	})
+	Library:_AttachAuroraShimmer(cardHeader, "card", 815, 0.6)
 
 	local avatarFrame = New("Frame", {
 		Name = "AvatarBox",
@@ -7714,23 +8833,25 @@ local function EnsureFloatingButton()
 		Size = UDim2.fromOffset(36, 36),
 		BackgroundColor3 = T("Element"),
 		BorderSizePixel = 0,
+		ClipsDescendants = true,
 		ZIndex = 812,
 	})
 	Corner(avatarFrame, 8)
 	Stroke(avatarFrame, "Border", 1, 0.2)
 	RegisterTheme(avatarFrame, { BackgroundColor3 = "Element" })
 
+	local headshotUri = GetPlayerHeadshotUri()
 	local pillAvatarImg = New("ImageLabel", {
 		Name = "Headshot",
 		Parent = avatarFrame,
 		BackgroundTransparency = 1,
 		Size = UDim2.fromScale(1, 1),
 		Image = "",
-		Visible = not Settings.MaskAvatar,
 		ZIndex = 813,
 	})
 	Corner(pillAvatarImg, 8)
-	LoadImageAsync(pillAvatarImg, GetPlayerHeadshotUri())
+	LoadImageAsync(pillAvatarImg, headshotUri)
+	local syncPillAvatarBlur = AttachImageBlur(avatarFrame, pillAvatarImg, 8, headshotUri)
 
 	local dNameInit, uNameInit = GetOperatorNames()
 	local pillOperatorLabel = New("TextLabel", {
@@ -7738,7 +8859,7 @@ local function EnsureFloatingButton()
 		Parent = cardHeader,
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(44, 2),
-		Size = UDim2.new(1, -120, 0, 18),
+		Size = UDim2.new(1, -112, 0, 18),
 		Font = FONT_BOLD,
 		Text = dNameInit,
 		TextColor3 = T("Text"),
@@ -7748,31 +8869,34 @@ local function EnsureFloatingButton()
 		ZIndex = 812,
 	})
 	RegisterTheme(pillOperatorLabel, { TextColor3 = "Text" })
+	local syncPillOpBlur = AttachTextBlur(pillOperatorLabel, false)
 
 	local pillGameLabel = New("TextLabel", {
 		Name = "Sub",
 		Parent = cardHeader,
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(44, 19),
-		Size = UDim2.new(1, -120, 0, 15),
-		Font = FONT,
+		Size = UDim2.new(1, -112, 0, 15),
+		Font = FONT_MEDIUM,
 		Text = uNameInit .. " • " .. Telemetry.GameName,
 		TextColor3 = T("SubText"),
-		TextSize = 11,
-		TextXAlignment = Enum.TextXAlignment.Left,
+		TextSize = 10,
+		TextScaled = false,
 		TextTruncate = Enum.TextTruncate.AtEnd,
+		TextXAlignment = Enum.TextXAlignment.Left,
 		ZIndex = 812,
 	})
 	RegisterTheme(pillGameLabel, { TextColor3 = "SubText" })
+	local syncPillSubBlur = AttachTextBlur(pillGameLabel, true)
 
 	local pillSessionLabel = New("TextLabel", {
 		Name = "SessionTime",
 		Parent = cardHeader,
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, 0, 0, 2),
-		Size = UDim2.fromOffset(74, 18),
+		Size = UDim2.fromOffset(66, 18),
 		BackgroundTransparency = 1,
-		Font = FONT_MONO,
+		Font = FONT_BOLD,
 		Text = "0m 00s",
 		TextColor3 = T("Accent"),
 		TextSize = 12,
@@ -7786,9 +8910,9 @@ local function EnsureFloatingButton()
 		Parent = cardHeader,
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, 0, 0, 19),
-		Size = UDim2.fromOffset(74, 14),
+		Size = UDim2.fromOffset(66, 14),
 		BackgroundTransparency = 1,
-		Font = FONT_MONO,
+		Font = FONT_BOLD,
 		Text = "UPTIME",
 		TextColor3 = T("SubText"),
 		TextSize = 9,
@@ -7824,15 +8948,15 @@ local function EnsureFloatingButton()
 			ZIndex = 812,
 		})
 		Corner(cell, 7)
-		Stroke(cell, "Border", 1, 0.3)
+		Stroke(cell, "Border", 1, 0.25)
 		RegisterTheme(cell, { BackgroundColor3 = "Header" })
 
 		local valLbl = New("TextLabel", {
 			Parent = cell,
 			BackgroundTransparency = 1,
-			Position = UDim2.fromOffset(6, 5),
-			Size = UDim2.new(1, -12, 0, 16),
-			Font = FONT_MONO,
+			Position = UDim2.fromOffset(8, 5),
+			Size = UDim2.new(1, -14, 0, 16),
+			Font = FONT_BOLD,
 			Text = initialVal,
 			TextColor3 = T("Text"),
 			TextSize = 12,
@@ -7845,9 +8969,9 @@ local function EnsureFloatingButton()
 		local tagLbl = New("TextLabel", {
 			Parent = cell,
 			BackgroundTransparency = 1,
-			Position = UDim2.fromOffset(6, 22),
-			Size = UDim2.new(1, -12, 0, 14),
-			Font = FONT_BOLD,
+			Position = UDim2.fromOffset(8, 22),
+			Size = UDim2.new(1, -14, 0, 14),
+			Font = FONT_MEDIUM,
 			Text = labelText,
 			TextColor3 = T("SubText"),
 			TextSize = 9,
@@ -7858,9 +8982,9 @@ local function EnsureFloatingButton()
 		return valLbl
 	end
 
-	local pillFpsVal     = CreateMiniMetricCell(1, "FPS", "60")
-	local pillPingVal    = CreateMiniMetricCell(2, "PING", "N/A")
-	local pillPlayersVal = CreateMiniMetricCell(3, "PLAYERS", "1/1")
+	local pillFpsVal     = CreateMiniMetricCell(1, "FPS", tostring(Telemetry.FPS) .. " fps")
+	local pillPingVal    = CreateMiniMetricCell(2, "PING", tostring(Telemetry.Ping or 35) .. " ms")
+	local pillPlayersVal = CreateMiniMetricCell(3, "PLAYERS", string.format("%d/%d", Telemetry.PlayersCount, Telemetry.MaxPlayers))
 	local pillTabVal     = CreateMiniMetricCell(4, "TAB", "Main")
 
 	-- Active Toggles Line
@@ -7870,8 +8994,8 @@ local function EnsureFloatingButton()
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(0, 98),
 		Size = UDim2.new(1, 0, 0, 18),
-		Font = FONT,
-		Text = "Active features: None",
+		Font = FONT_MEDIUM,
+		Text = "Active features: Standby (0 running)",
 		TextColor3 = T("SubText"),
 		TextSize = 11,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -7889,8 +9013,8 @@ local function EnsureFloatingButton()
 		AutoButtonColor = false,
 		Position = UDim2.fromOffset(0, 122),
 		Size = UDim2.new(1, 0, 0, 30),
-		Font = FONT_MEDIUM,
-		Text = "Click capsule or press [RCtrl] to toggle UI",
+		Font = FONT_BOLD,
+		Text = "Click capsule or press [RCtrl] to Restore UI",
 		TextColor3 = T("Text"),
 		TextSize = 11,
 		ZIndex = 813,
@@ -7900,9 +9024,14 @@ local function EnsureFloatingButton()
 	RegisterTheme(restoreBtn, { BackgroundColor3 = "Element", TextColor3 = "Text" })
 
 	LibraryMaid:Give(restoreBtn.MouseButton1Click:Connect(function()
-		SetPillPreviewExpanded(false)
-		Library:ToggleUI()
+		SetPillPreviewExpanded(false, false, true)
+		LastPillTransitionClock = os.clock()
+		Library:Show()
 	end))
+
+	local lastMaskedIdentity = nil
+	local lastMaskedAvatar = nil
+	local lastSubString = nil
 
 	UpdatePillMetrics = function()
 		if not FloatingButton or not FloatingButton.Parent then
@@ -7911,16 +9040,25 @@ local function EnsureFloatingButton()
 		local activeCount, activeNames = CountActiveUserToggles()
 		countTagLabel.Text = tostring(activeCount) .. " ON"
 
+		local dName, uName = GetOperatorNames()
+		local subStr = uName .. " • " .. Telemetry.GameName
+		if lastMaskedAvatar ~= (Settings.MaskAvatar == true) then
+			lastMaskedAvatar = (Settings.MaskAvatar == true)
+			syncPillAvatarBlur(lastMaskedAvatar)
+		end
+		if lastMaskedIdentity ~= (Settings.MaskIdentity == true) or lastSubString ~= subStr then
+			lastMaskedIdentity = (Settings.MaskIdentity == true)
+			lastSubString = subStr
+			syncPillOpBlur(lastMaskedIdentity, dName)
+			syncPillSubBlur(lastMaskedIdentity, subStr)
+		end
+
 		if not FloatingPillCard or not FloatingPillCard.Visible then
 			return
 		end
-		local dName, uName = GetOperatorNames()
-		pillAvatarImg.Visible = not Settings.MaskAvatar
-		pillOperatorLabel.Text = dName
-		pillGameLabel.Text = uName .. " • " .. Telemetry.GameName
 		pillSessionLabel.Text = Telemetry.SessionText
 		pillFpsVal.Text = tostring(Telemetry.FPS) .. " fps"
-		pillPingVal.Text = Telemetry.Ping and (tostring(Telemetry.Ping) .. " ms") or "N/A"
+		pillPingVal.Text = tostring(Telemetry.Ping or 35) .. " ms"
 		pillPlayersVal.Text = string.format("%d/%d", Telemetry.PlayersCount, Telemetry.MaxPlayers)
 		local curTab = (Library.Window and Library.Window.CurrentTab and Library.Window.CurrentTab.Title) or "Main"
 		pillTabVal.Text = tostring(curTab)
@@ -7931,40 +9069,82 @@ local function EnsureFloatingButton()
 			pillRunningLabel.Text = "Active features: Standby (0 running)"
 		end
 		local keyText = typeof(Settings.MinimizeKey) == "EnumItem" and DisplayKeyName(Settings.MinimizeKey.Name) or "Key"
-		restoreBtn.Text = (Library:IsOpen() and "Click to Minimize UI  [" or "Click to Restore UI  [") .. keyText .. "]"
+		restoreBtn.Text = "Click capsule or press [" .. keyText .. "] to Restore UI"
 	end
 
 	OnTelemetryUpdated(UpdatePillMetrics)
 
-	-- Unified Hover Tracking across Capsule, Bridge, and Preview Card (PC only)
-	local function EnterHoverRegion()
-		PillHoverCount += 1
-		FloatingButton:SetAttribute("CMHovered", true)
-		if not IsTouchDevice() and Settings.PillPreview == "Show on Hover" then
-			SetPillPreviewExpanded(true)
-			UpdatePillMetrics()
+	-- Deterministic, Non-Resetting Pointer Bounds Hover Tracker
+	local function StartHoverCollapseOnce()
+		if IsTouchDevice() or PillPreviewPinned or PillLeavePending then
+			return
 		end
-	end
-
-	local function LeaveHoverRegion()
-		PillHoverCount = math.max(0, PillHoverCount - 1)
-		local checkToken = PillHoverToken
-		task.delay(0.12, function()
-			if PillHoverCount == 0 and checkToken == PillHoverToken then
-				if FloatingButton and FloatingButton.Parent then
-					FloatingButton:SetAttribute("CMHovered", false)
-				end
-				if not IsTouchDevice() and Settings.PillPreview == "Show on Hover" then
-					SetPillPreviewExpanded(false)
+		PillLeavePending = true
+		PillLeaveToken += 1
+		local leaveTok = PillLeaveToken
+		task.delay(0.11, function()
+			if leaveTok == PillLeaveToken then
+				PillLeavePending = false
+				if PillPreviewExpanded and not PillPreviewPinned then
+					SetPillPreviewExpanded(false, false, false)
 				end
 			end
 		end)
 	end
 
-	for _, region in ipairs({ dragHandle, infoBtn, FloatingPillCard, hoverBridge, restoreBtn }) do
-		LibraryMaid:Give(region.MouseEnter:Connect(EnterHoverRegion))
-		LibraryMaid:Give(region.MouseLeave:Connect(LeaveHoverRegion))
-	end
+	LibraryMaid:Give(UserInputService.InputChanged:Connect(function(input)
+		if input.UserInputType ~= Enum.UserInputType.MouseMovement then
+			return
+		end
+		if IsTouchDevice() or Settings.PillPreview ~= "Show on Hover" then
+			return
+		end
+		if not FloatingButton or not FloatingButton.Parent or not FloatingButton.Visible then
+			return
+		end
+		if Library.Window and (Library.Window.Visible or Library.Window.TransitionState ~= "MINIMIZED") then
+			return
+		end
+		if FloatingButton:GetAttribute("CMDragging") == true then
+			return
+		end
+		if (os.clock() - LastPillTransitionClock) < 0.28 then
+			return
+		end
+		if PillPreviewPinned then
+			return
+		end
+
+		local mx, my = input.Position.X, input.Position.Y
+		local pPos = FloatingButton.AbsolutePosition
+		local pSize = FloatingButton.AbsoluteSize
+
+		local inPill = (mx >= pPos.X - 6 and mx <= pPos.X + pSize.X + 6 and my >= pPos.Y - 6 and my <= pPos.Y + pSize.Y + 12)
+		if inPill then
+			PillLeavePending = false
+			PillLeaveToken += 1
+			if not PillPreviewExpanded then
+				SetPillPreviewExpanded(true, false, false)
+			end
+			return
+		end
+
+		if PillPreviewExpanded and FloatingPillCard and FloatingPillCard.Visible then
+			local cPos = FloatingPillCard.AbsolutePosition
+			local cSize = FloatingPillCard.AbsoluteSize
+			local minX = math.min(pPos.X, cPos.X) - 14
+			local maxX = math.max(pPos.X + pSize.X, cPos.X + cSize.X) + 14
+			local minY = math.min(pPos.Y, cPos.Y) - 10
+			local maxY = math.max(pPos.Y + pSize.Y, cPos.Y + cSize.Y) + 14
+			local inCombined = (mx >= minX and mx <= maxX and my >= minY and my <= maxY)
+			if inCombined then
+				PillLeavePending = false
+				PillLeaveToken += 1
+			else
+				StartHoverCollapseOnce()
+			end
+		end
+	end))
 
 	LibraryMaid:Give(FloatingButton)
 	LibraryMaid:Give(FloatingPillCard)
@@ -7974,16 +9154,18 @@ local function EnsureFloatingButton()
 		Inset = 8,
 		OnStart = function()
 			FloatingButton:SetAttribute("CMDragging", true)
-			if PillPreviewExpanded then
-				SetPillPreviewExpanded(false)
+			PillPreviewPinned = false
+			if PillPreviewExpanded or (FloatingPillCard and FloatingPillCard.Visible) then
+				SetPillPreviewExpanded(false, false, true)
 			end
 		end,
 		OnEnd = function(moved)
 			FloatingButton:SetAttribute("CMDragging", false)
+			LastPillTransitionClock = os.clock()
 			if moved then
 				FloatingMoved = true
 			else
-				SetPillPreviewExpanded(false)
+				SetPillPreviewExpanded(false, false, true)
 				Library:ToggleUI()
 			end
 		end,
@@ -8006,6 +9188,7 @@ end
 local function BuildHomeDashboard(window, tab, config)
 	config = config or {}
 	FetchGameMetadataOnce()
+	SampleTelemetryNow()
 
 	local dashWrapper = New("Frame", {
 		Name = "CMCommandDeck",
@@ -8023,7 +9206,7 @@ local function BuildHomeDashboard(window, tab, config)
 	Padding(dashWrapper, 10, 12, 12, 12)
 	ListLayout(dashWrapper, 10)
 
-	-- Top Strip Header: Collapsible "COMMAND DECK // OPERATOR & TELEMETRY"
+	-- Top Strip Header: Collapsible "COMMAND DECK • TELEMETRY & INSTANCE OVERVIEW"
 	local deckHeader = New("TextButton", {
 		Name = "DeckHeader",
 		Parent = dashWrapper,
@@ -8050,8 +9233,8 @@ local function BuildHomeDashboard(window, tab, config)
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(14, 0),
 		Size = UDim2.new(1, -110, 1, 0),
-		Font = FONT_MONO,
-		Text = "COMMAND DECK // TELEMETRY & INSTANCE OVERVIEW",
+		Font = FONT_BOLD,
+		Text = "TELEMETRY & INSTANCE OVERVIEW",
 		TextColor3 = T("SubText"),
 		TextSize = 11,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -8063,9 +9246,9 @@ local function BuildHomeDashboard(window, tab, config)
 		Parent = deckHeader,
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, -2, 0.5, 0),
-		Size = UDim2.fromOffset(90, 18),
+		Size = UDim2.fromOffset(92, 18),
 		BackgroundTransparency = 1,
-		Font = FONT_MONO,
+		Font = FONT_BOLD,
 		Text = "[ COLLAPSE - ]",
 		TextColor3 = T("SubText"),
 		TextSize = 10,
@@ -8090,7 +9273,7 @@ local function BuildHomeDashboard(window, tab, config)
 		deckToggleTag.Text = deckOpen and "[ COLLAPSE - ]" or "[ EXPAND + ]"
 	end))
 
-	-- ROW 1: Asymmetric Hero Split (Operator Showcase Chamber + Experience & Server Matrix)
+	-- ROW 1: Balanced Hero Split (Operator Showcase Chamber + Experience & Server Matrix)
 	local heroRow = New("Frame", {
 		Name = "HeroRow",
 		Parent = deckBody,
@@ -8112,7 +9295,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Parent = heroRow,
 		BackgroundColor3 = T("Header"),
 		BorderSizePixel = 0,
-		Size = UDim2.new(0.54, -5, 0, 132),
+		Size = UDim2.new(0.51, -5, 0, 134),
 		LayoutOrder = 1,
 		ClipsDescendants = true,
 	})
@@ -8120,87 +9303,86 @@ local function BuildHomeDashboard(window, tab, config)
 	Stroke(opCard, "Border", 1, 0.15)
 	RegisterTheme(opCard, { BackgroundColor3 = "Header" })
 
-	-- Framed Character Portrait Bay on the LEFT (Natural Colors preserved!)
+	-- Framed Character Portrait Bay on the LEFT (Natural Colors preserved + Optical Blur when Masked!)
 	local portraitBay = New("Frame", {
 		Name = "PortraitBay",
 		Parent = opCard,
-		Position = UDim2.fromOffset(10, 12),
-		Size = UDim2.fromOffset(84, 108),
+		Position = UDim2.fromOffset(8, 12),
+		Size = UDim2.fromOffset(74, 110),
 		BackgroundColor3 = T("Background"),
 		BorderSizePixel = 0,
+		ClipsDescendants = true,
 	})
 	Corner(portraitBay, 8)
 	Stroke(portraitBay, "Border", 1, 0.2)
 	RegisterTheme(portraitBay, { BackgroundColor3 = "Background" })
+
+	local customArtwork = config.CharacterImage or config.ArtworkImage
+	local bustUri = (typeof(customArtwork) == "string" and customArtwork ~= "") and customArtwork or GetPlayerBustUri()
 
 	local charImage = New("ImageLabel", {
 		Name = "CharacterArt",
 		Parent = portraitBay,
 		AnchorPoint = Vector2.new(0.5, 1),
 		Position = UDim2.new(0.5, 0, 1, 0),
-		Size = UDim2.fromOffset(80, 104),
+		Size = UDim2.fromOffset(70, 106),
 		BackgroundTransparency = 1,
 		Image = "",
 		ScaleType = Enum.ScaleType.Crop,
-		Visible = not Settings.MaskAvatar,
 		ZIndex = portraitBay.ZIndex + 1,
 	})
 	Corner(charImage, 8)
-	local customArtwork = config.CharacterImage or config.ArtworkImage
-	local bustUri = (typeof(customArtwork) == "string" and customArtwork ~= "") and customArtwork or GetPlayerBustUri()
 	LoadImageAsync(charImage, bustUri)
+	local syncCharBlur = AttachImageBlur(portraitBay, charImage, 8, bustUri)
 
 	-- Small circular Headshot Pip at bottom-right of Portrait Bay
-	local headshotPip = New("ImageLabel", {
-		Name = "HeadshotPip",
-		Parent = portraitBay,
-		AnchorPoint = Vector2.new(1, 1),
-		Position = UDim2.new(1, -4, 1, -4),
-		Size = UDim2.fromOffset(24, 24),
+	local headUri = GetPlayerHeadshotUri()
+	local headshotPipFrame = New("Frame", {
+		Name = "HeadshotPipHolder",
+		Parent = opCard,
+		Position = UDim2.fromOffset(58, 96),
+		Size = UDim2.fromOffset(26, 26),
 		BackgroundColor3 = T("Header"),
 		BorderSizePixel = 0,
-		Image = "",
-		Visible = not Settings.MaskAvatar,
-		ZIndex = portraitBay.ZIndex + 2,
+		ClipsDescendants = true,
+		ZIndex = portraitBay.ZIndex + 5,
 	})
-	Corner(headshotPip, 12, false)
-	Stroke(headshotPip, "Accent", 1.2, 0.1)
-	RegisterTheme(headshotPip, { BackgroundColor3 = "Header" })
-	LoadImageAsync(headshotPip, GetPlayerHeadshotUri())
+	Corner(headshotPipFrame, 13, false)
+	Stroke(headshotPipFrame, "Accent", 1.2, 0.1)
+	RegisterTheme(headshotPipFrame, { BackgroundColor3 = "Header" })
 
-	local maskedPlaceholder = New("TextLabel", {
-		Name = "MaskedLabel",
-		Parent = portraitBay,
-		BackgroundTransparency = 1,
+	local headshotPip = New("ImageLabel", {
+		Name = "HeadshotPip",
+		Parent = headshotPipFrame,
 		Size = UDim2.fromScale(1, 1),
-		Font = FONT_MONO,
-		Text = "AVATAR\nMASKED",
-		TextColor3 = T("SubText"),
-		TextSize = 10,
-		Visible = Settings.MaskAvatar == true,
+		BackgroundTransparency = 1,
+		Image = "",
+		ZIndex = headshotPipFrame.ZIndex + 1,
 	})
-	RegisterTheme(maskedPlaceholder, { TextColor3 = "SubText" })
+	Corner(headshotPip, 13, false)
+	LoadImageAsync(headshotPip, headUri)
+	local syncPipBlur = AttachImageBlur(headshotPipFrame, headshotPip, 13, headUri)
 
 	-- Right side of Operator Card: Status Tag, DisplayName, @Username, Action Pills
 	local opDetails = New("Frame", {
 		Name = "OperatorDetails",
 		Parent = opCard,
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(102, 12),
-		Size = UDim2.new(1, -110, 1, -24),
+		Position = UDim2.fromOffset(90, 12),
+		Size = UDim2.new(1, -98, 1, -24),
 	})
 
 	local opBadge = New("TextLabel", {
 		Parent = opDetails,
 		BackgroundTransparency = 1,
 		Size = UDim2.new(1, 0, 0, 14),
-		Font = FONT_MONO,
-		Text = "OPERATOR // ACTIVE SESSION",
-		TextColor3 = T("SubText"),
-		TextSize = 10,
+		Font = FONT_BOLD,
+		Text = "OPERATOR • ACTIVE SESSION",
+		TextColor3 = T("Accent"),
+		TextSize = 9,
 		TextXAlignment = Enum.TextXAlignment.Left,
 	})
-	RegisterTheme(opBadge, { TextColor3 = "SubText" })
+	RegisterTheme(opBadge, { TextColor3 = "Accent" })
 
 	local dInit, uInit = GetOperatorNames()
 	local opDisplayName = New("TextLabel", {
@@ -8212,22 +9394,19 @@ local function BuildHomeDashboard(window, tab, config)
 		Text = dInit,
 		TextColor3 = T("Text"),
 		TextSize = 15,
-		TextScaled = true,
+		TextScaled = false,
+		TextTruncate = Enum.TextTruncate.AtEnd,
 		TextXAlignment = Enum.TextXAlignment.Left,
 	})
-	New("UITextSizeConstraint", {
-		Parent = opDisplayName,
-		MinTextSize = 11,
-		MaxTextSize = 16,
-	})
 	RegisterTheme(opDisplayName, { TextColor3 = "Text" })
+	local syncOpNameBlur = AttachTextBlur(opDisplayName, false)
 
 	local opUserHandle = New("TextLabel", {
 		Parent = opDetails,
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(0, 41),
 		Size = UDim2.new(1, 0, 0, 16),
-		Font = FONT_MONO,
+		Font = FONT_MEDIUM,
 		Text = uInit,
 		TextColor3 = T("SubText"),
 		TextSize = 11,
@@ -8235,6 +9414,7 @@ local function BuildHomeDashboard(window, tab, config)
 		TextTruncate = Enum.TextTruncate.AtEnd,
 	})
 	RegisterTheme(opUserHandle, { TextColor3 = "SubText" })
+	local syncOpHandleBlur = AttachTextBlur(opUserHandle, true)
 
 	local opPillsRow = New("Frame", {
 		Name = "Pills",
@@ -8242,7 +9422,7 @@ local function BuildHomeDashboard(window, tab, config)
 		BackgroundTransparency = 1,
 		AnchorPoint = Vector2.new(0, 1),
 		Position = UDim2.new(0, 0, 1, 0),
-		Size = UDim2.new(1, 0, 0, 24),
+		Size = UDim2.new(1, 0, 0, 22),
 	})
 	New("UIListLayout", {
 		Parent = opPillsRow,
@@ -8251,22 +9431,33 @@ local function BuildHomeDashboard(window, tab, config)
 		Padding = UDim.new(0, 4),
 	})
 
-	local function CreateOpPill(order, text, callback)
+	local function CreateOpPill(order, text, widthPx, isActiveFn, callback)
+		local isVersionBadge = (isActiveFn == nil and callback == nil)
 		local p = New("TextButton", {
 			Parent = opPillsRow,
-			BackgroundColor3 = T("Element"),
+			BackgroundColor3 = isVersionBadge and T("Accent") or ((isActiveFn and isActiveFn()) and T("Accent") or T("Element")),
+			BackgroundTransparency = isVersionBadge and 0.82 or 0,
 			BorderSizePixel = 0,
 			AutoButtonColor = false,
-			Size = UDim2.fromOffset(Clamp(math.floor(#text * 5.2 + 10), 42, 66), 22),
-			Font = FONT_MONO,
+			Size = UDim2.fromOffset(widthPx, 21),
+			Font = FONT_BOLD,
 			Text = text,
-			TextColor3 = T("Text"),
+			TextColor3 = isVersionBadge and T("Accent") or ((isActiveFn and isActiveFn()) and T("OnAccent") or T("Text")),
 			TextSize = 9,
 			LayoutOrder = order,
 		})
 		Corner(p, 5)
-		Stroke(p, "Border", 1, 0.25)
-		RegisterTheme(p, { BackgroundColor3 = "Element", TextColor3 = "Text" })
+		Stroke(p, isVersionBadge and "Accent" or "Border", 1, isVersionBadge and 0.45 or 0.25)
+		RegisterTheme(p, {
+			BackgroundColor3 = function(theme)
+				if isVersionBadge then return theme.Accent end
+				return (isActiveFn and isActiveFn()) and theme.Accent or theme.Element
+			end,
+			TextColor3 = function(theme)
+				if isVersionBadge then return theme.Accent end
+				return (isActiveFn and isActiveFn()) and GetOnAccentColor(theme) or theme.Text
+			end,
+		})
 		if callback then
 			tab.Maid:Give(p.MouseButton1Click:Connect(function()
 				callback(p)
@@ -8275,27 +9466,44 @@ local function BuildHomeDashboard(window, tab, config)
 		return p
 	end
 
-	CreateOpPill(1, "v" .. tostring(config.Version or LIB_VERSION))
-	CreateOpPill(2, Settings.MaskIdentity and "Show Name" or "Mask Name", function(btn)
+	CreateOpPill(1, "v" .. tostring(config.Version or LIB_VERSION), 36)
+	local maskNamePill = CreateOpPill(2, "Blurd Name", 56, function() return Settings.MaskIdentity == true end, function(btn)
 		Settings.MaskIdentity = not Settings.MaskIdentity
-		btn.Text = Settings.MaskIdentity and "Show Name" or "Mask Name"
+		btn.BackgroundColor3 = Settings.MaskIdentity and T("Accent") or T("Element")
+		btn.TextColor3 = Settings.MaskIdentity and T("OnAccent") or T("Text")
 		local dn, un = GetOperatorNames()
-		opDisplayName.Text = dn
-		opUserHandle.Text = un
+		syncOpNameBlur(Settings.MaskIdentity == true, dn)
+		syncOpHandleBlur(Settings.MaskIdentity == true, un)
 		if window._UpdateSidebarProfile then window._UpdateSidebarProfile() end
 		if UpdatePillMetrics then UpdatePillMetrics() end
 		SaveInterface()
 	end)
-	CreateOpPill(3, Settings.MaskAvatar and "Show Art" or "Mask Art", function(btn)
+	local maskArtPill = CreateOpPill(3, "Blurd Profile", 50, function() return Settings.MaskAvatar == true end, function(btn)
 		Settings.MaskAvatar = not Settings.MaskAvatar
-		btn.Text = Settings.MaskAvatar and "Show Art" or "Mask Art"
-		charImage.Visible = not Settings.MaskAvatar
-		headshotPip.Visible = not Settings.MaskAvatar
-		maskedPlaceholder.Visible = Settings.MaskAvatar
+		btn.BackgroundColor3 = Settings.MaskAvatar and T("Accent") or T("Element")
+		btn.TextColor3 = Settings.MaskAvatar and T("OnAccent") or T("Text")
+		syncCharBlur(Settings.MaskAvatar == true)
+		syncPipBlur(Settings.MaskAvatar == true)
 		if window._UpdateSidebarProfile then window._UpdateSidebarProfile() end
 		if UpdatePillMetrics then UpdatePillMetrics() end
 		SaveInterface()
 	end)
+
+	function window._SyncCommandDeckPrivacy()
+		local dn, un = GetOperatorNames()
+		syncOpNameBlur(Settings.MaskIdentity == true, dn)
+		syncOpHandleBlur(Settings.MaskIdentity == true, un)
+		syncCharBlur(Settings.MaskAvatar == true)
+		syncPipBlur(Settings.MaskAvatar == true)
+		if maskNamePill and maskNamePill.Parent then
+			maskNamePill.BackgroundColor3 = Settings.MaskIdentity and T("Accent") or T("Element")
+			maskNamePill.TextColor3 = Settings.MaskIdentity and T("OnAccent") or T("Text")
+		end
+		if maskArtPill and maskArtPill.Parent then
+			maskArtPill.BackgroundColor3 = Settings.MaskAvatar and T("Accent") or T("Element")
+			maskArtPill.TextColor3 = Settings.MaskAvatar and T("OnAccent") or T("Text")
+		end
+	end
 
 	-- Card B (Right): Experience & Server Instance Matrix
 	local gameCard = New("Frame", {
@@ -8303,7 +9511,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Parent = heroRow,
 		BackgroundColor3 = T("Header"),
 		BorderSizePixel = 0,
-		Size = UDim2.new(0.46, -5, 0, 132),
+		Size = UDim2.new(0.49, -5, 0, 134),
 		LayoutOrder = 2,
 	})
 	Corner(gameCard, 9)
@@ -8337,13 +9545,13 @@ local function BuildHomeDashboard(window, tab, config)
 	})
 	Corner(gameThumbImg, 8)
 	local customGameIcon = config.GameImage or config.GameIcon
-	LoadImageAsync(gameThumbImg, (typeof(customGameIcon) == "string" and customGameIcon ~= "") and customGameIcon or GetGameIconUri())
+	LoadImageAsync(gameThumbImg, (typeof(customGameIcon) == "string" and customGameIcon ~= "") and customGameIcon or (Telemetry.GameIconUri or GetGameIconUri()))
 
 	local gameTitleLbl = New("TextLabel", {
 		Parent = gameTop,
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(56, 2),
-		Size = UDim2.new(1, -58, 0, 18),
+		Position = UDim2.fromOffset(56, 3),
+		Size = UDim2.new(1, -58, 0, 19),
 		Font = FONT_BOLD,
 		Text = Telemetry.GameName,
 		TextColor3 = T("Text"),
@@ -8353,26 +9561,21 @@ local function BuildHomeDashboard(window, tab, config)
 	})
 	RegisterTheme(gameTitleLbl, { TextColor3 = "Text" })
 
-	local shortJob = tostring(game.JobId or "studio-local")
-	if #shortJob > 14 then
-		shortJob = shortJob:sub(1, 8) .. ".." .. shortJob:sub(-4)
-	end
-
 	local gameMetaLbl = New("TextLabel", {
 		Parent = gameTop,
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(56, 21),
-		Size = UDim2.new(1, -58, 0, 14),
-		Font = FONT_MONO,
-		Text = string.format("PLACE %s • JOB %s", tostring(game.PlaceId or 0), shortJob),
+		Position = UDim2.fromOffset(56, 23),
+		Size = UDim2.new(1, -58, 0, 15),
+		Font = FONT_MEDIUM,
+		Text = string.format("PLACE ID: %s", tostring(game.PlaceId or 0)),
 		TextColor3 = T("SubText"),
-		TextSize = 10,
+		TextSize = 11,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
 	})
 	RegisterTheme(gameMetaLbl, { TextColor3 = "SubText" })
 
-	-- 4 Sleek Instance Action Buttons
+	-- 4 Sleek Instance Action Buttons (Zero Truncation!)
 	local serverActions = New("Frame", {
 		Name = "ServerActions",
 		Parent = gameCard,
@@ -8380,7 +9583,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Position = UDim2.fromOffset(0, 56),
 		Size = UDim2.new(1, 0, 0, 54),
 	})
-	local actionGrid = New("UIGridLayout", {
+	New("UIGridLayout", {
 		Parent = serverActions,
 		CellSize = UDim2.new(0.5, -4, 0, 24),
 		CellPadding = UDim2.fromOffset(8, 6),
@@ -8402,14 +9605,14 @@ local function BuildHomeDashboard(window, tab, config)
 
 		local g, gParts = CreateLineGlyph(btn, iconName, 12, btn.ZIndex + 1)
 		g.AnchorPoint = Vector2.new(0, 0.5)
-		g.Position = UDim2.new(0, 8, 0.5, 0)
-		RegisterGlyphTheme(gParts, "SubText")
+		g.Position = UDim2.new(0, 7, 0.5, 0)
+		RegisterGlyphTheme(gParts, "Accent")
 
 		local lbl = New("TextLabel", {
 			Parent = btn,
 			BackgroundTransparency = 1,
-			Position = UDim2.fromOffset(25, 0),
-			Size = UDim2.new(1, -28, 1, 0),
+			Position = UDim2.fromOffset(23, 0),
+			Size = UDim2.new(1, -26, 1, 0),
 			Font = FONT_MEDIUM,
 			Text = labelText,
 			TextColor3 = T("Text"),
@@ -8461,7 +9664,7 @@ local function BuildHomeDashboard(window, tab, config)
 		end
 	end)
 
-	CreateServerBtn(4, "Author YouTube", "play", function()
+	CreateServerBtn(4, "YouTube Link", "play", function()
 		local yt = config.YouTube or YOUTUBE_URL
 		if CopyToClipboard(yt) then
 			Library:Notify({ Title = "Captain Manjiro", Content = "YouTube channel link copied to clipboard!", Duration = 3 })
@@ -8486,7 +9689,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Padding = UDim.new(0, 10),
 	})
 
-	local function CreateSparklineModule(order, metricName, initialReadout)
+	local function CreateSparklineModule(order, metricName, initialReadout, initialStats, barStartColor, barEndColor)
 		local box = New("Frame", {
 			Name = metricName .. "Box",
 			Parent = teleRow,
@@ -8504,10 +9707,10 @@ local function BuildHomeDashboard(window, tab, config)
 			Parent = box,
 			BackgroundTransparency = 1,
 			Size = UDim2.new(0.45, 0, 0, 13),
-			Font = FONT_MONO,
+			Font = FONT_BOLD,
 			Text = metricName,
 			TextColor3 = T("SubText"),
-			TextSize = 10,
+			TextSize = 9,
 			TextXAlignment = Enum.TextXAlignment.Left,
 		})
 		RegisterTheme(titleLbl, { TextColor3 = "SubText" })
@@ -8518,8 +9721,8 @@ local function BuildHomeDashboard(window, tab, config)
 			Position = UDim2.new(1, 0, 0, 0),
 			Size = UDim2.new(0.55, 0, 0, 13),
 			BackgroundTransparency = 1,
-			Font = FONT_MONO,
-			Text = "avg --",
+			Font = FONT_MEDIUM,
+			Text = initialStats or "avg --",
 			TextColor3 = T("SubText"),
 			TextSize = 9,
 			TextXAlignment = Enum.TextXAlignment.Right,
@@ -8539,7 +9742,7 @@ local function BuildHomeDashboard(window, tab, config)
 		})
 		RegisterTheme(valLbl, { TextColor3 = "Text" })
 
-		-- Pooled 16-bar mini sparkline
+		-- Pooled 16-bar color-coded gradient sparkline
 		local chartBarHolder = New("Frame", {
 			Name = "Sparkline",
 			Parent = box,
@@ -8548,7 +9751,7 @@ local function BuildHomeDashboard(window, tab, config)
 			Size = UDim2.new(1, 0, 0, 18),
 			BackgroundTransparency = 1,
 		})
-		local barLayout = New("UIListLayout", {
+		New("UIListLayout", {
 			Parent = chartBarHolder,
 			FillDirection = Enum.FillDirection.Horizontal,
 			SortOrder = Enum.SortOrder.LayoutOrder,
@@ -8557,27 +9760,44 @@ local function BuildHomeDashboard(window, tab, config)
 		})
 
 		local bars = {}
+		local cStart = barStartColor or Color3.fromRGB(16, 185, 129)
+		local cEnd = barEndColor or Color3.fromRGB(56, 189, 248)
 		for i = 1, 16 do
+			local alpha = (i - 1) / 15
+			local barCol = cStart:Lerp(cEnd, alpha)
 			local b = New("Frame", {
 				Name = "B" .. i,
 				Parent = chartBarHolder,
-				BackgroundColor3 = i == 16 and T("Accent") or T("Border"),
+				BackgroundColor3 = barCol,
+				BackgroundTransparency = Lerp(0.38, 0.0, alpha),
 				BorderSizePixel = 0,
-				Size = UDim2.new(1 / 16, -2, 0.5, 0),
+				Size = UDim2.new(1 / 16, -2, 0.55, 0),
 				LayoutOrder = i,
 			})
 			Corner(b, 2, false)
-			RegisterTheme(b, {
-				BackgroundColor3 = i == 16 and "Accent" or "Border",
-			})
 			bars[i] = b
 		end
 
 		return box, valLbl, statsLbl, bars
 	end
 
-	local fpsBox, fpsMainLbl, fpsStatsLbl, fpsBars = CreateSparklineModule(1, "FRAME RATE", "60 FPS")
-	local pingBox, pingMainLbl, pingStatsLbl, pingBars = CreateSparklineModule(2, "NETWORK PING", "N/A")
+	local initPing = Telemetry.Ping or 35
+	local fpsBox, fpsMainLbl, fpsStatsLbl, fpsBars = CreateSparklineModule(
+		1,
+		"FRAME RATE",
+		tostring(Telemetry.FPS) .. " FPS",
+		string.format("min %d • avg %d", Telemetry.FPSMin, Telemetry.FPSAvg),
+		Color3.fromRGB(16, 185, 129),
+		Color3.fromRGB(56, 189, 248)
+	)
+	local pingBox, pingMainLbl, pingStatsLbl, pingBars = CreateSparklineModule(
+		2,
+		"NETWORK PING",
+		tostring(initPing) .. " ms",
+		string.format("min %d • avg %d", Telemetry.PingMin or initPing, Telemetry.PingAvg or initPing),
+		Color3.fromRGB(56, 189, 248),
+		Color3.fromRGB(129, 140, 248)
+	)
 
 	-- Cell 3: Session Uptime, Server Capacity & Discord Community Link
 	local sessionBox = New("Frame", {
@@ -8597,7 +9817,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Parent = sessionBox,
 		BackgroundTransparency = 1,
 		Size = UDim2.new(1, 0, 0, 13),
-		Font = FONT_MONO,
+		Font = FONT_BOLD,
 		Text = "SESSION & SERVER",
 		TextColor3 = T("SubText"),
 		TextSize = 10,
@@ -8611,7 +9831,7 @@ local function BuildHomeDashboard(window, tab, config)
 		Position = UDim2.fromOffset(0, 14),
 		Size = UDim2.new(1, 0, 0, 20),
 		Font = FONT_BOLD,
-		Text = "0m 00s • 1/1",
+		Text = string.format("%s • %d/%d Plrs", Telemetry.SessionText, Telemetry.PlayersCount, Telemetry.MaxPlayers),
 		TextColor3 = T("Text"),
 		TextSize = 14,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -8624,18 +9844,19 @@ local function BuildHomeDashboard(window, tab, config)
 		AnchorPoint = Vector2.new(0, 1),
 		Position = UDim2.new(0, 0, 1, 0),
 		Size = UDim2.new(1, 0, 0, 22),
-		BackgroundColor3 = T("Element"),
+		BackgroundColor3 = T("Accent"),
+		BackgroundTransparency = 0.80,
 		BorderSizePixel = 0,
 		AutoButtonColor = false,
-		Font = FONT_MONO,
-		Text = "DISCORD // CAPTAIN MANJIRO",
+		Font = FONT_BOLD,
+		Text = "DISCORD • COPY INVITE",
 		TextColor3 = T("Text"),
-		TextSize = 10,
+		TextSize = 9,
 		TextTruncate = Enum.TextTruncate.AtEnd,
 	})
 	Corner(discordBtn, 5)
-	Stroke(discordBtn, "Border", 1, 0.25)
-	RegisterTheme(discordBtn, { BackgroundColor3 = "Element", TextColor3 = "Text" })
+	Stroke(discordBtn, "Accent", 1, 0.35)
+	RegisterTheme(discordBtn, { BackgroundColor3 = "Accent", TextColor3 = "Text" })
 	tab.Maid:Give(discordBtn.MouseButton1Click:Connect(function()
 		local dc = config.Discord or DISCORD_URL
 		if CopyToClipboard(dc) then
@@ -8645,13 +9866,20 @@ local function BuildHomeDashboard(window, tab, config)
 		end
 	end))
 
+	-- Attach Flowing Active Card Shimmers across the 5 Command Deck Cards (staggered wave phases!)
+	Library:_AttachAuroraShimmer(opCard, "card", opCard.ZIndex + 2, 0.0)
+	Library:_AttachAuroraShimmer(gameCard, "card", gameCard.ZIndex + 2, 0.7)
+	Library:_AttachAuroraShimmer(fpsBox, "card", fpsBox.ZIndex + 2, 1.4)
+	Library:_AttachAuroraShimmer(pingBox, "card", pingBox.ZIndex + 2, 2.1)
+	Library:_AttachAuroraShimmer(sessionBox, "card", sessionBox.ZIndex + 2, 2.8)
+
 	-- Responsive Reflow for Dashboard on Narrow Screens
 	local function ReflowDashboard()
 		local w = dashWrapper.AbsoluteSize.X
 		local narrow = w > 0 and w < 460
 		heroLayout.FillDirection = narrow and Enum.FillDirection.Vertical or Enum.FillDirection.Horizontal
-		opCard.Size = narrow and UDim2.new(1, 0, 0, 132) or UDim2.new(0.54, -5, 0, 132)
-		gameCard.Size = narrow and UDim2.new(1, 0, 0, 132) or UDim2.new(0.46, -5, 0, 132)
+		opCard.Size = narrow and UDim2.new(1, 0, 0, 134) or UDim2.new(0.51, -5, 0, 134)
+		gameCard.Size = narrow and UDim2.new(1, 0, 0, 134) or UDim2.new(0.49, -5, 0, 134)
 
 		teleLayout.FillDirection = narrow and Enum.FillDirection.Vertical or Enum.FillDirection.Horizontal
 		fpsBox.Size = narrow and UDim2.new(1, 0, 0, 70) or UDim2.new(0.34, -6, 0, 74)
@@ -8671,24 +9899,31 @@ local function BuildHomeDashboard(window, tab, config)
 			LoadImageAsync(gameThumbImg, t.GameIconUri)
 		end
 		fpsMainLbl.Text = tostring(t.FPS) .. " FPS"
-		fpsStatsLbl.Text = string.format("min %d avg %d", t.FPSMin, t.FPSAvg)
+		fpsStatsLbl.Text = string.format("min %d • avg %d", t.FPSMin, t.FPSAvg)
 		local maxF = math.max(t.FPSMax, 60)
+		local smoothBars = Settings.Animations and not Settings.ReducedMotion
 		for i = 1, 16 do
-			local hRatio = Clamp((t.FPSHistory[i] or 60) / maxF, 0.15, 1)
-			fpsBars[i].Size = UDim2.new(1 / 16, -2, hRatio, 0)
+			local hRatio = Clamp((t.FPSHistory[i] or 60) / maxF, 0.18, 1)
+			local targetSize = UDim2.new(1 / 16, -2, hRatio, 0)
+			if smoothBars then
+				Tween(fpsBars[i], { Size = targetSize }, 0.28, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+			else
+				fpsBars[i].Size = targetSize
+			end
 		end
 
-		if t.Ping ~= nil then
-			pingMainLbl.Text = tostring(t.Ping) .. " ms"
-			pingStatsLbl.Text = string.format("min %d avg %d", t.PingMin or t.Ping, t.PingAvg or t.Ping)
-			local maxP = math.max(t.PingMax or 100, 80)
-			for i = 1, 16 do
-				local hRatio = Clamp((t.PingHistory[i] or t.Ping) / maxP, 0.15, 1)
-				pingBars[i].Size = UDim2.new(1 / 16, -2, hRatio, 0)
+		local curPing = t.Ping or 35
+		pingMainLbl.Text = tostring(curPing) .. " ms"
+		pingStatsLbl.Text = string.format("min %d • avg %d", t.PingMin or curPing, t.PingAvg or curPing)
+		local maxP = math.max(t.PingMax or 100, 80)
+		for i = 1, 16 do
+			local hRatio = Clamp((t.PingHistory[i] or curPing) / maxP, 0.18, 1)
+			local targetSize = UDim2.new(1 / 16, -2, hRatio, 0)
+			if smoothBars then
+				Tween(pingBars[i], { Size = targetSize }, 0.28, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+			else
+				pingBars[i].Size = targetSize
 			end
-		else
-			pingMainLbl.Text = "Unavailable"
-			pingStatsLbl.Text = "no stat"
 		end
 
 		sessValue.Text = string.format("%s • %d/%d Plrs", t.SessionText, t.PlayersCount, t.MaxPlayers)
@@ -8742,6 +9977,8 @@ local function CreateTab(window, config)
 	local function IsSelected()
 		return window.CurrentTab == tab
 	end
+
+	Library:_AttachAuroraShimmer(button, "card", button.ZIndex + 1, index * 0.45, IsSelected)
 
 	local iconKind = ResolveTabIcon(config.Icon, config.Title)
 	local iconHolder, iconParts = CreateLineGlyph(button, iconKind, 18, button.ZIndex + 1)
@@ -9024,7 +10261,7 @@ local function CreateTab(window, config)
 
 	function tab:_SetSidebarCollapsed(collapsed, instant)
 		self.SidebarCollapsed = collapsed == true
-		titleLabel.Visible = true
+		titleLabel.Visible = not self.SidebarCollapsed
 		local pose = {
 			AnchorPoint = Vector2.new(self.SidebarCollapsed and 0.5 or 0, 0.5),
 			Position = self.SidebarCollapsed and UDim2.fromScale(0.5, 0.5) or UDim2.new(0, 11, 0.5, 0),
@@ -9033,7 +10270,7 @@ local function CreateTab(window, config)
 			titleLabel.TextTransparency = self.SidebarCollapsed and 1 or 0
 			iconHolder.AnchorPoint, iconHolder.Position = pose.AnchorPoint, pose.Position
 		else
-			Tween(titleLabel, { TextTransparency = self.SidebarCollapsed and 1 or 0 }, SPEED.Fast)
+			titleLabel.TextTransparency = self.SidebarCollapsed and 1 or 0
 			Tween(iconHolder, pose, SPEED.Normal, Enum.EasingStyle.Quart)
 		end
 
@@ -9325,11 +10562,12 @@ local function CreateWindowInternal(config)
 		end
 	end
 
-	local main = New("Frame", {
+	local main = New("CanvasGroup", {
 		Name = "CMWindow",
 		Parent = ScreenGui,
 		BackgroundColor3 = T("Background"),
 		BackgroundTransparency = Settings.Transparency or 0,
+		GroupTransparency = 0,
 		BorderSizePixel = 0,
 		Size = UDim2.fromOffset(width, height),
 		Position = initialPos,
@@ -9338,7 +10576,7 @@ local function CreateWindowInternal(config)
 	})
 
 	Corner(main, 12)
-	Stroke(main, "Border", 1.2, 0, "window")
+	local windowStroke = Stroke(main, "Border", 1.2, 0, "window")
 	RegisterTheme(main, { BackgroundColor3 = "Background" })
 
 	local uiScale = New("UIScale", { Parent = main, Scale = Settings.Scale or 1 })
@@ -9347,6 +10585,7 @@ local function CreateWindowInternal(config)
 
 	window.Instance = main
 	window.Frame = main
+	window.WindowStroke = windowStroke
 	window.Scale = uiScale
 	window.DefaultPosition = defaultPosition
 	window.DefaultSize = UDim2.fromOffset(width, height)
@@ -9391,6 +10630,8 @@ local function CreateWindowInternal(config)
 	})
 	RegisterTheme(headerLine, { BackgroundColor3 = "Border" })
 
+	Library:_AttachAuroraShimmer(header, "crown", 106, 0)
+
 	local logo = New("Frame", {
 		Name = "Logo",
 		Parent = header,
@@ -9410,11 +10651,11 @@ local function CreateWindowInternal(config)
 		Size = UDim2.fromScale(1, 1),
 		Font = FONT_BOLD,
 		Text = "CM",
-		TextColor3 = T("Background"),
+		TextColor3 = T("OnAccent"),
 		TextSize = 11,
 		ZIndex = 104,
 	})
-	RegisterTheme(logoLabel, { TextColor3 = "Background" })
+	RegisterTheme(logoLabel, { TextColor3 = "OnAccent" })
 	Library:_AttachAnimatedLogo(logo, logoLabel, 105)
 
 	local titleLabel = New("TextLabel", {
@@ -9422,7 +10663,7 @@ local function CreateWindowInternal(config)
 		Parent = header,
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(48, 7),
-		Size = UDim2.new(0, 190, 0, 18),
+		Size = UDim2.new(0, 168, 0, 18),
 		Font = FONT_BOLD,
 		Text = tostring(config.Title or "CM Hub"),
 		TextColor3 = T("Text"),
@@ -9440,38 +10681,39 @@ local function CreateWindowInternal(config)
 		Parent = header,
 		BackgroundTransparency = 1,
 		Position = UDim2.fromOffset(48, 25),
-		Size = UDim2.new(0, 190, 0, 15),
-		Font = FONT_MONO,
+		Size = UDim2.new(0, 170, 0, 15),
+		Font = FONT_MEDIUM,
 		Text = subtitleText,
 		TextColor3 = T("SubText"),
 		TextSize = 10,
-		TextXAlignment = Enum.TextXAlignment.Left,
+		TextScaled = false,
 		TextTruncate = Enum.TextTruncate.AtEnd,
+		TextXAlignment = Enum.TextXAlignment.Left,
 		RichText = true,
 		Visible = subtitleText ~= "",
 		ZIndex = 103,
 	})
 	RegisterTheme(subtitleLabel, { TextColor3 = "SubText" })
 
-	-- Active Page Breadcrumb Tag in Header
+	-- Active Page Breadcrumb Tag in Header (Always clears 216px left branding block)
 	local routeBadge = New("Frame", {
 		Name = "RouteBadge",
 		Parent = header,
 		AnchorPoint = Vector2.new(0, 0.5),
-		Position = UDim2.new(0, initialSidebarWidth + 12, 0.5, 0),
-		Size = UDim2.fromOffset(128, 26),
+		Position = UDim2.new(0, math.max(initialSidebarWidth + 12, 224), 0.5, 0),
+		Size = UDim2.fromOffset(104, 26),
 		BackgroundColor3 = T("Background"),
 		BorderSizePixel = 0,
 		ZIndex = 103,
 	})
 	Corner(routeBadge, 6)
-	Stroke(routeBadge, "Border", 1, 0.3)
+	Stroke(routeBadge, "Border", 1, 0.25)
 	RegisterTheme(routeBadge, { BackgroundColor3 = "Background" })
 
 	local routeDot = New("Frame", {
 		Parent = routeBadge,
 		AnchorPoint = Vector2.new(0, 0.5),
-		Position = UDim2.new(0, 8, 0.5, 0),
+		Position = UDim2.new(0, 9, 0.5, 0),
 		Size = UDim2.fromOffset(5, 5),
 		BackgroundColor3 = T("Accent"),
 		BorderSizePixel = 0,
@@ -9484,9 +10726,9 @@ local function CreateWindowInternal(config)
 		Name = "RouteText",
 		Parent = routeBadge,
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(18, 0),
+		Position = UDim2.fromOffset(19, 0),
 		Size = UDim2.new(1, -24, 1, 0),
-		Font = FONT_MONO,
+		Font = FONT_BOLD,
 		Text = "MAIN",
 		TextColor3 = T("Text"),
 		TextSize = 11,
@@ -9605,7 +10847,12 @@ local function CreateWindowInternal(config)
 			SetGlyphColor(glyphParts, T("SubText"))
 		end))
 
-		window.Maid:Give(button.MouseButton1Click:Connect(callback))
+		window.Maid:Give(button.MouseButton1Click:Connect(function(...)
+			HideTooltip()
+			if callback then
+				callback(...)
+			end
+		end))
 
 		return button
 	end
@@ -9730,8 +10977,8 @@ local function CreateWindowInternal(config)
 		Name = "AvatarBox",
 		Parent = profileCard,
 		AnchorPoint = Vector2.new(0, 0.5),
-		Position = UDim2.new(0, 8, 0.5, 0),
-		Size = UDim2.fromOffset(32, 32),
+		Position = UDim2.new(0, 7, 0.5, 0),
+		Size = UDim2.fromOffset(30, 30),
 		BackgroundColor3 = T("Element"),
 		BorderSizePixel = 0,
 		ZIndex = 104,
@@ -9740,70 +10987,79 @@ local function CreateWindowInternal(config)
 	Stroke(profAvatarBox, "Border", 1, 0.2)
 	RegisterTheme(profAvatarBox, { BackgroundColor3 = "Element" })
 
+	local profHeadshotUri = GetPlayerHeadshotUri()
 	local profAvatarImg = New("ImageLabel", {
 		Name = "Headshot",
 		Parent = profAvatarBox,
 		BackgroundTransparency = 1,
 		Size = UDim2.fromScale(1, 1),
 		Image = "",
-		Visible = not Settings.MaskAvatar,
+		Visible = true,
 		ZIndex = 105,
 	})
 	Corner(profAvatarImg, 8)
-	LoadImageAsync(profAvatarImg, GetPlayerHeadshotUri())
+	LoadImageAsync(profAvatarImg, profHeadshotUri)
+	local syncProfAvatarBlur = AttachImageBlur(profAvatarBox, profAvatarImg, 8, profHeadshotUri)
 
 	local profOnlineDot = New("Frame", {
 		Parent = profAvatarBox,
 		AnchorPoint = Vector2.new(1, 1),
 		Position = UDim2.new(1, 1, 1, 1),
 		Size = UDim2.fromOffset(8, 8),
-		BackgroundColor3 = T("Accent"),
+		BackgroundColor3 = Color3.fromRGB(16, 185, 129),
 		BorderSizePixel = 0,
-		ZIndex = 106,
+		ZIndex = 110,
 	})
 	Corner(profOnlineDot, 4, false)
 	Stroke(profOnlineDot, "Background", 1.5)
-	RegisterTheme(profOnlineDot, { BackgroundColor3 = "Accent" })
 
 	local dProf, uProf = GetOperatorNames()
 	local profNameLabel = New("TextLabel", {
 		Name = "DisplayName",
 		Parent = profileCard,
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(46, 8),
-		Size = UDim2.new(1, -52, 0, 16),
+		Position = UDim2.fromOffset(43, 8),
+		Size = UDim2.new(1, -48, 0, 16),
 		Font = FONT_BOLD,
 		Text = dProf,
 		TextColor3 = T("Text"),
-		TextSize = 12,
-		TextXAlignment = Enum.TextXAlignment.Left,
+		TextSize = 11,
+		TextScaled = false,
 		TextTruncate = Enum.TextTruncate.AtEnd,
+		TextXAlignment = Enum.TextXAlignment.Left,
 		ZIndex = 104,
 	})
 	RegisterTheme(profNameLabel, { TextColor3 = "Text" })
+	local syncProfNameBlur = AttachTextBlur(profNameLabel, true)
 
 	local profSubLabel = New("TextLabel", {
 		Name = "Username",
 		Parent = profileCard,
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(46, 24),
-		Size = UDim2.new(1, -52, 0, 14),
-		Font = FONT_MONO,
+		Position = UDim2.fromOffset(43, 24),
+		Size = UDim2.new(1, -48, 0, 14),
+		Font = FONT_MEDIUM,
 		Text = uProf,
 		TextColor3 = T("SubText"),
 		TextSize = 10,
-		TextXAlignment = Enum.TextXAlignment.Left,
+		TextScaled = false,
 		TextTruncate = Enum.TextTruncate.AtEnd,
+		TextXAlignment = Enum.TextXAlignment.Left,
 		ZIndex = 104,
 	})
 	RegisterTheme(profSubLabel, { TextColor3 = "SubText" })
+	local syncProfSubBlur = AttachTextBlur(profSubLabel, true)
 
 	function window._UpdateSidebarProfile()
 		local dn, un = GetOperatorNames()
 		profNameLabel.Text = dn
 		profSubLabel.Text = un
-		profAvatarImg.Visible = not Settings.MaskAvatar
+		profAvatarImg.Visible = true
+		syncProfAvatarBlur(Settings.MaskAvatar == true)
+		syncProfNameBlur(Settings.MaskIdentity == true, dn)
+		syncProfSubBlur(Settings.MaskIdentity == true, un)
 	end
+	window._UpdateSidebarProfile()
 
 	window.Maid:Give(profileCard.MouseButton1Click:Connect(function()
 		window:SelectTab(1)
@@ -9862,7 +11118,7 @@ local function CreateWindowInternal(config)
 		Position = UDim2.fromOffset(24, 0),
 		Size = UDim2.new(1, -210, 1, 0),
 		Font = FONT_MONO,
-		Text = "CM UI LIBRARY v" .. LIB_VERSION .. " // STUDIO MONOCHROME // CAPTAIN MANJIRO",
+		Text = "CM UI LIBRARY v" .. LIB_VERSION .. " // AURORA STUDIO // CAPTAIN MANJIRO",
 		TextColor3 = T("SubText"),
 		TextSize = 10,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -10168,11 +11424,14 @@ local function CreateWindowInternal(config)
 		local sidebarSize = UDim2.new(0, targetWidth, 1, 0)
 		local contentPosition = UDim2.fromOffset(targetWidth, 0)
 		local contentSize = UDim2.new(1, -targetWidth, 1, 0)
-		local routePos = UDim2.new(0, targetWidth + 12, 0.5, 0)
+		local routePos = UDim2.new(0, math.max(targetWidth + 12, 224), 0.5, 0)
 
 		profNameLabel.Visible = not self.SidebarCollapsed
 		profSubLabel.Visible = not self.SidebarCollapsed
-		profAvatarBox.Position = self.SidebarCollapsed and UDim2.new(0.5, -16, 0.5, 0) or UDim2.new(0, 8, 0.5, 0)
+		profAvatarBox.AnchorPoint = Vector2.new(self.SidebarCollapsed and 0.5 or 0, 0.5)
+		profAvatarBox.Position = self.SidebarCollapsed and UDim2.fromScale(0.5, 0.5) or UDim2.new(0, 7, 0.5, 0)
+		profileCard.Size = UDim2.new(1, self.SidebarCollapsed and -12 or -16, 0, 48)
+		collapseButton.Size = UDim2.new(1, self.SidebarCollapsed and -12 or -16, 0, 24)
 
 		if instant or not Settings.Animations then
 			sidebar.Size = sidebarSize
@@ -10320,13 +11579,14 @@ local function CreateWindowInternal(config)
 		end)
 	end))
 
-	-- Minimize-to-Pill & Restore Transition State Machine
+	-- Minimize-to-Pill & Restore Transition State Machine (Zero UIScale Tween = Zero Text Jitter!)
 	function window:Show()
 		self._TransitionToken = (self._TransitionToken or 0) + 1
 		local token = self._TransitionToken
+		LastPillTransitionClock = os.clock()
 
 		if SetPillPreviewExpanded then
-			SetPillPreviewExpanded(false)
+			SetPillPreviewExpanded(false, false, true)
 		end
 
 		self.Visible = true
@@ -10340,34 +11600,58 @@ local function CreateWindowInternal(config)
 		self:EnsureInBounds(true)
 		local targetPos = self.SavedPosition or self.DefaultPosition
 		local targetScale = Settings.Scale or 1
+		uiScale.Scale = targetScale
+
+		RenderFloatingButton(true)
+		UpdateBackgroundDim()
+
+		if windowStroke then
+			windowStroke.Enabled = true
+		end
 
 		if Settings.Animations and not Settings.ReducedMotion then
-			if FloatingButton and FloatingButton.Parent then
-				local pillPos = FloatingButton.Position
-				main.Position = UDim2.fromOffset(
-					math.floor(Lerp(targetPos.X.Offset, pillPos.X.Offset, 0.35)),
-					math.floor(Lerp(targetPos.Y.Offset, pillPos.Y.Offset, 0.45))
-				)
+			main.Position = UDim2.fromOffset(targetPos.X.Offset, math.max(8, targetPos.Y.Offset - 14))
+			main.BackgroundTransparency = Settings.Transparency or 0
+			if windowStroke then
+				windowStroke.Transparency = 1
 			end
-			uiScale.Scale = targetScale * 0.86
-			Tween(main, { Position = targetPos, BackgroundTransparency = Settings.Transparency or 0 }, SPEED.Normal, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-			Tween(uiScale, { Scale = targetScale }, SPEED.Normal, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
-			task.delay(SPEED.Normal + 0.02, function()
+			pcall(function()
+				main.GroupTransparency = 1
+			end)
+
+			if windowStroke then
+				Tween(windowStroke, { Transparency = 0 }, 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			end
+			Tween(main, {
+				Position = targetPos,
+				BackgroundTransparency = Settings.Transparency or 0,
+				GroupTransparency = 0,
+			}, 0.20, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+
+			task.delay(0.21, function()
 				if self._TransitionToken == token and not self.Destroyed then
 					self.TransitionState = "OPEN"
 					main.Position = targetPos
-					uiScale.Scale = targetScale
+					if windowStroke then
+						windowStroke.Transparency = 0
+					end
+					pcall(function()
+						main.GroupTransparency = 0
+					end)
+					LastPillTransitionClock = os.clock()
 				end
 			end)
 		else
 			main.Position = targetPos
 			main.BackgroundTransparency = Settings.Transparency or 0
-			uiScale.Scale = targetScale
+			if windowStroke then
+				windowStroke.Transparency = 0
+			end
+			pcall(function()
+				main.GroupTransparency = 0
+			end)
 			self.TransitionState = "OPEN"
 		end
-
-		RenderFloatingButton(true)
-		UpdateBackgroundDim()
 
 		return self
 	end
@@ -10377,6 +11661,12 @@ local function CreateWindowInternal(config)
 	function window:Hide()
 		self._TransitionToken = (self._TransitionToken or 0) + 1
 		local token = self._TransitionToken
+		LastPillTransitionClock = os.clock()
+
+		HideTooltip()
+		if SetPillPreviewExpanded then
+			SetPillPreviewExpanded(false, false, true)
+		end
 
 		if self._DragController and self._DragController.IsDragging() then
 			self._DragController.Cancel()
@@ -10392,36 +11682,54 @@ local function CreateWindowInternal(config)
 		self.TransitionState = "MINIMIZING"
 
 		EnsureFloatingButton()
-		RenderFloatingButton(false)
 		UpdateBackgroundDim()
 
-		local targetScale = (Settings.Scale or 1) * 0.48
-		local pillTargetPos = main.Position
-		if FloatingButton and FloatingButton.Parent then
-			local pPos = FloatingButton.Position
-			local sPos = self.SavedPosition or main.Position
-			pillTargetPos = UDim2.fromOffset(
-				math.floor(Lerp(sPos.X.Offset, pPos.X.Offset, 0.55)),
-				math.floor(Lerp(sPos.Y.Offset, pPos.Y.Offset, 0.65))
-			)
-		end
+		local sPos = self.SavedPosition or main.Position
+		local slideUpPos = UDim2.fromOffset(sPos.X.Offset, math.max(8, sPos.Y.Offset - 14))
 
 		if Settings.Animations and not Settings.ReducedMotion then
-			Tween(uiScale, { Scale = targetScale }, SPEED.Normal, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
-			Tween(main, { Position = pillTargetPos, BackgroundTransparency = 0.65 }, SPEED.Normal, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
+			if windowStroke then
+				Tween(windowStroke, { Transparency = 1 }, 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+			end
+			Tween(main, {
+				Position = slideUpPos,
+				GroupTransparency = 1,
+			}, 0.18, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
 
-			task.delay(SPEED.Normal + 0.02, function()
+			task.delay(0.06, function()
+				if self._TransitionToken == token and not self.Visible and not self.Destroyed then
+					RenderFloatingButton(false)
+				end
+			end)
+
+			task.delay(0.19, function()
 				if self._TransitionToken == token and not self.Visible and main.Parent then
 					main.Visible = false
+					if windowStroke then
+						windowStroke.Enabled = false
+						windowStroke.Transparency = 1
+					end
 					self.TransitionState = "MINIMIZED"
 					main.Position = self.SavedPosition or self.DefaultPosition
 					main.BackgroundTransparency = Settings.Transparency or 0
-					uiScale.Scale = Settings.Scale or 1
+					pcall(function()
+						main.GroupTransparency = 0
+					end)
+					LastPillTransitionClock = os.clock()
 				end
 			end)
 		else
 			main.Visible = false
+			if windowStroke then
+				windowStroke.Enabled = false
+				windowStroke.Transparency = 1
+			end
 			self.TransitionState = "MINIMIZED"
+			pcall(function()
+				main.GroupTransparency = 0
+			end)
+			RenderFloatingButton(false)
+			LastPillTransitionClock = os.clock()
 		end
 
 		return self
@@ -11157,14 +12465,13 @@ local function BuildSettingsTab(window)
 	--============================================
 	local configuration = tab:AddFolder({
 		Title = "Configuration Manager",
-		Description = "Save, load, rename, auto-load, and import/export",
+		Description = "Save, load, rename, and auto-load configs",
 		Icon = "folder",
 		Default = true,
 	})
 
 	local configNameInput
 	local configListDropdown
-	local importCodeInput
 
 	local function CurrentConfigName()
 		local typed = configNameInput and tostring(configNameInput.Value or "") or ""
@@ -11338,132 +12645,6 @@ local function BuildSettingsTab(window)
 		end,
 	})
 
-	configuration:AddButton({
-		Title = "Copy Config Code (Export)",
-		Icon = "copy",
-		Callback = function()
-			local code = Library.Config:Export(CurrentConfigName())
-			if code and CopyToClipboard(code) then
-				Library:Notify({
-					Title = "Exported Config",
-					Content = "Configuration JSON copied to clipboard!",
-					Duration = 3,
-				})
-			elseif code and importCodeInput then
-				importCodeInput:SetValue(code, true)
-				Library:Notify({
-					Title = "Exported Config",
-					Content = "Placed config code in Import box.",
-					Duration = 3,
-				})
-			end
-		end,
-	})
-
-	importCodeInput = configuration:AddInput("__CMImportCode", {
-		Title = "Config Code",
-		Placeholder = "Paste exported JSON...",
-		Default = "",
-		Finished = true,
-		Save = false,
-	})
-
-	configuration:AddButton({
-		Title = "Import Config Code",
-		Icon = "download",
-		Callback = function()
-			local raw = importCodeInput and importCodeInput.Value or ""
-			local ok, report = Library.Config:Import(raw, CurrentConfigName())
-			if ok then
-				RefreshConfigList()
-				SyncSettingsUI()
-				Library:Notify({
-					Title = "Import Complete",
-					Content = ("Imported %d options into '%s'."):format(report and report.Restored or 0, CurrentConfigName()),
-					Duration = 3,
-				})
-			else
-				Library:Notify({
-					Type = "Error",
-					Title = "Import Failed",
-					Content = "Invalid configuration code.",
-					Duration = 3,
-				})
-			end
-		end,
-	})
-
-	return tab
-end
-
---==================================================
--- CREDITS TAB (placed directly below Settings)
---==================================================
-
-local function BuildCreditsTab(window)
-	local tab = CreateTab(window, {
-		Title = "Credits",
-		Icon = "heart",
-		LayoutOrder = 9001,
-		IsCredits = true,
-	})
-
-	window.CreditsTab = tab
-
-	local credits = tab:AddFolder({
-		Title = "Creator & Community",
-		Description = "CM UI Library by Captain Manjiro",
-		Icon = "heart",
-		Default = true,
-	})
-
-	credits:AddParagraph({
-		Title = "Support the Creator - Captain Manjiro :3",
-		Content = "Join the community for full updates, upcoming releases, scripts, and announcements.",
-	})
-
-	credits:AddButton({
-		Title = "YouTube",
-		Icon = "play",
-		Callback = function()
-			if CopyToClipboard(YOUTUBE_URL) then
-				Library:Notify({
-					Title = "Thank You for Supporting :3",
-					Content = "YouTube link copied!",
-					Duration = 3,
-				})
-			else
-				Library:Notify({
-					Title = "YouTube",
-					Content = YOUTUBE_URL,
-					SubContent = "Clipboard unavailable - copy the link manually.",
-					Duration = 8,
-				})
-			end
-		end,
-	})
-
-	credits:AddButton({
-		Title = "Discord",
-		Icon = "link",
-		Callback = function()
-			if CopyToClipboard(DISCORD_URL) then
-				Library:Notify({
-					Title = "Thank You for Supporting :3",
-					Content = "Discord link copied!",
-					Duration = 3,
-				})
-			else
-				Library:Notify({
-					Title = "Discord",
-					Content = DISCORD_URL,
-					SubContent = "Clipboard unavailable - copy the link manually.",
-					Duration = 8,
-				})
-			end
-		end,
-	})
-
 	return tab
 end
 
@@ -11498,10 +12679,6 @@ function Library:CreateWindow(config)
 
 	if not window.SettingsTab then
 		BuildSettingsTab(window)
-	end
-
-	if not window.CreditsTab then
-		BuildCreditsTab(window)
 	end
 
 	window:SelectTab(1)
@@ -11766,6 +12943,36 @@ function Library:IsAntiAFK()
 	return Settings.AntiAFK == true
 end
 
+function Library:SetMaskIdentity(state)
+	Settings.MaskIdentity = (state == true)
+	if self.Window and self.Window._SyncCommandDeckPrivacy then
+		pcall(self.Window._SyncCommandDeckPrivacy)
+	end
+	if self.Window and self.Window._UpdateSidebarProfile then
+		pcall(self.Window._UpdateSidebarProfile)
+	end
+	if UpdatePillMetrics then
+		pcall(UpdatePillMetrics)
+	end
+	SaveInterface()
+	return self
+end
+
+function Library:SetMaskAvatar(state)
+	Settings.MaskAvatar = (state == true)
+	if self.Window and self.Window._SyncCommandDeckPrivacy then
+		pcall(self.Window._SyncCommandDeckPrivacy)
+	end
+	if self.Window and self.Window._UpdateSidebarProfile then
+		pcall(self.Window._UpdateSidebarProfile)
+	end
+	if UpdatePillMetrics then
+		pcall(UpdatePillMetrics)
+	end
+	SaveInterface()
+	return self
+end
+
 function Library:GetOption(id)
 	return self.Options[id]
 end
@@ -12009,8 +13216,10 @@ do
 		if typeof(saved.BackgroundDim) == "boolean" then
 			Settings.BackgroundDim = saved.BackgroundDim
 		end
-		if typeof(saved.Animations) == "boolean" then
+		if typeof(saved.Animations) == "boolean" and saved.ConfigName ~= "__live_test_cfg" then
 			Settings.Animations = saved.Animations
+		else
+			Settings.Animations = true
 		end
 		if typeof(saved.AnimationSpeed) == "string" then
 			Settings.AnimationSpeed = saved.AnimationSpeed
@@ -12033,8 +13242,10 @@ do
 		if typeof(saved.AfterimageTrail) == "boolean" then
 			Settings.AfterimageTrail = saved.AfterimageTrail
 		end
-		if typeof(saved.PillPreview) == "string" then
+		if typeof(saved.PillPreview) == "string" and saved.PillPreview ~= "" then
 			Settings.PillPreview = saved.PillPreview
+		else
+			Settings.PillPreview = "Show on Hover"
 		end
 		if typeof(saved.AdaptiveLayout) == "boolean" then
 			Settings.AdaptiveLayout = saved.AdaptiveLayout
@@ -12080,17 +13291,23 @@ do
 		if typeof(saved.AutoLoad) == "string" and saved.AutoLoad ~= "" then
 			Settings.AutoLoad = saved.AutoLoad
 		end
-		if typeof(saved.ConfigName) == "string" and saved.ConfigName ~= "" then
+		if typeof(saved.ConfigName) == "string" and saved.ConfigName ~= "" and saved.ConfigName ~= "__live_test_cfg" then
 			Settings.ConfigName = saved.ConfigName
+		else
+			Settings.ConfigName = "default"
 		end
 	end
 
 	UpdateAnimationSpeedMultiplier()
 	AntiAFK:Set(Settings.AntiAFK == true)
+	if saved and saved.ConfigName == "__live_test_cfg" then
+		SaveInterface()
+	end
 end
 
 for _, env in ipairs(GetSharedEnvironments()) do
 	rawset(env, "CM_UI_LIBRARY", Library)
+	rawset(env, "__CM_LOCAL_LIBRARY_SOURCE", nil)
 end
 
 --==================================================
